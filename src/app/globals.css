@@ -2,33 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Self-hosted fonts */
-@font-face {
-  font-family: "Phenomena";
-  src: url("/fonts/Phenomena-Regular.woff2") format("woff2"),
-       url("/fonts/Phenomena-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Phenomena";
-  src: url("/fonts/Phenomena-Bold.woff2") format("woff2"),
-       url("/fonts/Phenomena-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sailors";
-  src: url("/fonts/Sailors-Regular.woff2") format("woff2"),
-       url("/fonts/Sailors-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* Font variables — Syne (titoli) e DM Serif Display (body) */
+/* Sostituti temporanei di Phenomena e Sailors, da sostituire con i font self-hosted */
 
 :root {
   --color-primary: #474747;
@@ -58,13 +33,13 @@ html {
 body {
   color: var(--color-primary);
   background: var(--color-bg);
-  font-family: "Sailors", Georgia, serif;
+  font-family: var(--font-sailors), Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Phenomena", sans-serif;
+  font-family: var(--font-phenomena), sans-serif;
   letter-spacing: -0.02em;
 }
 

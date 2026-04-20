@@ -19,8 +19,8 @@ const config: Config = {
         bg: "#f5f0eb",
       },
       fontFamily: {
-        phenomena: ["Phenomena", "sans-serif"],
-        sailors: ["Sailors", "Georgia", "serif"],
+        phenomena: ["var(--font-phenomena)", "sans-serif"],
+        sailors: ["var(--font-sailors)", "Georgia", "serif"],
       },
       keyframes: {
         fadeInUp: {
