@@ -1,0 +1,129 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import ColorBar from "@/components/ColorBar";
+
+const COMPETENZE = [
+  "Social Media Marketing",
+  "AI Automation",
+  "Email Marketing",
+  "Content Strategy",
+  "SEO & Analytics",
+  "Meta & Google Ads",
+  "Funnel Marketing",
+  "Automazioni n8n",
+];
+
+function useTypewriter(words: string[], speed = 60, pause = 1800) {
+  const [displayed, setDisplayed] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!deleting && charIndex < current.length) {
+      timeout = setTimeout(() => setCharIndex((i) => i + 1), speed);
+    } else if (!deleting && charIndex === current.length) {
+      timeout = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && charIndex > 0) {
+      timeout = setTimeout(() => setCharIndex((i) => i - 1), speed / 2);
+    } else {
+      setDeleting(false);
+      setWordIndex((i) => (i + 1) % words.length);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, deleting, wordIndex, words, speed, pause]);
+
+  useEffect(() => {
+    setDisplayed(words[wordIndex].slice(0, charIndex));
+  }, [charIndex, wordIndex, words]);
+
+  return displayed;
+}
+
+export default function Hero() {
+  const typewritten = useTypewriter(COMPETENZE);
+
+  return (
+    <section className="min-h-screen flex flex-col justify-center pt-16 px-6">
+      <div className="max-w-5xl mx-auto w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          {/* Typewriter label */}
+          <div className="mb-6 h-8 flex items-center">
+            <span
+              className="text-lg text-accent-1 font-bold"
+              style={{ fontFamily: "Phenomena, sans-serif" }}
+            >
+              {typewritten}
+              <span className="animate-blink ml-0.5">|</span>
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-primary leading-none mb-6"
+            style={{ fontFamily: "Phenomena, sans-serif", letterSpacing: "-0.03em" }}
+          >
+            Cresciamo
+            <br />
+            <span className="text-coral">insieme</span>
+            <br />
+            con l&apos;AI.
+          </h1>
+
+          {/* Color bar */}
+          <ColorBar className="w-48 mb-8" height={5} />
+
+          {/* Subheadline */}
+          <p className="text-xl md:text-2xl text-primary/70 max-w-2xl mb-10 leading-relaxed">
+            Sono Luca Vizza, freelance di marketing digitale e AI automation.
+            Aiuto le PMI italiane a crescere con strategie concrete e tecnologia.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/audit"
+              className="px-8 py-4 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all hover:scale-105 inline-block text-center"
+              style={{ fontFamily: "Phenomena, sans-serif" }}
+            >
+              Fai l&apos;audit gratuito →
+            </Link>
+            <Link
+              href="/chi-sono"
+              className="px-8 py-4 rounded-full border-2 border-primary/20 text-primary font-bold text-lg hover:border-primary/50 transition-all inline-block text-center"
+              style={{ fontFamily: "Phenomena, sans-serif" }}
+            >
+              Chi sono
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="mt-20 flex items-center gap-2 text-primary/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+        >
+          <motion.span
+            className="block w-px h-12 bg-primary/20"
+            animate={{ scaleY: [1, 0.5, 1] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          />
+          <span className="text-xs tracking-widest uppercase">scroll</span>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted fonts */
+@font-face {
+  font-family: "Phenomena";
+  src: url("/fonts/Phenomena-Regular.woff2") format("woff2"),
+       url("/fonts/Phenomena-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Phenomena";
+  src: url("/fonts/Phenomena-Bold.woff2") format("woff2"),
+       url("/fonts/Phenomena-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sailors";
+  src: url("/fonts/Sailors-Regular.woff2") format("woff2"),
+       url("/fonts/Sailors-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-primary: #474747;
+  --color-accent-1: #3ad3ef;
+  --color-accent-2: #ffbd59;
+  --color-accent-3: #5bc783;
+  --color-accent-4: #544fb3;
+  --color-accent-5: #5ed5bf;
+  --color-coral: #ee826d;
+  --color-bg: #f5f0eb;
+}
+
+* {
+  cursor: none;
+}
+
+@media (max-width: 767px) {
+  * {
+    cursor: auto;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-primary);
+  background: var(--color-bg);
+  font-family: "Sailors", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Phenomena", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Color bar utility — reusable across components */
+.color-bar {
+  display: flex;
+  gap: 4px;
+}
+
+.color-bar span {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
