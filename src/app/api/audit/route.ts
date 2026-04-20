@@ -2,11 +2,6 @@ import { NextRequest } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { Resend } from "resend";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-});
-
-const resend = new Resend(process.env.RESEND_API_KEY!);
 
 function buildPrompt(
   settore: string,
@@ -53,6 +48,7 @@ export async function POST(req: NextRequest) {
 
   const prompt = buildPrompt(settore, answers, nome, azienda);
 
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
   const encoder = new TextEncoder();
   let fullReport = "";
 
@@ -80,6 +76,7 @@ export async function POST(req: NextRequest) {
 
         // Send email after stream completes
         if (process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL) {
+          const resend = new Resend(process.env.RESEND_API_KEY);
           await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL,
             to: email,
