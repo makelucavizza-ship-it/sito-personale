@@ -6,14 +6,14 @@ import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 
 const COMPETENZE = [
-  "Social Media Marketing",
-  "AI Automation",
+  "Agenti vocali AI",
+  "WhatsApp Marketing",
+  "Social Media",
   "Email Marketing",
-  "Content Strategy",
-  "SEO & Analytics",
   "Meta & Google Ads",
-  "Funnel Marketing",
-  "Automazioni n8n",
+  "CRM personalizzati",
+  "SEO & Contenuti",
+  "Automazioni per PMI",
 ];
 
 function useTypewriter(words: string[], speed = 60, pause = 1800) {
@@ -86,8 +86,9 @@ export default function Hero() {
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-primary/70 max-w-2xl mb-10 leading-relaxed">
-            Sono Luca Vizza, freelance di marketing digitale e AI automation.
-            Aiuto le PMI italiane a crescere con strategie concrete e tecnologia.
+            Sono Luca Vizza. Aiuto le PMI italiane a usare il digitale e
+            l&apos;AI per lavorare meglio e perdere meno tempo.
+            Strumenti pratici, zero fronzoli.
           </p>
 
           {/* CTAs */}
