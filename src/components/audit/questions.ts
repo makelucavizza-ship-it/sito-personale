@@ -13,83 +13,78 @@ export type Settore = (typeof SETTORI)[number];
 export interface Question {
   id: string;
   text: string;
-  type: "scale" | "select" | "text";
+  type: "select" | "text";
   options?: string[];
-  scaleLabels?: [string, string];
 }
 
-const COMMON_QUESTIONS: Question[] = [
-  {
-    id: "automazione_attuale",
-    text: "Attualmente usi strumenti digitali per gestire la tua attività?",
-    type: "select",
-    options: [
-      "No, quasi tutto è fatto a mano o su carta",
-      "Sì, uso qualche software base (gestionale, email)",
-      "Sì, ho diversi strumenti ma non comunicano tra loro",
-      "Sì, ho un sistema digitale abbastanza strutturato",
-    ],
-  },
-  {
-    id: "presenza_online",
-    text: "Quanto è strutturata la tua presenza online?",
-    type: "select",
-    options: [
-      "Non ho un sito web né social attivi",
-      "Ho solo una pagina social, non aggiornata regolarmente",
-      "Ho un sito e almeno un social attivo",
-      "Ho sito, social, e qualche attività pubblicitaria online",
-    ],
-  },
-  {
-    id: "fiducia_ai",
-    text: "Come descriveresti il tuo rapporto con l'intelligenza artificiale?",
-    type: "select",
-    options: [
-      "Non so bene cosa sia o come funzioni",
-      "Ne ho sentito parlare ma non l'ho mai usata",
-      "Ci ho giocato un po' (ChatGPT, ecc.) ma non in modo strutturato",
-      "La uso già per qualche attività nella mia azienda",
-    ],
-  },
-  {
-    id: "obiettivo_principale",
-    text: "Qual è il tuo obiettivo principale in questo momento?",
-    type: "select",
-    options: [
-      "Trovare nuovi clienti",
-      "Mantenere i clienti attuali e aumentare la fidelizzazione",
-      "Risparmiare tempo su attività ripetitive",
-      "Migliorare la visibilità online",
-      "Capire dove sono e cosa fare",
-    ],
-  },
-];
-
-const SECTOR_QUESTIONS: Record<Settore, Question[]> = {
+export const SECTOR_QUESTIONS: Record<Settore, Question[]> = {
   Ristorazione: [
     {
       id: "gestione_prenotazioni",
-      text: "Come gestisci le prenotazioni?",
+      text: "Come gestisci le prenotazioni oggi?",
       type: "select",
       options: [
         "Solo telefono",
         "Telefono + WhatsApp",
-        "Ho un sistema di prenotazione online",
+        "App (TheFork, ecc.)",
         "Non accetto prenotazioni",
+      ],
+    },
+    {
+      id: "telefonate_fuori_orario",
+      text: "Rispondi anche alle telefonate fuori orario?",
+      type: "select",
+      options: [
+        "Sì, sempre",
+        "Solo a volte",
+        "No, le perdo",
+        "Ho un voicemail",
+      ],
+    },
+    {
+      id: "presenza_online",
+      text: "I tuoi clienti sanno che esisti online?",
+      type: "select",
+      options: [
+        "Ho sito + Google Business",
+        "Solo social",
+        "Solo Google Business",
+        "No, mi trovano solo di persona",
       ],
     },
   ],
   "Turismo e ospitalità": [
     {
       id: "canali_prenotazione",
-      text: "Su quali canali ricevi prenotazioni?",
+      text: "Su quanti canali ricevi prenotazioni?",
       type: "select",
       options: [
         "Solo diretto (telefono/email)",
         "Booking.com / Airbnb",
-        "OTA + sito proprio",
-        "Ho un sistema di channel manager",
+        "Più OTA + sito proprio",
+        "Ho un channel manager",
+      ],
+    },
+    {
+      id: "gestione_richieste",
+      text: "Come gestisci le richieste di informazioni?",
+      type: "select",
+      options: [
+        "Rispondo a mano a tutto",
+        "Uso template email",
+        "Sistema semiautomatico",
+        "CRM dedicato",
+      ],
+    },
+    {
+      id: "recensioni",
+      text: "I tuoi ospiti lasciano recensioni online?",
+      type: "select",
+      options: [
+        "Spesso, senza che io faccia nulla",
+        "A volte",
+        "Raramente",
+        "Non le monitoro",
       ],
     },
   ],
@@ -99,61 +94,166 @@ const SECTOR_QUESTIONS: Record<Settore, Question[]> = {
       text: "Come gestisci gli appuntamenti?",
       type: "select",
       options: [
-        "Agenda cartacea o telefono",
+        "Agenda cartacea",
         "Agenda digitale personale",
-        "Software specifico per il settore",
-        "Sistema online dove i clienti prenotano da soli",
+        "App di prenotazione",
+        "Sistema online self-service",
+      ],
+    },
+    {
+      id: "promemoria",
+      text: "Mandi conferme e promemoria ai clienti?",
+      type: "select",
+      options: [
+        "No, se ne ricordano loro",
+        "Sì, a mano via WhatsApp",
+        "Sì, in modo automatico",
+        "Ho un gestionale che lo fa",
+      ],
+    },
+    {
+      id: "prenotazione_online",
+      text: "I clienti possono prenotare da soli online?",
+      type: "select",
+      options: [
+        "No",
+        "Sì ma pochi lo usano",
+        "Sì, è il canale principale",
       ],
     },
   ],
   Commercio: [
     {
-      id: "ecommerce",
+      id: "vendita_online",
       text: "Hai un canale di vendita online?",
       type: "select",
       options: [
-        "No, vendo solo in negozio",
-        "Ho marketplace (Amazon, eBay, ecc.)",
-        "Ho un e-commerce proprio",
-        "Ho sia marketplace che e-commerce",
+        "No, solo negozio fisico",
+        "Marketplace (Amazon, ecc.)",
+        "E-commerce proprio",
+        "Entrambi",
+      ],
+    },
+    {
+      id: "comunicazione_promozioni",
+      text: "Come comunichi le promozioni ai clienti?",
+      type: "select",
+      options: [
+        "Solo in negozio",
+        "Social sporadici",
+        "Newsletter o WhatsApp",
+        "Sistema strutturato multicanale",
+      ],
+    },
+    {
+      id: "analisi_vendite",
+      text: "Sai quali prodotti vendono di più e perché?",
+      type: "select",
+      options: [
+        "No, vado a sensazione",
+        "Ho i dati ma non li analizzo",
+        "Analizzo spesso",
+        "Ho un sistema automatico",
       ],
     },
   ],
   Artigianato: [
     {
-      id: "vendita_online",
-      text: "Vendi i tuoi prodotti online?",
+      id: "acquisizione_clienti",
+      text: "Come trovi nuovi clienti?",
       type: "select",
       options: [
-        "No, solo locale/passaparola",
-        "Instagram / Facebook shop",
-        "Etsy o marketplace di settore",
-        "E-commerce proprio",
+        "Solo passaparola",
+        "Social fatti da me",
+        "Qualche pubblicità online",
+        "Strategia strutturata",
+      ],
+    },
+    {
+      id: "tempo_preventivi",
+      text: "Quanto tempo perdi a fare preventivi?",
+      type: "select",
+      options: [
+        "Pochissimo, sono semplici",
+        "1–2 ore a settimana",
+        "3–5 ore a settimana",
+        "Più di 5 ore",
+      ],
+    },
+    {
+      id: "portfolio_online",
+      text: "Mostri il tuo lavoro online?",
+      type: "select",
+      options: [
+        "No",
+        "Solo su Instagram",
+        "Ho un sito portfolio",
+        "Più canali coordinati",
       ],
     },
   ],
   "Servizi professionali": [
     {
       id: "gestione_clienti",
-      text: "Come gestisci i tuoi clienti e le loro pratiche?",
+      text: "Come gestisci i tuoi clienti e le pratiche?",
       type: "select",
       options: [
-        "Email e file su PC/carta",
-        "CRM base o Excel strutturato",
-        "Software specifico di settore",
-        "CRM avanzato con automazioni",
+        "Email e file locali",
+        "Excel strutturato",
+        "Software di settore",
+        "CRM con automazioni",
+      ],
+    },
+    {
+      id: "tempo_amministrativo",
+      text: "Quanto tempo dedichi ad attività amministrative ogni settimana?",
+      type: "select",
+      options: [
+        "Meno di 2 ore",
+        "2–5 ore",
+        "5–10 ore",
+        "Più di 10 ore",
+      ],
+    },
+    {
+      id: "visibilita_online",
+      text: "I tuoi clienti ti trovano facilmente online?",
+      type: "select",
+      options: [
+        "No, solo passaparola",
+        "Ho LinkedIn",
+        "Ho un sito base",
+        "Sito + contenuti + ads",
       ],
     },
   ],
   Altro: [
     {
-      id: "sfida_principale",
-      text: "Qual è la sfida principale della tua attività in questo momento?",
+      id: "attivita_principale",
+      text: "Raccontami in due parole la tua attività principale.",
       type: "text",
+    },
+    {
+      id: "sfida_principale",
+      text: "Qual è la tua sfida principale in questo momento?",
+      type: "select",
+      options: [
+        "Trovare nuovi clienti",
+        "Mantenere quelli attuali",
+        "Risparmiare tempo su ripetizioni",
+        "Migliorare la visibilità online",
+      ],
+    },
+    {
+      id: "strumenti_digitali",
+      text: "Usi già strumenti digitali per il tuo lavoro?",
+      type: "select",
+      options: [
+        "No, quasi tutto a mano",
+        "Qualcosa di base",
+        "Diversi strumenti non collegati",
+        "Sistema strutturato",
+      ],
     },
   ],
 };
-
-export function getQuestionsForSector(settore: Settore): Question[] {
-  return [...COMMON_QUESTIONS, ...(SECTOR_QUESTIONS[settore] ?? [])];
-}
