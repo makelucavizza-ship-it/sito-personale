@@ -16,8 +16,18 @@ const COMPETENZE = [
   "Automazioni per PMI",
 ];
 
+const COLORS = [
+  "#3ad3ef",
+  "#5ed5bf",
+  "#5bc783",
+  "#ffbd59",
+  "#544fb3",
+  "#ee826d",
+  "#3ad3ef",
+  "#5bc783",
+];
+
 function useTypewriter(words: string[], speed = 60, pause = 1800) {
-  const [displayed, setDisplayed] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -40,15 +50,13 @@ function useTypewriter(words: string[], speed = 60, pause = 1800) {
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, wordIndex, words, speed, pause]);
 
-  useEffect(() => {
-    setDisplayed(words[wordIndex].slice(0, charIndex));
-  }, [charIndex, wordIndex, words]);
-
-  return displayed;
+  const displayed = words[wordIndex].slice(0, charIndex);
+  return { displayed, wordIndex };
 }
 
 export default function Hero() {
-  const typewritten = useTypewriter(COMPETENZE);
+  const { displayed, wordIndex } = useTypewriter(COMPETENZE);
+  const color = COLORS[wordIndex % COLORS.length];
 
   return (
     <section className="min-h-screen flex flex-col justify-center pt-16 px-6">
@@ -60,13 +68,15 @@ export default function Hero() {
         >
           {/* Typewriter label */}
           <div className="mb-6 h-8 flex items-center">
-            <span
-              className="text-lg text-accent-1 font-bold"
+            <motion.span
+              className="text-lg font-bold"
+              animate={{ color }}
+              transition={{ duration: 0.4 }}
               style={{ fontFamily: "Phenomena, sans-serif" }}
             >
-              {typewritten}
+              {displayed}
               <span className="animate-blink ml-0.5">|</span>
-            </span>
+            </motion.span>
           </div>
 
           {/* Headline */}
