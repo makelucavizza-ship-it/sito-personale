@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 110" fill="none">
+  <!-- LUCA VIZZA text -->
+  <text
+    x="10"
+    y="54"
+    font-family="Arial, sans-serif"
+    font-size="52"
+    font-weight="300"
+    fill="#474747"
+    letter-spacing="8"
+  >LUCA VIZZA</text>
+  <!-- Color bar -->
+  <rect x="10"  y="66" width="46" height="6" rx="3" fill="#3ad3ef"/>
+  <rect x="62"  y="66" width="38" height="6" rx="3" fill="#ffbd59"/>
+  <rect x="106" y="66" width="54" height="6" rx="3" fill="#5bc783"/>
+  <rect x="166" y="66" width="54" height="6" rx="3" fill="#544fb3"/>
+  <rect x="226" y="66" width="38" height="6" rx="3" fill="#3ad3ef"/>
+  <rect x="270" y="66" width="46" height="6" rx="3" fill="#ffbd59"/>
+  <rect x="322" y="66" width="54" height="6" rx="3" fill="#5bc783"/>
+  <rect x="382" y="66" width="54" height="6" rx="3" fill="#544fb3"/>
+  <!-- Payoff text -->
+  <text
+    x="10"
+    y="96"
+    font-family="Arial, sans-serif"
+    font-size="14"
+    font-weight="400"
+    fill="#5ed5bf"
+    letter-spacing="3"
+  >CRESCIAMO INSIEME CON L'AI</text>
+</svg>

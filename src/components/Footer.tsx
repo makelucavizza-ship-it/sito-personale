@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ColorBar from "./ColorBar";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,18 +8,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <div className="mb-3">
-              <span
-                className="text-3xl font-bold text-bg"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                LUCA VIZZA
-              </span>
+            <div className="mb-6">
+              <Image
+                src="/logo-full.svg"
+                alt="Luca Vizza"
+                width={280}
+                height={60}
+                className="brightness-0 invert"
+              />
             </div>
-            <ColorBar height={4} className="w-36 mb-4" />
             <p className="text-bg/70 text-sm leading-relaxed">
-              Cresciamo insieme con l&apos;AI.
-              <br />
               Marketing digitale e automazione AI
               <br />
               per PMI italiane.

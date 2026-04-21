@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ColorBar from "./ColorBar";
 
 const links = [
   { href: "/servizi/marketing-digitale", label: "Marketing" },
@@ -32,14 +32,14 @@ export default function Navigation() {
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex flex-col items-start gap-0.5 group">
-          <span
-            className="text-2xl font-bold leading-none text-primary"
-            style={{ fontFamily: "Phenomena, sans-serif", letterSpacing: "-0.03em" }}
-          >
-            LV
-          </span>
-          <ColorBar height={3} className="w-10" />
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo-lv.svg"
+            alt="Luca Vizza"
+            width={52}
+            height={58}
+            priority
+          />
         </Link>
 
         {/* Desktop links */}
