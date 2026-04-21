@@ -5,44 +5,44 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const FAQS = [
   {
-    q: "Cos'è esattamente il marketing digitale?",
-    a: "È l'insieme delle attività di comunicazione e vendita che si svolgono online: social media, email, advertising, SEO, contenuti. L'obiettivo è portare persone giuste nel momento giusto verso la tua azienda.",
+    q: "Chi sei e perché dovrei fidarmi di te?",
+    a: "Mi chiamo Luca Vizza, ho 36 anni e a settembre 2026 apro la partita IVA. Ho lavorato nella scuola, nel turismo, negli eventi e nella comunicazione. Ho scelto questo percorso tardi — ma consapevolmente. Non sono un ragazzo che ha aperto un'agenzia a 22 anni: so cosa vuol dire lavorare in un'azienda, gestire persone, adattarsi. Mi diploma all'ITS Academy Turismo Emilia-Romagna a giugno 2026.",
   },
   {
-    q: "Cosa può fare l'AI per la mia azienda?",
-    a: "L'AI può automatizzare attività ripetitive (risposte email, aggiornamento CRM, reportistica), creare contenuti in modo più veloce, analizzare dati e aiutarti a prendere decisioni più informate. Non sostituisce le persone — le libera dal lavoro manuale.",
+    q: "Cosa fai esattamente?",
+    a: "Due cose principali: marketing digitale (social, ads, email, SEO) e automazioni AI (agenti vocali, CRM, WhatsApp, flussi automatici). Non vendo consulenza generica — costruisco strumenti concreti e gestisco attività operative. Quello che faccio deve cambiare la tua giornata lavorativa, non finire in un cassetto.",
   },
   {
-    q: "Lavori solo con aziende della Romagna?",
-    a: "No, lavoro in tutta Italia e anche con aziende estere. La mia base è in Romagna, ma il lavoro è quasi sempre remoto. Disponibile per incontri in presenza su richiesta.",
+    q: "Cos'è un agente vocale AI e mi serve davvero?",
+    a: "È un assistente che risponde al telefono al posto tuo: raccoglie prenotazioni, risponde a domande frequenti, smista le chiamate. Se perdi clienti perché non riesci a rispondere sempre al telefono, o se passi troppo tempo a rispondere alle stesse domande — sì, probabilmente ti serve.",
+  },
+  {
+    q: "Non sono molto pratico di digitale. È un problema?",
+    a: "No, è esattamente il tipo di cliente con cui lavoro meglio. Parto da zero, spiego tutto senza gergo tecnico e costruisco cose che sai usare da solo. Il mio obiettivo non è renderti dipendente da me — è darti strumenti che puoi gestire.",
+  },
+  {
+    q: "Come lavori con i clienti? Sparisci dopo il primo mese?",
+    a: "No. Lavoro in modo continuativo, con aggiornamenti regolari e report mensili chiari. Scrivi e rispondo io — non un assistente, non un account manager. Almeno per ora. Se in futuro dovesse cambiare qualcosa, te lo dico in anticipo.",
   },
   {
     q: "Quanto costa lavorare con te?",
-    a: "Dipende dalla portata del progetto. Non pubblico listini perché ogni situazione è diversa. Quello che posso dirti: non vendo pacchetti standard. Prima faccio un audit gratuito per capire cosa ti serve davvero, poi ti faccio una proposta personalizzata.",
+    a: "Non ho listini fissi perché ogni situazione è diversa. Parto sempre dall'audit gratuito per capire cosa ti serve davvero, poi faccio una proposta su misura. Quello che posso garantire: niente pacchetti gonfiati, niente costi nascosti.",
   },
   {
     q: "Cos'è il progetto pilota gratuito?",
-    a: "Fino a settembre 2026 sto selezionando 3-5 aziende con cui lavorare a costo zero in cambio di feedback onesto e la possibilità di pubblicare il caso studio (con il tuo consenso). È un'opportunità reale, non un assaggio.",
+    a: "Sto costruendo il mio portfolio. Fino a settembre 2026 lavoro gratis con 3-5 aziende selezionate, in cambio di feedback onesto e la possibilità di pubblicare il caso studio. Non è un assaggio — è il lavoro completo. I posti sono davvero limitati.",
   },
   {
-    q: "Hai esperienza con il mio settore?",
-    a: "Ho lavorato con ristorazione, turismo, benessere, commercio, artigianato e servizi professionali. Il marketing funziona su principi universali — si adatta al settore, non si reinventa. L'audit iniziale serve proprio a capire le specificità del tuo contesto.",
+    q: "Lavori solo in Romagna?",
+    a: "No, lavoro da remoto con aziende in tutta Italia. Sono di base in Romagna ma non è un limite. Per alcuni progetti posso spostarmi, se ha senso.",
   },
   {
-    q: "Gestisci i social in autonomia o mi coinvolgi?",
-    a: "Dipende da come lavoriamo. Posso gestire tutto io o coinvolgerti nella creazione dei contenuti. L'importante è che il tono di voce sia autentico. Non mi piace pubblicare contenuti che potrebbero venire da qualsiasi azienda.",
+    q: "Cosa mi chiedi per iniziare?",
+    a: "Niente di impegnativo. Compila l'audit gratuito — 5 minuti, nessun obbligo. Ricevi un report personalizzato e poi decidiamo insieme se e come andare avanti. Non ti chiamo dieci volte per venderti qualcosa.",
   },
   {
-    q: "Come faccio a sapere se stai producendo risultati?",
-    a: "Report mensili chiari, con i KPI che contano per te (non quelli che fanno bella figura). Prima di iniziare definiamo insieme cosa misurare e cosa vuol dire 'funzionare' per il tuo caso specifico.",
-  },
-  {
-    q: "Posso lavorare con te se ho già un'agenzia?",
-    a: "Sì. Collaboro come freelance esterno con agenzie che hanno bisogno di risorse in più, sia su progetti specifici che in modo continuativo. C'è una pagina dedicata alle agenzie.",
-  },
-  {
-    q: "Da dove si parte?",
-    a: "Dal tool di audit gratuito. In 5 minuti analizzi la tua situazione attuale e ricevi un report personalizzato via email. Da lì decidiamo insieme se e come procedere. Zero impegno.",
+    q: "Lavori anche con le agenzie?",
+    a: "Sì. Collaboro come freelance esterno per agenzie che hanno bisogno di supporto su specifici progetti o overflow di lavoro. White label disponibile. Ho una pagina dedicata.",
   },
 ];
 
@@ -63,10 +63,10 @@ export default function FAQ() {
             className="text-4xl md:text-5xl font-bold text-primary mb-4"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Domande frequenti
+            Domande su di me
           </h2>
           <p className="text-primary/60 text-lg">
-            Le cose che mi chiedono di più. Se la tua non c&apos;è,{" "}
+            Quello che ti staresti chiedendo. Se manca qualcosa,{" "}
             <a href="/contatti" className="text-coral underline underline-offset-2">
               scrivimi
             </a>
