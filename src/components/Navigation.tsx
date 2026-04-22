@@ -64,7 +64,7 @@ export default function Navigation() {
             className="px-4 py-2 rounded-full bg-coral text-white text-sm font-bold hover:bg-coral/90 transition-colors"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Audit gratuito
+            Calcolatore gratuito
           </Link>
         </div>
 
@@ -109,7 +109,7 @@ export default function Navigation() {
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  Audit gratuito
+                  Calcolatore gratuito
                 </Link>
               </li>
             </ul>
