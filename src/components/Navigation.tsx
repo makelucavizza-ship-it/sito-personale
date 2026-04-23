@@ -34,7 +34,7 @@ export default function Navigation() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo-lv.svg"
+            src="/logo-lv.png"
             alt="Luca Vizza"
             width={52}
             height={58}

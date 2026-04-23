@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import ColorBar from "./ColorBar";
 
 export default function Footer() {
   return (
@@ -9,16 +8,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <div className="mb-3">
+            <div className="mb-6">
               <Image
-                src="/logo-full.svg"
+                src="/logo-full.png"
                 alt="Luca Vizza"
                 width={260}
                 height={55}
                 className="brightness-0 invert"
               />
             </div>
-            <ColorBar height={4} className="w-48 mb-6" />
             <p className="text-bg/70 text-sm leading-relaxed">
               Marketing digitale e automazione AI
               <br />
