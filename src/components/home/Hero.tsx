@@ -124,7 +124,7 @@ export default function Hero() {
                 className="px-8 py-4 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all hover:scale-105 inline-block text-center"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
-                Calcola quanto perdi →
+                Scopri quanto tempo e soldi stai perdendo senza AI →
               </Link>
               <Link
                 href="/chi-sono"
