@@ -70,6 +70,20 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
+            {/* Avatar mobile-only */}
+            <div className="md:hidden mb-6">
+              <div className="w-20 h-20 rounded-full overflow-hidden bg-gradient-to-br from-accent-1/20 to-accent-5/15 border-2 border-accent-1/20">
+                <Image
+                  src="/luca-vizza-nobg.png"
+                  alt="Luca Vizza"
+                  width={80}
+                  height={80}
+                  className="w-full h-full object-cover object-top"
+                  priority
+                />
+              </div>
+            </div>
+
             {/* Typewriter label */}
             <div className="mb-6 h-8 flex items-center">
               <motion.span
