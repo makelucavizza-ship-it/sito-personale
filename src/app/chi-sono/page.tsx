@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import ColorBar from "@/components/ColorBar";
 
 export const metadata: Metadata = {
@@ -55,13 +56,15 @@ export default function ChiSonoPage() {
 
           {/* Visual */}
           <div className="relative">
-            <div className="w-full aspect-square rounded-3xl bg-gradient-to-br from-accent-1/20 to-accent-5/20 border-2 border-accent-1/20 flex items-center justify-center">
-              <span
-                className="text-8xl font-bold text-primary/10"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                LV
-              </span>
+            <div className="w-full aspect-square rounded-3xl overflow-hidden border-2 border-accent-1/20 bg-gradient-to-br from-accent-1/10 to-accent-5/10">
+              <Image
+                src="/luca-vizza-nobg.png"
+                alt="Luca Vizza"
+                width={600}
+                height={600}
+                className="w-full h-full object-cover object-top"
+                priority
+              />
             </div>
             <div className="absolute -bottom-4 -right-4 bg-coral rounded-2xl px-5 py-3">
               <span

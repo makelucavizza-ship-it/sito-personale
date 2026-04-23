@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import ColorBar from "@/components/ColorBar";
 
 const COMPETENZE = [
@@ -95,11 +96,23 @@ export default function Hero() {
           <ColorBar className="w-48 mb-8" height={5} />
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-primary/70 max-w-2xl mb-10 leading-relaxed">
-            Sono Luca Vizza. Aiuto le PMI italiane a usare il digitale e
-            l&apos;AI per lavorare meglio e perdere meno tempo.
-            Strumenti pratici, zero fronzoli.
-          </p>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/10 flex-shrink-0">
+              <Image
+                src="/luca-vizza-nobg.png"
+                alt="Luca Vizza"
+                width={48}
+                height={48}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <p className="text-xl md:text-2xl text-primary/70 leading-snug">
+              Sono <strong className="text-primary">Luca Vizza</strong>. Aiuto le PMI italiane a usare il digitale e
+              l&apos;AI per lavorare meglio e perdere meno tempo.
+              Strumenti pratici, zero fronzoli.
+            </p>
+          </div>
+          <div className="mb-10" />
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4">
