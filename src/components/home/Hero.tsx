@@ -100,9 +100,7 @@ export default function Hero() {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-primary/70 max-w-md mb-10 leading-relaxed">
-              Sono <strong className="text-primary">Luca Vizza</strong>. Aiuto le PMI italiane a usare
-              il digitale e l&apos;AI per lavorare meglio e perdere meno tempo.
-              Strumenti pratici, zero fronzoli.
+              Scopri quanto tempo e soldi stai perdendo senza AI.
             </p>
 
             {/* CTAs */}

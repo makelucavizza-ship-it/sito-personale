@@ -139,6 +139,8 @@ export default function AuditForm() {
   const [sectorAnswers, setSectorAnswers] = useState<Record<string, string>>({});
   const [textAnswer, setTextAnswer] = useState("");
   const [nome, setNome] = useState("");
+  const [nomeAttivita, setNomeAttivita] = useState("");
+  const [citta, setCitta] = useState("");
   const [email, setEmail] = useState("");
   const [result, setResult] = useState<AuditResult | null>(null);
   const [error, setError] = useState("");
@@ -164,7 +166,7 @@ export default function AuditForm() {
       const res = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ settore, sliders, sectorAnswers, nome, email }),
+        body: JSON.stringify({ settore, sliders, sectorAnswers, nome, nomeAttivita, citta, email }),
       });
 
       if (!res.ok) throw new Error("Errore nella generazione");
@@ -652,19 +654,53 @@ export default function AuditForm() {
                 }}
                 className="space-y-4"
               >
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      className="block text-bg/50 text-sm font-bold mb-2"
+                      style={{ fontFamily: "Phenomena, sans-serif" }}
+                    >
+                      Il tuo nome *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      placeholder="Mario"
+                      className="w-full px-4 py-3 rounded-xl border border-bg/20 bg-bg/10 text-bg placeholder-bg/30 focus:outline-none focus:border-coral transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="block text-bg/50 text-sm font-bold mb-2"
+                      style={{ fontFamily: "Phenomena, sans-serif" }}
+                    >
+                      Città *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={citta}
+                      onChange={(e) => setCitta(e.target.value)}
+                      placeholder="Bologna"
+                      className="w-full px-4 py-3 rounded-xl border border-bg/20 bg-bg/10 text-bg placeholder-bg/30 focus:outline-none focus:border-coral transition-colors"
+                    />
+                  </div>
+                </div>
                 <div>
                   <label
                     className="block text-bg/50 text-sm font-bold mb-2"
                     style={{ fontFamily: "Phenomena, sans-serif" }}
                   >
-                    Nome *
+                    Nome della tua attività *
                   </label>
                   <input
                     type="text"
                     required
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    placeholder="Il tuo nome"
+                    value={nomeAttivita}
+                    onChange={(e) => setNomeAttivita(e.target.value)}
+                    placeholder="Ristorante da Mario"
                     className="w-full px-4 py-3 rounded-xl border border-bg/20 bg-bg/10 text-bg placeholder-bg/30 focus:outline-none focus:border-coral transition-colors"
                   />
                 </div>
@@ -906,6 +942,8 @@ export default function AuditForm() {
                     setResult(null);
                     setEmail("");
                     setNome("");
+                    setNomeAttivita("");
+                    setCitta("");
                     setError("");
                   }}
                   className="px-8 py-5 rounded-full border-2 border-primary/20 text-primary font-bold hover:border-primary/40 transition-colors"

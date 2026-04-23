@@ -53,11 +53,95 @@ function extractJSON(text: string): string {
   return text.trim();
 }
 
+async function scrapeBusinessInfo(
+  nomeAttivita: string,
+  citta: string
+): Promise<string> {
+  if (!nomeAttivita || !citta) return "";
+
+  const parts: string[] = [];
+  const query = `${nomeAttivita} ${citta}`;
+
+  // DuckDuckGo Instant Answer API (free, no key needed)
+  try {
+    const res = await fetch(
+      `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`,
+      { signal: AbortSignal.timeout(5000) }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data.Abstract) parts.push(`Descrizione trovata: ${data.Abstract}`);
+      if (data.Answer) parts.push(`Info diretta: ${data.Answer}`);
+      if (data.AbstractSource) parts.push(`Fonte: ${data.AbstractSource}`);
+    }
+  } catch {
+    // ignore
+  }
+
+  // DuckDuckGo HTML search for reviews, website, social
+  const searchQueries = [
+    `${query} recensioni`,
+    `${query} sito web`,
+  ];
+
+  for (const q of searchQueries) {
+    try {
+      const res = await fetch(
+        `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}&kl=it-it`,
+        {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept-Language": "it-IT,it;q=0.9",
+            Accept: "text/html",
+          },
+          signal: AbortSignal.timeout(6000),
+        }
+      );
+      if (!res.ok) continue;
+
+      const html = await res.text();
+
+      // Strip scripts/styles and extract readable text
+      const text = html
+        .replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/<style[\s\S]*?<\/style>/gi, "")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+
+      // Look for mentions of the business name in results
+      const namePart = nomeAttivita.split(" ")[0].toLowerCase();
+      const idx = text.toLowerCase().indexOf(namePart);
+      if (idx > -1) {
+        const snippet = text
+          .slice(Math.max(0, idx - 50), idx + 700)
+          .replace(/\s+/g, " ")
+          .trim();
+        const label = q.includes("recensioni") ? "Risultati recensioni" : "Presenza online";
+        parts.push(`${label}: ${snippet}`);
+        break;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  if (parts.length === 0) {
+    return `Ricerca web: Nessuna informazione trovata online per "${nomeAttivita}" a ${citta}. L'attività potrebbe avere poca o nessuna presenza digitale.`;
+  }
+
+  return `=== DATI TROVATI ONLINE ===\n${parts.join("\n\n")}`;
+}
+
 function buildPrompt(
   settore: string,
   sliders: Sliders,
   sectorAnswers: Record<string, string>,
-  nome: string
+  nome: string,
+  nomeAttivita: string,
+  citta: string,
+  webInfo: string
 ): string {
   const totalOre = sliders.prenotazioni + sliders.preventivi + sliders.followup;
   const annualValue = totalOre * sliders.tariffa * 52;
@@ -68,50 +152,52 @@ function buildPrompt(
 
   return `Sei Luca Vizza, esperto di marketing digitale e AI automation per PMI italiane.
 
-Hai ricevuto le risposte di ${nome || "un imprenditore"} dal settore: ${settore}.
+Hai appena analizzato la situazione di ${nome || "un imprenditore"}${nomeAttivita ? `, titolare di "${nomeAttivita}"` : ""}${citta ? ` a ${citta}` : ""}, settore: ${settore}.
 
 DATI CALCOLATORE:
 - Ore/settimana su prenotazioni: ${sliders.prenotazioni}h
 - Ore/settimana su preventivi: ${sliders.preventivi}h
 - Ore/settimana su follow-up: ${sliders.followup}h
 - Valore orario: €${sliders.tariffa}
-- Totale ore perse/anno: ${totalOre * 52}
+- Totale ore perse/anno: ${totalOre * 52}h
 - Valore economico annuo: €${annualValue.toLocaleString("it-IT")}
 
-RISPOSTE SETTORE:
+RISPOSTE ALLE DOMANDE:
 ${answersText}
 
-Genera un'analisi personalizzata IN ITALIANO. Rispondi SOLO con JSON valido, senza nient'altro.
+${webInfo ? `${webInfo}\n` : ""}
+ISTRUZIONI IMPORTANTI:
+1. Usa il nome "${nomeAttivita || nome}" nella risposta — rendila ultra-personalizzata
+2. Se hai trovato dati online (recensioni, sito, social), citali ESPLICITAMENTE: es. "Ho visto che hai X recensioni su Google" o "Sul tuo sito non c'è un sistema di prenotazione"
+3. Se NON hai trovato dati online, citalo come problema: "Non ti ho trovato facilmente online — questo già dice qualcosa"
+4. Usa i numeri reali del calcolatore (€${annualValue.toLocaleString("it-IT")}/anno, ${totalOre}h/settimana)
+5. Sii diretto e specifico per il settore ${settore} a ${citta || "Italia"}
+6. Scrivi come parleresti a questa persona specifica, non come un report generico
 
-Il JSON deve avere ESATTAMENTE questa struttura:
+Rispondi SOLO con JSON valido, nient'altro.
+
 {
-  "titolo": "Titolo corto e diretto che cattura la loro situazione (puoi usare numeri reali dal calcolatore)",
-  "problema_principale": "2-3 frasi basate sui dati reali. Usa i numeri del calcolatore. Sii diretto, non generico.",
+  "titolo": "Titolo specifico per ${nomeAttivita || nome} — usa numeri reali e/o riferimenti a ciò che hai trovato online",
+  "problema_principale": "2-3 frasi MOLTO specifiche. Cita la città, il nome attività, i dati trovati online, le ore perse. No genericità.",
   "automazioni": [
     {
-      "nome": "Nome dello strumento o automazione concreta",
-      "descrizione": "1-2 frasi su come funziona per il loro caso specifico nel settore ${settore}",
-      "risparmio": "Stima concreta, es: '3h/settimana' o '€2.400/anno'"
+      "nome": "Nome strumento concreto",
+      "descrizione": "Come funziona SPECIFICAMENTE per ${nomeAttivita || "questa attività"} a ${citta || "questa città"}. Cita contesto reale se disponibile.",
+      "risparmio": "Stima concreta es: '3h/settimana = €${sliders.tariffa * 3 * 52}/anno'"
     },
-    {
-      "nome": "...",
-      "descrizione": "...",
-      "risparmio": "..."
-    },
-    {
-      "nome": "...",
-      "descrizione": "...",
-      "risparmio": "..."
-    }
+    { "nome": "...", "descrizione": "...", "risparmio": "..." },
+    { "nome": "...", "descrizione": "...", "risparmio": "..." }
   ],
-  "insight_finale": "1-2 frasi: una verità scomoda o un insight inaspettato. Qualcosa che li faccia riflettere. Prima persona come Luca.",
-  "prossimo_passo": "1-2 frasi su cosa fare adesso. Specifico e concreto. Puoi menzionare lucavizza.it/contatti"
+  "insight_finale": "1-2 frasi: verità scomoda basata su ciò che hai trovato (o non trovato) online. Prima persona come Luca.",
+  "prossimo_passo": "Specifico per questa situazione. Puoi menzionare lucavizza.it/contatti"
 }`;
 }
 
 function buildUserEmailHtml(
   result: AuditResult,
   nome: string,
+  nomeAttivita: string,
+  citta: string,
   settore: string,
   sliders: Sliders
 ): string {
@@ -126,51 +212,35 @@ function buildUserEmailHtml(
   <div style="max-width:600px;margin:0 auto;padding:32px 24px;">
 
     <div style="background:#474747;border-radius:16px;padding:32px;margin-bottom:24px;">
-      <p style="color:#ee826d;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px;">
-        IL Tuo REPORT GRATUITO
-      </p>
-      <h1 style="color:#f5f0eb;font-size:26px;margin:0 0 8px;line-height:1.3;">
-        ${result.titolo}
-      </h1>
-      <p style="color:rgba(245,240,235,0.5);font-size:13px;margin:0;">
-        ${settore}${nome ? ` · ${nome}` : ""}
-      </p>
+      <p style="color:#ee826d;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px;">IL TUO REPORT</p>
+      <h1 style="color:#f5f0eb;font-size:24px;margin:0 0 8px;line-height:1.3;">${result.titolo}</h1>
+      <p style="color:rgba(245,240,235,0.5);font-size:13px;margin:0;">${nomeAttivita || nome}${citta ? ` · ${citta}` : ""} · ${settore}</p>
     </div>
 
-    <div style="background:#ee826d15;border:1px solid #ee826d30;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;">
+    <div style="background:#ee826d15;border:1px solid #ee826d30;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <div>
         <p style="color:#474747;font-size:12px;margin:0 0 4px;opacity:0.5;">Tempo perso/anno</p>
         <p style="color:#474747;font-size:22px;font-weight:bold;margin:0;">${totalOre * 52} ore</p>
       </div>
-      <div style="text-align:right;">
+      <div>
         <p style="color:#474747;font-size:12px;margin:0 0 4px;opacity:0.5;">Valore economico</p>
         <p style="color:#ee826d;font-size:22px;font-weight:bold;margin:0;">€${annualValue}/anno</p>
       </div>
     </div>
 
     <div style="background:white;border-radius:12px;padding:24px;margin-bottom:24px;">
-      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">
-        SITUAZIONE ATTUALE
-      </p>
+      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">SITUAZIONE ATTUALE</p>
       <p style="color:#474747;opacity:0.8;line-height:1.7;margin:0;">${result.problema_principale}</p>
     </div>
 
     <div style="margin-bottom:24px;">
-      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 16px;">
-        LE 3 AUTOMAZIONI PER TE
-      </p>
-      ${result.automazioni
-        .map(
-          (a, i) => `
+      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 16px;">LE 3 AUTOMAZIONI PER TE</p>
+      ${result.automazioni.map((a, i) => `
       <div style="background:white;border-radius:12px;padding:20px;margin-bottom:12px;">
-        <p style="color:#474747;font-weight:bold;margin:0 0 6px;font-size:15px;">${i + 1}. ${a.nome}</p>
+        <p style="color:#474747;font-weight:bold;margin:0 0 6px;">${i + 1}. ${a.nome}</p>
         <p style="color:#474747;opacity:0.65;font-size:14px;line-height:1.6;margin:0 0 10px;">${a.descrizione}</p>
-        <span style="background:#3ad3ef15;color:#3ad3ef;font-size:12px;font-weight:bold;padding:4px 12px;border-radius:100px;">
-          ${a.risparmio}
-        </span>
-      </div>`
-        )
-        .join("")}
+        <span style="background:#3ad3ef15;color:#3ad3ef;font-size:12px;font-weight:bold;padding:4px 12px;border-radius:100px;">${a.risparmio}</span>
+      </div>`).join("")}
     </div>
 
     <div style="background:#ee826d10;border:1px solid #ee826d25;border-radius:12px;padding:20px;margin-bottom:24px;">
@@ -178,26 +248,16 @@ function buildUserEmailHtml(
     </div>
 
     <div style="background:white;border-radius:12px;padding:24px;margin-bottom:32px;">
-      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">
-        PROSSIMO PASSO
-      </p>
+      <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">PROSSIMO PASSO</p>
       <p style="color:#474747;opacity:0.8;line-height:1.7;margin:0;">${result.prossimo_passo}</p>
     </div>
 
     <div style="text-align:center;padding:32px;background:#474747;border-radius:16px;margin-bottom:24px;">
-      <p style="color:rgba(245,240,235,0.7);margin:0 0 20px;font-size:15px;">
-        Vuoi approfondire questi risultati?<br>
-        Parliamo 20 minuti, senza impegno.
-      </p>
-      <a href="https://lucavizza.it/contatti"
-         style="display:inline-block;background:#ee826d;color:white;padding:14px 32px;border-radius:100px;text-decoration:none;font-weight:bold;font-size:16px;">
-        Scrivimi ora →
-      </a>
+      <p style="color:rgba(245,240,235,0.7);margin:0 0 20px;font-size:15px;">Vuoi approfondire questi risultati?<br>Parliamo 20 minuti, senza impegno.</p>
+      <a href="https://lucavizza.it/contatti" style="display:inline-block;background:#ee826d;color:white;padding:14px 32px;border-radius:100px;text-decoration:none;font-weight:bold;font-size:16px;">Scrivimi ora →</a>
     </div>
 
-    <p style="text-align:center;color:#474747;font-size:11px;opacity:0.3;margin:0;">
-      Luca Vizza — lucavizza.it — Marketing Digitale &amp; AI Automation
-    </p>
+    <p style="text-align:center;color:#474747;font-size:11px;opacity:0.3;margin:0;">Luca Vizza — lucavizza.it — Marketing Digitale &amp; AI Automation</p>
   </div>
 </body>
 </html>`;
@@ -206,42 +266,42 @@ function buildUserEmailHtml(
 function buildAdminEmailHtml(
   result: AuditResult,
   nome: string,
+  nomeAttivita: string,
+  citta: string,
   emailAddress: string,
   settore: string,
   sliders: Sliders,
-  sectorAnswers: Record<string, string>
+  sectorAnswers: Record<string, string>,
+  webInfo: string
 ): string {
   const totalOre = sliders.prenotazioni + sliders.preventivi + sliders.followup;
   const annualValue = (totalOre * sliders.tariffa * 52).toLocaleString("it-IT");
 
   return `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#474747;">
-  <h2 style="color:#ee826d;">Nuovo audit completato</h2>
+  <h2 style="color:#ee826d;">Nuovo audit — ${nomeAttivita || nome}${citta ? ` (${citta})` : ""}</h2>
 
   <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
     <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Nome</td><td style="padding:8px;border-bottom:1px solid #eee;">${nome || "—"}</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Attività</td><td style="padding:8px;border-bottom:1px solid #eee;">${nomeAttivita || "—"}</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Città</td><td style="padding:8px;border-bottom:1px solid #eee;">${citta || "—"}</td></tr>
     <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Email</td><td style="padding:8px;border-bottom:1px solid #eee;">${emailAddress}</td></tr>
     <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Settore</td><td style="padding:8px;border-bottom:1px solid #eee;">${settore}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Ore/sett.</td><td style="padding:8px;border-bottom:1px solid #eee;">${totalOre}h (prenotazioni: ${sliders.prenotazioni}h, preventivi: ${sliders.preventivi}h, follow-up: ${sliders.followup}h)</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Tariffa oraria</td><td style="padding:8px;border-bottom:1px solid #eee;">€${sliders.tariffa}/h</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Ore/sett.</td><td style="padding:8px;border-bottom:1px solid #eee;">${totalOre}h</td></tr>
     <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Valore annuo</td><td style="padding:8px;border-bottom:1px solid #eee;color:#ee826d;font-weight:bold;">€${annualValue}</td></tr>
   </table>
 
-  <h3>Risposte settore</h3>
-  <ul>
-    ${Object.entries(sectorAnswers)
-      .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-      .join("")}
-  </ul>
+  <h3>Risposte</h3>
+  <ul>${Object.entries(sectorAnswers).map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`).join("")}</ul>
+
+  ${webInfo ? `<h3>Dati web trovati</h3><pre style="background:#f5f0eb;padding:16px;border-radius:8px;font-size:12px;white-space:pre-wrap;">${webInfo}</pre>` : ""}
 
   <h3>Report generato</h3>
-  <p><strong>Titolo:</strong> ${result.titolo}</p>
-  <p><strong>Problema:</strong> ${result.problema_principale}</p>
-  <ul>
-    ${result.automazioni.map((a) => `<li><strong>${a.nome}</strong>: ${a.descrizione} (${a.risparmio})</li>`).join("")}
-  </ul>
-  <p><strong>Insight:</strong> ${result.insight_finale}</p>
-  <p><strong>Prossimo passo:</strong> ${result.prossimo_passo}</p>
+  <p><strong>${result.titolo}</strong></p>
+  <p>${result.problema_principale}</p>
+  <ul>${result.automazioni.map((a) => `<li><strong>${a.nome}</strong>: ${a.descrizione} (${a.risparmio})</li>`).join("")}</ul>
+  <p><em>${result.insight_finale}</em></p>
+  <p>${result.prossimo_passo}</p>
 
   <a href="mailto:${emailAddress}" style="display:inline-block;background:#ee826d;color:white;padding:12px 24px;border-radius:100px;text-decoration:none;font-weight:bold;margin-top:16px;">
     Rispondi a ${nome || emailAddress}
@@ -250,11 +310,17 @@ function buildAdminEmailHtml(
 }
 
 export async function POST(req: NextRequest) {
-  const { settore, sliders, sectorAnswers, nome, email } = await req.json();
+  const { settore, sliders, sectorAnswers, nome, nomeAttivita, citta, email } =
+    await req.json();
 
   if (!settore || !sliders || !email) {
     return NextResponse.json({ error: "Dati mancanti" }, { status: 400 });
   }
+
+  // Run web scraping and Claude call in parallel
+  const [webInfo] = await Promise.all([
+    scrapeBusinessInfo(nomeAttivita ?? "", citta ?? ""),
+  ]);
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -263,11 +329,19 @@ export async function POST(req: NextRequest) {
   try {
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-6",
-      max_tokens: 1200,
+      max_tokens: 1500,
       messages: [
         {
           role: "user",
-          content: buildPrompt(settore, sliders, sectorAnswers ?? {}, nome ?? ""),
+          content: buildPrompt(
+            settore,
+            sliders,
+            sectorAnswers ?? {},
+            nome ?? "",
+            nomeAttivita ?? "",
+            citta ?? "",
+            webInfo
+          ),
         },
       ],
     });
@@ -280,7 +354,7 @@ export async function POST(req: NextRequest) {
       result = parsed as AuditResult;
     }
   } catch {
-    // Use fallback result
+    // use fallback
   }
 
   if (process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL) {
@@ -291,19 +365,29 @@ export async function POST(req: NextRequest) {
         from: process.env.RESEND_FROM_EMAIL,
         to: email,
         subject: `Il tuo report: ${result.titolo}`,
-        html: buildUserEmailHtml(result, nome ?? "", settore, sliders),
+        html: buildUserEmailHtml(
+          result,
+          nome ?? "",
+          nomeAttivita ?? "",
+          citta ?? "",
+          settore,
+          sliders
+        ),
       }),
       resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL,
         to: "make.luca.vizza@gmail.com",
-        subject: `Nuovo audit: ${nome || email} — ${settore}`,
+        subject: `Nuovo audit: ${nomeAttivita || nome} — ${citta || settore}`,
         html: buildAdminEmailHtml(
           result,
           nome ?? "",
+          nomeAttivita ?? "",
+          citta ?? "",
           email,
           settore,
           sliders,
-          sectorAnswers ?? {}
+          sectorAnswers ?? {},
+          webInfo
         ),
       }),
     ]);
