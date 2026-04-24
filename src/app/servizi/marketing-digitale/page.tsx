@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Marketing Digitale",
@@ -50,7 +51,7 @@ export default function MarketingDigitalePage() {
   return (
     <div className="pt-24">
       {/* Hero */}
-      <section className="px-6 py-16 max-w-5xl mx-auto">
+      <section className="px-6 py-16 max-w-5xl mx-auto relative overflow-hidden">
         <span
           className="inline-block text-sm font-bold text-coral uppercase tracking-widest mb-4"
           style={{ fontFamily: "Phenomena, sans-serif" }}
@@ -77,6 +78,9 @@ export default function MarketingDigitalePage() {
         >
           Analizza il tuo marketing →
         </Link>
+        <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
+          <Image src="/pesce-mandarino-1-nobg.png" alt="" width={200} height={105} className="opacity-55 drop-shadow-lg" />
+        </div>
       </section>
 
       {/* Services grid */}

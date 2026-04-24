@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
+import Image from "next/image";
 import ColorBar from "@/components/ColorBar";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function ContattiPage() {
   return (
     <div className="pt-24">
       <div className="max-w-5xl mx-auto px-6">
-        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-start relative overflow-hidden">
           {/* Left */}
           <div>
             <span
@@ -86,6 +87,9 @@ export default function ContattiPage() {
 
           {/* Form */}
           <ContactForm />
+          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
+            <Image src="/pesce-mandarino-1-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
+          </div>
         </section>
       </div>
     </div>

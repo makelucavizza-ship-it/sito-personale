@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "AI Automation",
@@ -50,7 +51,7 @@ export default function AutomazioneAIPage() {
   return (
     <div className="pt-24">
       {/* Hero */}
-      <section className="px-6 py-16 max-w-5xl mx-auto">
+      <section className="px-6 py-16 max-w-5xl mx-auto relative overflow-hidden">
         <span
           className="inline-block text-sm font-bold text-accent-1 uppercase tracking-widest mb-4"
           style={{ fontFamily: "Phenomena, sans-serif" }}
@@ -77,6 +78,9 @@ export default function AutomazioneAIPage() {
         >
           Scopri dove puoi automatizzare →
         </Link>
+        <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
+          <Image src="/pesce-mandarino-2-nobg.png" alt="" width={200} height={105} className="opacity-55 drop-shadow-lg" />
+        </div>
       </section>
 
       {/* Use cases */}

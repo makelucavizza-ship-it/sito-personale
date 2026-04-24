@@ -15,7 +15,7 @@ export default function ChiSonoPage() {
       <div className="max-w-5xl mx-auto px-6">
 
         {/* Hero */}
-        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start relative overflow-hidden">
           <div>
             <span
               className="inline-block text-sm font-bold text-accent-3 uppercase tracking-widest mb-4"
@@ -75,6 +75,9 @@ export default function ChiSonoPage() {
               </span>
               <span className="text-white/70 text-xs">da remoto</span>
             </div>
+          </div>
+          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
+            <Image src="/pesce-mandarino-2-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
           </div>
         </section>
 
