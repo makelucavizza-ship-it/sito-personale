@@ -150,7 +150,10 @@ function buildPrompt(
     .map(([k, v]) => `- ${k}: ${v}`)
     .join("\n");
 
+  const oggi = new Date().toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+
   return `Sei Luca Vizza, esperto di marketing digitale e AI automation per PMI italiane.
+Data di oggi: ${oggi}. Usa questa data se citi periodi, stagioni o aggiornamenti recenti.
 
 Hai appena analizzato la situazione di ${nome || "un imprenditore"}${nomeAttivita ? `, titolare di "${nomeAttivita}"` : ""}${citta ? ` a ${citta}` : ""}, settore: ${settore}.
 

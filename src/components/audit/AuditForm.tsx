@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Clock,
@@ -127,6 +127,7 @@ function SliderItem({
 }
 
 export default function AuditForm() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<Step>("calculator");
   const [sliders, setSliders] = useState({
     prenotazioni: 5,
@@ -148,6 +149,10 @@ export default function AuditForm() {
 
   const totalOre = sliders.prenotazioni + sliders.preventivi + sliders.followup;
   const annualValue = totalOre * sliders.tariffa * 52;
+
+  useEffect(() => {
+    containerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [step]);
 
   useEffect(() => {
     if (step !== "loading") return;
@@ -258,6 +263,7 @@ export default function AuditForm() {
       `}</style>
 
       <div
+        ref={containerRef}
         className="min-h-screen transition-colors duration-500"
         style={{ backgroundColor: isDark ? "#474747" : "#f5f0eb" }}
       >

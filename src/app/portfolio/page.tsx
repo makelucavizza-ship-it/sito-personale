@@ -16,7 +16,7 @@ export default function PortfolioPage() {
     <div className="pt-24">
       <div className="max-w-5xl mx-auto px-6">
         {/* Hero */}
-        <section className="py-16 relative overflow-hidden">
+        <section className="py-16 relative">
           <span
             className="inline-block text-sm font-bold text-accent-2 uppercase tracking-widest mb-4"
             style={{ fontFamily: "Phenomena, sans-serif" }}
