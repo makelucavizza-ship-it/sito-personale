@@ -76,7 +76,7 @@ export default function CustomCursor() {
       ? "#0077B5"
       : state === "instagram"
       ? "#E1306C"
-      : "#474747";
+      : "#ffffff";
 
   const scale =
     state === "link" || state === "carousel" || state === "faq"
@@ -94,6 +94,7 @@ export default function CustomCursor() {
         y: springY,
         translateX: "-50%",
         translateY: "-50%",
+        mixBlendMode: "difference",
       }}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.15 }}
@@ -105,14 +106,14 @@ export default function CustomCursor() {
           height: 20,
           border: `1.5px solid ${borderColor}`,
           backgroundColor:
-            state === "link" ? "rgba(238,130,109,0.12)" : "transparent",
+            state === "link" ? "rgba(255,255,255,0.15)" : "transparent",
         }}
         animate={{ scale }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
       >
         {showText && (
           <span
-            className="text-[7px] font-phenomena font-bold whitespace-nowrap text-primary select-none"
+            className="text-[7px] font-phenomena font-bold whitespace-nowrap text-white select-none"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             {cursorText}
