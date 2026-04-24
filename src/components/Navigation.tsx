@@ -66,6 +66,9 @@ export default function Navigation() {
           >
             Calcolatore gratuito
           </Link>
+          <div className="pointer-events-none select-none opacity-50 hidden lg:block">
+            <Image src="/pesce-mandarino-1-nobg.png" alt="" width={60} height={31} className="drop-shadow-sm" />
+          </div>
         </div>
 
         {/* Mobile hamburger */}

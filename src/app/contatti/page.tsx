@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
-import Image from "next/image";
 import ColorBar from "@/components/ColorBar";
 
 export const metadata: Metadata = {
@@ -87,9 +86,6 @@ export default function ContattiPage() {
 
           {/* Form */}
           <ContactForm />
-          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
-            <Image src="/pesce-mandarino-1-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
-          </div>
         </section>
       </div>
     </div>

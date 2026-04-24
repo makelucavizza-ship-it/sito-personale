@@ -100,7 +100,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-bg/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="mt-12 pt-8 border-t border-bg/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative">
+          <div className="absolute right-0 bottom-0 pointer-events-none opacity-30 hidden md:block">
+            <Image src="/pesce-mandarino-2-nobg.png" alt="" width={110} height={57} className="brightness-0 invert drop-shadow-sm" />
+          </div>
           <p className="text-bg/40 text-xs">
             © {new Date().getFullYear()} Luca Vizza. Tutti i diritti riservati.
           </p>

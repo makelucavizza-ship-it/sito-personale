@@ -76,9 +76,6 @@ export default function ChiSonoPage() {
               <span className="text-white/70 text-xs">da remoto</span>
             </div>
           </div>
-          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
-            <Image src="/pesce-mandarino-2-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
-          </div>
         </section>
 
         {/* Il punto di svolta */}

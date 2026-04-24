@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Bandi Digitalizzazione Romagna",
@@ -56,7 +55,7 @@ export default function BandiPage() {
     <div className="pt-24">
       <div className="max-w-5xl mx-auto px-6">
         {/* Hero */}
-        <section className="py-16 relative overflow-hidden">
+        <section className="py-16 relative">
           <span
             className="inline-block text-sm font-bold text-accent-2 uppercase tracking-widest mb-4"
             style={{ fontFamily: "Phenomena, sans-serif" }}
@@ -82,9 +81,6 @@ export default function BandiPage() {
             <span>Ultimo aggiornamento: aprile 2026</span>
             <span>·</span>
             <span>Verifica sempre la disponibilità fondi prima di applicare</span>
-          </div>
-          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
-            <Image src="/pesce-mandarino-2-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
           </div>
         </section>
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { getPortfolioItems } from "@/lib/markdown";
 
 export const metadata: Metadata = {
@@ -38,9 +37,6 @@ export default function PortfolioPage() {
           <p className="text-sm text-primary/40">
             In fase di costruzione — nuovi case study in arrivo.
           </p>
-          <div className="absolute bottom-0 right-0 pointer-events-none hidden md:block" style={{ transform: "translateY(35%)" }}>
-            <Image src="/pesce-mandarino-2-nobg.png" alt="" width={190} height={99} className="opacity-55 drop-shadow-lg" />
-          </div>
         </section>
 
         {/* Portfolio grid */}
