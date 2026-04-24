@@ -97,7 +97,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full px-6 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-6 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ fontFamily: "Phenomena, sans-serif" }}
       >
         {status === "sending" ? "Invio in corso..." : "Invia messaggio"}

@@ -91,7 +91,7 @@ export default function ChiSonoPage() {
               È stato l&apos;ITS Academy Turismo Emilia-Romagna — mi diploma a
               giugno 2026. Non è stata solo formazione tecnica. Mi ha fatto
               capire dall&apos;interno come ragionano le piccole imprese: cosa
-              le fa funzionare, cosa le spaventa, cosa invece gli dà la carica.
+              le fa funzionare, cosa le spaventa, cosa invece le dà la carica.
             </p>
             <p className="text-primary/70 leading-relaxed">
               Nel mezzo è arrivata l&apos;AI. Ho iniziato a costruire agenti
@@ -239,7 +239,7 @@ export default function ChiSonoPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/audit"
-              className="px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors"
+              className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors"
               style={{ fontFamily: "Phenomena, sans-serif" }}
             >
               Audit gratuito

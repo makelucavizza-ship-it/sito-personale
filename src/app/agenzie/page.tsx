@@ -36,7 +36,7 @@ export default function AgenziePage() {
           </p>
           <Link
             href="/contatti"
-            className="px-8 py-4 rounded-full bg-accent-4 text-white font-bold text-lg hover:bg-accent-4/90 transition-all hover:scale-105 inline-block"
+            className="px-8 py-4 rounded-full bg-gradient-to-br from-[#544fb3] to-[#3a368a] text-white font-bold text-lg hover:from-[#3a368a] hover:to-[#2d2b70] transition-all hover:scale-105 inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Parliamo →
@@ -180,7 +180,7 @@ export default function AgenziePage() {
           </p>
           <Link
             href="/contatti"
-            className="px-8 py-4 rounded-full bg-accent-4 text-white font-bold hover:bg-accent-4/90 transition-colors inline-block"
+            className="px-8 py-4 rounded-full bg-gradient-to-br from-[#544fb3] to-[#3a368a] text-white font-bold hover:from-[#3a368a] hover:to-[#2d2b70] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Scrivimi

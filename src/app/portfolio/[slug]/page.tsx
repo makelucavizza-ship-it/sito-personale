@@ -95,7 +95,7 @@ export default function PortfolioItemPage({ params }: Props) {
         <div className="py-8 border-t border-primary/10 text-center">
           <Link
             href="/audit"
-            className="px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors inline-block"
+            className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Audit gratuito per la tua azienda

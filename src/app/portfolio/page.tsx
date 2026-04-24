@@ -125,7 +125,7 @@ export default function PortfolioPage() {
           </p>
           <Link
             href="/contatti"
-            className="px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors inline-block"
+            className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Candidati al progetto pilota

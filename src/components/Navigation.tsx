@@ -61,7 +61,7 @@ export default function Navigation() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             href="/audit"
-            className="px-4 py-2 rounded-full bg-coral text-white text-sm font-bold hover:bg-coral/90 transition-colors"
+            className="px-4 py-2 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white text-sm font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Calcolatore gratuito
@@ -105,7 +105,7 @@ export default function Navigation() {
               <li className="pt-2">
                 <Link
                   href="/audit"
-                  className="inline-block px-6 py-3 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors"
+                  className="inline-block px-6 py-3 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                   onClick={() => setMenuOpen(false)}
                 >

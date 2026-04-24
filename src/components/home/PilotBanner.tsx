@@ -45,7 +45,7 @@ export default function PilotBanner() {
             </div>
             <Link
               href="/contatti"
-              className="flex-shrink-0 px-7 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-all hover:scale-105 text-base whitespace-nowrap"
+              className="flex-shrink-0 px-7 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 text-base whitespace-nowrap"
               style={{ fontFamily: "Phenomena, sans-serif" }}
             >
               Candidati ora →

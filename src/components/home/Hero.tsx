@@ -121,7 +121,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/audit"
-                className="px-8 py-4 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all hover:scale-105 inline-block text-center"
+                className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block text-center"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
                 Scopri quanto tempo e soldi stai perdendo senza AI →

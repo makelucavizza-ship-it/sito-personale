@@ -72,7 +72,7 @@ export default function AutomazioneAIPage() {
         </p>
         <Link
           href="/audit"
-          className="px-8 py-4 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all hover:scale-105 inline-block"
+          className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
           style={{ fontFamily: "Phenomena, sans-serif" }}
         >
           Scopri dove puoi automatizzare →
@@ -144,7 +144,7 @@ export default function AutomazioneAIPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/audit"
-            className="px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors"
+            className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
             Audit gratuito

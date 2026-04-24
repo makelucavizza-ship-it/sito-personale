@@ -377,7 +377,7 @@ export default function AuditForm() {
 
               <motion.button
                 onClick={() => setStep("yesno")}
-                className="mt-8 w-full px-8 py-5 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all flex items-center justify-center gap-2"
+                className="mt-8 w-full px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all flex items-center justify-center gap-2"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -434,7 +434,7 @@ export default function AuditForm() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <motion.button
                   onClick={() => setStep("sector")}
-                  className="px-8 py-6 rounded-2xl bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all text-center"
+                  className="px-8 py-6 rounded-2xl bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all text-center"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -600,7 +600,7 @@ export default function AuditForm() {
                   />
                   <motion.button
                     onClick={() => handleAnswer(textAnswer || "(non specificato)")}
-                    className="px-6 py-3 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors flex items-center gap-2"
+                    className="px-6 py-3 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors flex items-center gap-2"
                     style={{ fontFamily: "Phenomena, sans-serif" }}
                     whileTap={{ scale: 0.97 }}
                   >
@@ -722,7 +722,7 @@ export default function AuditForm() {
                 </div>
                 <motion.button
                   type="submit"
-                  className="w-full px-8 py-5 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all flex items-center justify-center gap-2 mt-4"
+                  className="w-full px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all flex items-center justify-center gap-2 mt-4"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -928,7 +928,7 @@ export default function AuditForm() {
               >
                 <Link
                   href="/contatti"
-                  className="flex-1 px-8 py-5 rounded-full bg-coral text-white font-bold text-lg hover:bg-coral/90 transition-all hover:scale-[1.02] text-center flex items-center justify-center gap-2"
+                  className="flex-1 px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-[1.02] text-center flex items-center justify-center gap-2"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                 >
                   Parliamo →
