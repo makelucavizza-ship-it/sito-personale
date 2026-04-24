@@ -60,7 +60,7 @@ export default function Hero() {
   const color = COLORS[wordIndex % COLORS.length];
 
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-16 px-6">
+    <section className="min-h-screen flex flex-col justify-center pt-16 px-6 relative overflow-hidden">
       <div className="max-w-5xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
@@ -174,6 +174,23 @@ export default function Hero() {
           <span className="text-xs tracking-widest uppercase">scroll</span>
         </motion.div>
       </div>
+
+      {/* Pesce mandarino decorativo */}
+      <motion.div
+        className="absolute bottom-0 right-0 pointer-events-none hidden md:block"
+        initial={{ opacity: 0, x: 60 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
+        style={{ transform: "translateY(30%)" }}
+      >
+        <Image
+          src="/pesce-mandarino-1-nobg.png"
+          alt=""
+          width={340}
+          height={178}
+          className="opacity-75 drop-shadow-2xl"
+        />
+      </motion.div>
     </section>
   );
 }

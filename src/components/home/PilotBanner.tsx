@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function PilotBanner() {
   return (
@@ -17,6 +18,17 @@ export default function PilotBanner() {
           {/* Background accent */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-coral/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
           <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-accent-1/10 rounded-full translate-y-1/2 pointer-events-none" />
+
+          {/* Pesce mandarino decorativo */}
+          <div className="absolute bottom-0 right-8 pointer-events-none hidden md:block opacity-30 rotate-12">
+            <Image
+              src="/pesce-mandarino-2-nobg.png"
+              alt=""
+              width={220}
+              height={115}
+              className="drop-shadow-xl"
+            />
+          </div>
 
           <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div className="flex-1">
