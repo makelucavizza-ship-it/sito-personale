@@ -15,7 +15,7 @@ export default function ChiSonoPage() {
       <div className="max-w-5xl mx-auto px-6">
 
         {/* Hero */}
-        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start relative overflow-hidden">
+        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start relative">
           <div>
             <span
               className="inline-block text-sm font-bold text-accent-3 uppercase tracking-widest mb-4"

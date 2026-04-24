@@ -13,7 +13,7 @@ export default function ContattiPage() {
   return (
     <div className="pt-24">
       <div className="max-w-5xl mx-auto px-6">
-        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-start relative overflow-hidden">
+        <section className="py-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-start relative">
           {/* Left */}
           <div>
             <span

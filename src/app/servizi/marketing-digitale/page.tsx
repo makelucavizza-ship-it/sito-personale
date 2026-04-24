@@ -51,7 +51,7 @@ export default function MarketingDigitalePage() {
   return (
     <div className="pt-24">
       {/* Hero */}
-      <section className="px-6 py-16 max-w-5xl mx-auto relative overflow-hidden">
+      <section className="px-6 py-16 max-w-5xl mx-auto relative">
         <span
           className="inline-block text-sm font-bold text-coral uppercase tracking-widest mb-4"
           style={{ fontFamily: "Phenomena, sans-serif" }}
