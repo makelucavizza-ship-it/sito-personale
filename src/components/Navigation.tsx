@@ -8,10 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const links = [
   { href: "/servizi/marketing-digitale", label: "Marketing" },
   { href: "/servizi/automazione-ai", label: "AI Automation" },
-  { href: "/portfolio", label: "Portfolio" },
   { href: "/chi-sono", label: "Chi sono" },
   { href: "/agenzie", label: "Agenzie" },
-  { href: "/risorse/bandi-digitalizzazione-romagna", label: "Bandi" },
 ];
 
 export default function Navigation() {
@@ -114,6 +112,9 @@ export default function Navigation() {
                 >
                   Calcolatore gratuito
                 </Link>
+              </li>
+              <li className="pt-2 flex justify-end opacity-40 pointer-events-none">
+                <Image src="/pesce-mandarino-1-nobg.png" alt="" width={80} height={42} />
               </li>
             </ul>
           </motion.div>

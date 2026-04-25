@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Bandi Digitalizzazione Romagna",
   description:
     "Guida ai bandi e finanziamenti per la digitalizzazione delle PMI in Romagna. Aggiornata e curata da Luca Vizza.",
+  robots: { index: false, follow: false },
 };
 
 const BANDI = [

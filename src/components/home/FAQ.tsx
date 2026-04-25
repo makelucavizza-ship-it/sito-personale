@@ -36,7 +36,7 @@ const FAQS = [
   },
   {
     q: "✦ Cos'è il progetto pilota gratuito?",
-    a: "Sto costruendo il mio portfolio. Fino a settembre 2026 lavoro gratis con 3-5 aziende selezionate, in cambio di feedback onesto e la possibilità di pubblicare il caso studio. Non è un assaggio — è il lavoro completo. I posti sono davvero limitati.",
+    a: "Sto costruendo il mio portfolio. Fino a settembre 2026 lavoro gratis con 5 aziende selezionate, in cambio di feedback onesto e la possibilità di pubblicare il caso studio. Non è un assaggio — è il lavoro completo. I posti sono davvero limitati.",
     highlight: true,
   },
   {

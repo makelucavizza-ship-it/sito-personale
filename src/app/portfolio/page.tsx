@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "Case study e progetti di marketing digitale e AI automation. Risultati concreti per PMI italiane.",
+  robots: { index: false, follow: false },
 };
 
 export default function PortfolioPage() {
@@ -121,7 +122,7 @@ export default function PortfolioPage() {
           </h2>
           <p className="text-primary/60 mb-8 max-w-xl mx-auto">
             Sono il progetto pilota: fino a settembre 2026 lavoro a costo zero
-            con 3-5 aziende selezionate.
+            con 5 aziende selezionate.
           </p>
           <Link
             href="/contatti"

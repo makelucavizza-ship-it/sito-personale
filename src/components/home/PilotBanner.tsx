@@ -45,7 +45,7 @@ export default function PilotBanner() {
                 className="text-2xl md:text-3xl font-bold text-bg leading-snug mb-3"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
-                Lavoro gratis con 3-5 aziende
+                Lavoro gratis con 5 aziende
                 <br />
                 fino a settembre 2026.
               </h3>
