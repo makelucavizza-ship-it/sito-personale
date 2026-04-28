@@ -53,6 +53,72 @@ function extractJSON(text: string): string {
   return text.trim();
 }
 
+async function braveSearch(query: string, apiKey: string): Promise<string> {
+  const res = await fetch(
+    `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=5&country=it&search_lang=it`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Accept-Encoding": "gzip",
+        "X-Subscription-Token": apiKey,
+      },
+      signal: AbortSignal.timeout(7000),
+    }
+  );
+  if (!res.ok) throw new Error(`Brave ${res.status}`);
+  const data = await res.json();
+  const results = (data.web?.results ?? []) as Array<{
+    title: string;
+    url: string;
+    description?: string;
+    extra_snippets?: string[];
+  }>;
+  return results
+    .map(
+      (r) =>
+        `[${r.title}](${r.url})\n${r.description ?? ""}${
+          r.extra_snippets?.length ? "\n" + r.extra_snippets.join(" ") : ""
+        }`
+    )
+    .join("\n\n");
+}
+
+async function jinaSearch(query: string): Promise<string> {
+  const res = await fetch(
+    `https://s.jina.ai/${encodeURIComponent(query)}`,
+    {
+      headers: {
+        Accept: "application/json",
+        "X-Retain-Images": "none",
+        "X-No-Cache": "true",
+      },
+      signal: AbortSignal.timeout(12000),
+    }
+  );
+  if (!res.ok) throw new Error(`Jina search ${res.status}`);
+  const text = await res.text();
+  return text.slice(0, 3000);
+}
+
+async function jinaReader(url: string): Promise<string> {
+  const res = await fetch(`https://r.jina.ai/${url}`, {
+    headers: {
+      Accept: "text/plain",
+      "X-Retain-Images": "none",
+      "X-No-Cache": "true",
+    },
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!res.ok) throw new Error(`Jina reader ${res.status}`);
+  const text = await res.text();
+  return text.slice(0, 2000);
+}
+
+function extractFirstUrl(text: string): string | null {
+  const match = text.match(/https?:\/\/[^\s\)\]"'<>]+/);
+  return match ? match[0] : null;
+}
+
 async function scrapeBusinessInfo(
   nomeAttivita: string,
   citta: string
@@ -61,70 +127,62 @@ async function scrapeBusinessInfo(
 
   const parts: string[] = [];
   const query = `${nomeAttivita} ${citta}`;
+  const braveKey = process.env.BRAVE_SEARCH_API_KEY;
 
-  // DuckDuckGo Instant Answer API (free, no key needed)
-  try {
-    const res = await fetch(
-      `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`,
-      { signal: AbortSignal.timeout(5000) }
-    );
-    if (res.ok) {
-      const data = await res.json();
-      if (data.Abstract) parts.push(`Descrizione trovata: ${data.Abstract}`);
-      if (data.Answer) parts.push(`Info diretta: ${data.Answer}`);
-      if (data.AbstractSource) parts.push(`Fonte: ${data.AbstractSource}`);
-    }
-  } catch {
-    // ignore
+  // 1. Brave Search (if key configured) — best quality
+  if (braveKey) {
+    try {
+      const [reviews, web] = await Promise.allSettled([
+        braveSearch(`${query} recensioni google tripadvisor`, braveKey),
+        braveSearch(`${query} sito ufficiale`, braveKey),
+      ]);
+      if (reviews.status === "fulfilled" && reviews.value) {
+        parts.push(`Recensioni e presenza:\n${reviews.value}`);
+      }
+      if (web.status === "fulfilled" && web.value) {
+        const websiteUrl = extractFirstUrl(web.value);
+        if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.")) {
+          try {
+            const content = await jinaReader(websiteUrl);
+            parts.push(`Contenuto sito web (${websiteUrl}):\n${content}`);
+          } catch { /* skip */ }
+        } else {
+          parts.push(`Risultati web:\n${web.value}`);
+        }
+      }
+    } catch { /* fall through to Jina */ }
   }
 
-  // DuckDuckGo HTML search for reviews, website, social
-  const searchQueries = [
-    `${query} recensioni`,
-    `${query} sito web`,
-  ];
+  // 2. Jina AI Search (free, no key) — fallback or supplement
+  if (parts.length === 0) {
+    try {
+      const jinaResult = await jinaSearch(`${query} recensioni sito web presenza online`);
+      if (jinaResult.trim()) {
+        parts.push(`Risultati ricerca online:\n${jinaResult}`);
+        const foundUrl = extractFirstUrl(jinaResult);
+        if (foundUrl && !foundUrl.includes("jina.ai") && !foundUrl.includes("google.")) {
+          try {
+            const content = await jinaReader(foundUrl);
+            parts.push(`Contenuto pagina trovata:\n${content}`);
+          } catch { /* skip */ }
+        }
+      }
+    } catch { /* fall through */ }
+  }
 
-  for (const q of searchQueries) {
+  // 3. DuckDuckGo Instant Answer — quick facts fallback
+  if (parts.length === 0) {
     try {
       const res = await fetch(
-        `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}&kl=it-it`,
-        {
-          headers: {
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept-Language": "it-IT,it;q=0.9",
-            Accept: "text/html",
-          },
-          signal: AbortSignal.timeout(6000),
-        }
+        `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`,
+        { signal: AbortSignal.timeout(5000) }
       );
-      if (!res.ok) continue;
-
-      const html = await res.text();
-
-      // Strip scripts/styles and extract readable text
-      const text = html
-        .replace(/<script[\s\S]*?<\/script>/gi, "")
-        .replace(/<style[\s\S]*?<\/style>/gi, "")
-        .replace(/<[^>]+>/g, " ")
-        .replace(/\s{2,}/g, " ")
-        .trim();
-
-      // Look for mentions of the business name in results
-      const namePart = nomeAttivita.split(" ")[0].toLowerCase();
-      const idx = text.toLowerCase().indexOf(namePart);
-      if (idx > -1) {
-        const snippet = text
-          .slice(Math.max(0, idx - 50), idx + 700)
-          .replace(/\s+/g, " ")
-          .trim();
-        const label = q.includes("recensioni") ? "Risultati recensioni" : "Presenza online";
-        parts.push(`${label}: ${snippet}`);
-        break;
+      if (res.ok) {
+        const data = await res.json();
+        if (data.Abstract) parts.push(`Descrizione: ${data.Abstract}`);
+        if (data.Answer) parts.push(`Info: ${data.Answer}`);
       }
-    } catch {
-      // ignore
-    }
+    } catch { /* ignore */ }
   }
 
   if (parts.length === 0) {
