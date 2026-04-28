@@ -267,18 +267,25 @@ async function scrapeBusinessInfo(
     } catch { /* fall through */ }
   }
 
-  // 2. Jina AI Search (free, no key)
+  // 2. Jina AI Search (free, no key) — cerca su più query in parallelo
   if (parts.length === 0) {
     try {
-      const jinaResult = await jinaSearch(`${query} recensioni sito web presenza online`);
-      if (jinaResult.trim()) {
-        parts.push(`Risultati ricerca online:\n${jinaResult}`);
-        const foundUrl = extractFirstUrl(jinaResult);
-        if (foundUrl && !foundUrl.includes("jina.ai") && !foundUrl.includes("google.")) {
-          try {
-            const content = await jinaReader(foundUrl);
-            parts.push(`Contenuto pagina trovata:\n${content}`);
-          } catch { /* skip */ }
+      const jinaQueries = [
+        `${query} tripadvisor OR "google maps" OR facebook OR instagram`,
+        `${queryShort} ristorante recensioni`,
+      ];
+      const jinaResults = await Promise.allSettled(jinaQueries.map(jinaSearch));
+      for (const r of jinaResults) {
+        if (r.status === "fulfilled" && r.value.trim()) {
+          parts.push(`Risultati ricerca online:\n${r.value}`);
+          const foundUrl = extractFirstUrl(r.value);
+          if (foundUrl && !foundUrl.includes("jina.ai") && !foundUrl.includes("google.")) {
+            try {
+              const content = await jinaReader(foundUrl);
+              parts.push(`Contenuto pagina trovata:\n${content}`);
+            } catch { /* skip */ }
+          }
+          break;
         }
       }
     } catch { /* fall through */ }
@@ -328,6 +335,8 @@ function buildPrompt(
 Data di oggi: ${oggi}. Usa questa data se citi periodi, stagioni o aggiornamenti recenti.
 
 Hai appena analizzato la situazione di ${nome || "un imprenditore"}${nomeAttivita ? `, titolare di "${nomeAttivita}"` : ""}${citta ? ` a ${citta}` : ""}, settore: ${settore}.
+
+REGOLA ASSOLUTA SUL NOME: rivolgiti all'utente SEMPRE come "${nome || "questa persona"}" — MAI inventare soprannomi, MAI usare il nome del ristorante come nome della persona, MAI usare forme affettuose non richieste.
 
 DATI CALCOLATORE:
 - Ore/settimana su prenotazioni: ${sliders.prenotazioni}h
