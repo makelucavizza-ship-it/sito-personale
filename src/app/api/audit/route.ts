@@ -279,37 +279,75 @@ function buildAdminEmailHtml(
 ): string {
   const totalOre = sliders.prenotazioni + sliders.preventivi + sliders.followup;
   const annualValue = (totalOre * sliders.tariffa * 52).toLocaleString("it-IT");
+  const now = new Date().toLocaleString("it-IT", { dateStyle: "full", timeStyle: "short" });
 
-  return `
-<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#474747;">
-  <h2 style="color:#ee826d;">Nuovo audit — ${nomeAttivita || nome}${citta ? ` (${citta})` : ""}</h2>
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#f5f0eb;font-family:Arial,sans-serif;">
+<div style="max-width:600px;margin:0 auto;padding:32px 24px;">
 
-  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Nome</td><td style="padding:8px;border-bottom:1px solid #eee;">${nome || "—"}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Attività</td><td style="padding:8px;border-bottom:1px solid #eee;">${nomeAttivita || "—"}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Città</td><td style="padding:8px;border-bottom:1px solid #eee;">${citta || "—"}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Email</td><td style="padding:8px;border-bottom:1px solid #eee;">${emailAddress}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Settore</td><td style="padding:8px;border-bottom:1px solid #eee;">${settore}</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Ore/sett.</td><td style="padding:8px;border-bottom:1px solid #eee;">${totalOre}h</td></tr>
-    <tr><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;">Valore annuo</td><td style="padding:8px;border-bottom:1px solid #eee;color:#ee826d;font-weight:bold;">€${annualValue}</td></tr>
-  </table>
+  <!-- Header -->
+  <div style="background:#474747;border-radius:16px;padding:28px 32px;margin-bottom:24px;">
+    <p style="color:#ee826d;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px;">NUOVO CLIENTE</p>
+    <h1 style="color:#f5f0eb;font-size:22px;margin:0 0 4px;">${nome || "Anonimo"}${nomeAttivita ? ` — ${nomeAttivita}` : ""}</h1>
+    <p style="color:rgba(245,240,235,0.5);font-size:13px;margin:0;">${now}</p>
+  </div>
 
-  <h3>Risposte</h3>
-  <ul>${Object.entries(sectorAnswers).map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`).join("")}</ul>
+  <!-- CONTATTI (focus principale) -->
+  <div style="background:white;border-radius:12px;padding:24px;margin-bottom:16px;border-left:4px solid #ee826d;">
+    <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 16px;">📋 DATI DI CONTATTO</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;width:120px;">Nome</td><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-weight:bold;font-size:15px;">${nome || "—"}</td></tr>
+      <tr><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Email</td><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:15px;"><a href="mailto:${emailAddress}" style="color:#ee826d;font-weight:bold;text-decoration:none;">${emailAddress}</a></td></tr>
+      <tr><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Attività</td><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:15px;">${nomeAttivita || "—"}</td></tr>
+      <tr><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Città</td><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:15px;">${citta || "—"}</td></tr>
+      <tr><td style="padding:10px 0;color:#474747;opacity:0.5;font-size:13px;">Settore</td><td style="padding:10px 0;font-size:15px;">${settore}</td></tr>
+    </table>
+    <a href="mailto:${emailAddress}" style="display:inline-block;background:#ee826d;color:white;padding:12px 28px;border-radius:100px;text-decoration:none;font-weight:bold;margin-top:20px;font-size:14px;">
+      ✉️ Rispondi a ${nome || emailAddress}
+    </a>
+  </div>
 
-  ${webInfo ? `<h3>Dati web trovati</h3><pre style="background:#f5f0eb;padding:16px;border-radius:8px;font-size:12px;white-space:pre-wrap;">${webInfo}</pre>` : ""}
+  <!-- NUMERI CALCOLATORE -->
+  <div style="background:white;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 16px;">📊 CALCOLATORE</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <tr><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;width:120px;">Prenotazioni</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${sliders.prenotazioni}h/sett.</td></tr>
+      <tr><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Preventivi</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${sliders.preventivi}h/sett.</td></tr>
+      <tr><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Follow-up</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">${sliders.followup}h/sett.</td></tr>
+      <tr><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#474747;opacity:0.5;font-size:13px;">Tariffa oraria</td><td style="padding:8px 0;border-bottom:1px solid #f0f0f0;">€${sliders.tariffa}/h</td></tr>
+      <tr><td style="padding:8px 0;color:#474747;opacity:0.5;font-size:13px;">Valore annuo</td><td style="padding:8px 0;color:#ee826d;font-weight:bold;font-size:18px;">€${annualValue}/anno</td></tr>
+    </table>
+  </div>
 
-  <h3>Report generato</h3>
-  <p><strong>${result.titolo}</strong></p>
-  <p>${result.problema_principale}</p>
-  <ul>${result.automazioni.map((a) => `<li><strong>${a.nome}</strong>: ${a.descrizione} (${a.risparmio})</li>`).join("")}</ul>
-  <p><em>${result.insight_finale}</em></p>
-  <p>${result.prossimo_passo}</p>
+  <!-- RISPOSTE SETTORE -->
+  ${Object.keys(sectorAnswers).length > 0 ? `
+  <div style="background:white;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 16px;">💬 RISPOSTE</p>
+    ${Object.entries(sectorAnswers).map(([k, v]) => `
+    <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;">
+      <p style="color:#474747;opacity:0.5;font-size:12px;margin:0 0 4px;">${k}</p>
+      <p style="color:#474747;margin:0;font-size:14px;">${v}</p>
+    </div>`).join("")}
+  </div>` : ""}
 
-  <a href="mailto:${emailAddress}" style="display:inline-block;background:#ee826d;color:white;padding:12px 24px;border-radius:100px;text-decoration:none;font-weight:bold;margin-top:16px;">
-    Rispondi a ${nome || emailAddress}
-  </a>
-</div>`;
+  <!-- REPORT AI -->
+  <div style="background:white;border-radius:12px;padding:24px;margin-bottom:16px;">
+    <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">🤖 REPORT GENERATO</p>
+    <p style="font-weight:bold;color:#474747;margin:0 0 8px;">${result.titolo}</p>
+    <p style="color:#474747;opacity:0.7;font-size:14px;line-height:1.6;margin:0 0 16px;">${result.problema_principale}</p>
+    ${result.automazioni.map((a, i) => `<p style="font-size:13px;color:#474747;margin:0 0 6px;"><strong>${i + 1}. ${a.nome}</strong> — ${a.risparmio}</p>`).join("")}
+  </div>
+
+  ${webInfo && !webInfo.includes("Nessuna informazione") ? `
+  <div style="background:#f9f9f7;border-radius:12px;padding:20px;margin-bottom:16px;">
+    <p style="color:#474747;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;opacity:0.4;margin:0 0 12px;">🌐 DATI WEB</p>
+    <pre style="font-size:12px;white-space:pre-wrap;color:#474747;opacity:0.7;margin:0;">${webInfo.substring(0, 600)}${webInfo.length > 600 ? "…" : ""}</pre>
+  </div>` : ""}
+
+  <p style="text-align:center;color:#474747;font-size:11px;opacity:0.3;margin:24px 0 0;">lucavizza.it — Calcolatore Gratuito</p>
+</div>
+</body></html>`;
 }
 
 export async function POST(req: NextRequest) {

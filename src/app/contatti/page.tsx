@@ -40,7 +40,7 @@ export default function ContattiPage() {
 
             <div className="mt-10 space-y-4">
               <a
-                href="mailto:luca@lucavizza.it"
+                href="mailto:make.luca.vizza@gmail.com"
                 className="flex items-center gap-3 text-primary/70 hover:text-coral transition-colors group"
               >
                 <span className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center group-hover:border-coral transition-colors">
@@ -49,10 +49,10 @@ export default function ContattiPage() {
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                   </svg>
                 </span>
-                <span>luca@lucavizza.it</span>
+                <span>make.luca.vizza@gmail.com</span>
               </a>
               <a
-                href="https://linkedin.com/in/lucavizza"
+                href="https://www.linkedin.com/in/luca-vizza"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="linkedin"
@@ -66,7 +66,7 @@ export default function ContattiPage() {
                 <span>LinkedIn</span>
               </a>
               <a
-                href="https://instagram.com/lucavizza"
+                href="https://www.instagram.com/makevizza/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="instagram"

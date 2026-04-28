@@ -31,7 +31,7 @@ const FAQS = [
   },
   {
     q: "Quanto costa lavorare con te?",
-    a: "Non ho listini fissi perché ogni situazione è diversa. Parto sempre dall'audit gratuito per capire cosa ti serve davvero, poi faccio una proposta su misura. Quello che posso garantire: niente pacchetti gonfiati, niente costi nascosti.",
+    a: "Non ho listini fissi perché ogni situazione è diversa. Parto sempre dal calcolatore gratuito per capire cosa ti serve davvero, poi faccio una proposta su misura. Quello che posso garantire: niente pacchetti gonfiati, niente costi nascosti.",
     highlight: false,
   },
   {
@@ -46,7 +46,7 @@ const FAQS = [
   },
   {
     q: "Da dove si parte?",
-    a: "Compila l'audit gratuito — 5 minuti, nessun obbligo. Ricevi un report personalizzato e poi decidiamo insieme se e come andare avanti. Non ti chiamo dieci volte per venderti qualcosa.",
+    a: "Prova il calcolatore gratuito — 5 minuti, nessun obbligo. Ricevi un report personalizzato e poi decidiamo insieme se e come andare avanti. Non ti chiamo dieci volte per venderti qualcosa.",
     highlight: false,
   },
   {

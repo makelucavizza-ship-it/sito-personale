@@ -173,7 +173,7 @@ export default function MarketingDigitalePage() {
             className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Audit gratuito
+            Calcolatore gratuito
           </Link>
           <Link
             href="/portfolio"

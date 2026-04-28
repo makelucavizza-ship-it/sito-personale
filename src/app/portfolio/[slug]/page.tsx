@@ -98,7 +98,7 @@ export default function PortfolioItemPage({ params }: Props) {
             className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Audit gratuito per la tua azienda
+            Calcolatore gratuito per la tua azienda
           </Link>
         </div>
       </div>

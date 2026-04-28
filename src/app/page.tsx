@@ -4,7 +4,7 @@ import Hero from "@/components/home/Hero";
 export const metadata: Metadata = {
   title: "Luca Vizza — Marketing Digitale & AI Automation per PMI",
   description:
-    "Freelance di marketing digitale e AI automation per PMI italiane. Social media, advertising, automazioni AI, email marketing. Basato in Romagna, lavoro in tutta Italia. Audit gratuito.",
+    "Freelance di marketing digitale e AI automation per PMI italiane. Social media, advertising, automazioni AI, email marketing. Basato in Romagna, lavoro in tutta Italia. Calcolatore gratuito.",
   keywords: [
     "marketing digitale freelance",
     "AI automation PMI",

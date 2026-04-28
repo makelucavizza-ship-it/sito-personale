@@ -41,7 +41,7 @@ export default function Footer() {
                 { href: "/servizi/automazione-ai", label: "AI Automation" },
                 { href: "/chi-sono", label: "Chi sono" },
                 { href: "/agenzie", label: "Per le agenzie" },
-                { href: "/audit", label: "Audit gratuito" },
+                { href: "/audit", label: "Calcolatore gratuito" },
                 { href: "/contatti", label: "Contatti" },
               ].map((l) => (
                 <li key={l.href}>
@@ -66,7 +66,7 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-3">
               <a
-                href="https://linkedin.com/in/lucavizza"
+                href="https://www.linkedin.com/in/luca-vizza"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="linkedin"
@@ -80,7 +80,7 @@ export default function Footer() {
                 LinkedIn
               </a>
               <a
-                href="https://instagram.com/lucavizza"
+                href="https://www.instagram.com/makevizza/"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="instagram"
@@ -106,12 +106,20 @@ export default function Footer() {
           <p className="text-bg/40 text-xs">
             © {new Date().getFullYear()} Luca Vizza. Tutti i diritti riservati.
           </p>
-          <Link
-            href="/contatti"
-            className="text-xs text-bg/40 hover:text-bg/70 transition-colors"
-          >
-            contatti →
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/privacy"
+              className="text-xs text-bg/40 hover:text-bg/70 transition-colors"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/contatti"
+              className="text-xs text-bg/40 hover:text-bg/70 transition-colors"
+            >
+              contatti →
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

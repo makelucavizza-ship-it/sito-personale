@@ -90,7 +90,7 @@ export default function ContactForm() {
       )}
       {status === "error" && (
         <div className="bg-coral/10 border border-coral/30 rounded-xl p-4 text-coral text-sm">
-          Errore nell&apos;invio. Riprova o scrivimi direttamente a luca@lucavizza.it
+          Errore nell&apos;invio. Riprova o scrivimi direttamente a make.luca.vizza@gmail.com
         </div>
       )}
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export default function RootLayout({
         <Navigation />
         <main>{children}</main>
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );
