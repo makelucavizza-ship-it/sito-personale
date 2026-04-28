@@ -88,7 +88,7 @@ export default function ChiSonoPage() {
           </h2>
           <div className="max-w-2xl space-y-5">
             <p className="text-primary/70 leading-relaxed">
-              È stato l&apos;ITS Academy Turismo Emilia-Romagna — mi diploma a
+              È stato l&apos;ITS Academy Turismo Emilia-Romagna — mi diplomerò a
               giugno 2026. Non è stata solo formazione tecnica. Mi ha fatto
               capire dall&apos;interno come ragionano le piccole imprese: cosa
               le fa funzionare, cosa le spaventa, cosa invece le dà la carica.

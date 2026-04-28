@@ -23,7 +23,7 @@ export default function PrivacyPage() {
           Informativa sulla Privacy
         </h1>
         <p className="text-primary/50 text-sm mb-12">
-          Ultimo aggiornamento: aprile 2026 — ai sensi del Reg. UE 2016/679 (GDPR)
+          Ultimo aggiornamento: 28 aprile 2026 — ai sensi del Reg. UE 2016/679 (GDPR)
         </p>
 
         <div className="prose-custom space-y-10 text-primary/80 leading-relaxed">
@@ -54,6 +54,7 @@ export default function PrivacyPage() {
                 </p>
                 <ul className="list-disc list-inside mt-2 space-y-1 text-primary/70">
                   <li>Generare un report personalizzato tramite intelligenza artificiale (Claude di Anthropic);</li>
+                  <li>Effettuare ricerche online sulla tua attività tramite API di terze parti (SerpAPI, Jina AI) per personalizzare il report;</li>
                   <li>Inviarti il report via email;</li>
                   <li>Inviarmi una notifica interna con i tuoi dati di contatto.</li>
                 </ul>
@@ -86,37 +87,54 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-2xl font-bold text-primary mb-3" style={{ fontFamily: "Phenomena, sans-serif" }}>
-              3. Cookie
+              3. Cookie e strumenti di analisi
             </h2>
             <p className="text-sm leading-relaxed mb-3">
               Questo sito utilizza le seguenti categorie di cookie:
             </p>
-            <div className="text-sm space-y-3">
+            <div className="text-sm space-y-4">
               <div>
                 <p className="font-bold text-primary">Cookie tecnici / necessari</p>
                 <p className="text-primary/70">
                   Indispensabili per il funzionamento del sito (es. memorizzazione delle tue preferenze
-                  cookie). Non richiedono consenso. Non vengono trasferiti a terzi.
+                  cookie in <code className="text-xs bg-primary/5 px-1 py-0.5 rounded">localStorage</code>).
+                  Non richiedono consenso. Non vengono trasferiti a terzi.
                 </p>
               </div>
               <div>
-                <p className="font-bold text-primary">Cookie analitici (solo con consenso)</p>
+                <p className="font-bold text-primary">Cookie analitici — Google Analytics 4 (solo con consenso)</p>
+                <p className="text-primary/70 mb-2">
+                  Utilizziamo Google Analytics 4 (GA4) per raccogliere statistiche aggregate sull&apos;utilizzo
+                  del sito (pagine visitate, durata della sessione, provenienza geografica). I dati sono
+                  pseudoanonimizzati e non permettono di identificare il singolo utente.
+                </p>
                 <p className="text-primary/70">
-                  Ci permettono di capire come gli utenti usano il sito, in forma aggregata e anonima.
-                  Non sono attualmente attivi.
+                  Questi cookie vengono attivati <strong>solo se hai prestato consenso</strong> tramite il
+                  banner cookie. Implementiamo Google Consent Mode v2: in assenza di consenso, GA4 non
+                  installa cookie di tracciamento e raccoglie solo dati aggregati e non identificabili
+                  (modalità &quot;cookieless&quot;).
                 </p>
               </div>
               <div>
                 <p className="font-bold text-primary">Cookie di marketing (solo con consenso)</p>
                 <p className="text-primary/70">
-                  Usati per mostrare annunci pertinenti. Non sono attualmente attivi.
+                  Cookie utilizzati per campagne pubblicitarie personalizzate. Attivi solo se hai prestato
+                  esplicito consenso. Attualmente non utilizziamo reti pubblicitarie di terze parti su
+                  questo sito.
                 </p>
               </div>
             </div>
-            <p className="text-sm mt-4 text-primary/60">
-              Puoi modificare o revocare il consenso ai cookie in qualsiasi momento svuotando i dati
-              del browser o contattandoci via email.
-            </p>
+            <div className="mt-4 p-4 rounded-xl bg-primary/[0.03] border border-primary/10 text-sm">
+              <p className="font-bold text-primary mb-1">Gestione del consenso ai cookie</p>
+              <p className="text-primary/70">
+                Puoi modificare le tue preferenze in qualsiasi momento tramite il banner cookie (cancella
+                i dati del sito nel tuo browser per riaprirlo) oppure scrivendoci a{" "}
+                <a href="mailto:make.luca.vizza@gmail.com" className="text-coral underline underline-offset-2">
+                  make.luca.vizza@gmail.com
+                </a>.
+                Il consenso ha durata di 12 mesi, dopodiché verrà richiesto nuovamente.
+              </p>
+            </div>
           </section>
 
           <section>
@@ -129,10 +147,44 @@ export default function PrivacyPage() {
                 <p className="text-primary/70">
                   Le risposte del calcolatore gratuito vengono elaborate dall&apos;API di Anthropic per
                   generare il report personalizzato. I dati trasmessi includono le risposte al
-                  questionario. Anthropic è certificata per il trattamento dati ai sensi delle normative
-                  vigenti. Per dettagli:{" "}
+                  questionario. Per dettagli:{" "}
                   <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-coral underline underline-offset-2">
                     anthropic.com/privacy
+                  </a>.
+                </p>
+              </div>
+              <div>
+                <p className="font-bold text-primary">SerpAPI, LLC</p>
+                <p className="text-primary/70">
+                  Utilizzato dal calcolatore gratuito per recuperare informazioni pubbliche sull&apos;attività
+                  dell&apos;utente (scheda Google My Business, risultati di ricerca) al fine di personalizzare
+                  il report. I dati trasmessi includono nome dell&apos;attività e città. Per dettagli:{" "}
+                  <a href="https://serpapi.com/privacy" target="_blank" rel="noopener noreferrer" className="text-coral underline underline-offset-2">
+                    serpapi.com/privacy
+                  </a>.
+                </p>
+              </div>
+              <div>
+                <p className="font-bold text-primary">Jina AI GmbH</p>
+                <p className="text-primary/70">
+                  Utilizzato dal calcolatore gratuito per la lettura di pagine web pubbliche al fine di
+                  arricchire il report con informazioni sull&apos;attività. Per dettagli:{" "}
+                  <a href="https://jina.ai/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-coral underline underline-offset-2">
+                    jina.ai/privacy-policy
+                  </a>.
+                </p>
+              </div>
+              <div>
+                <p className="font-bold text-primary">Google LLC (Google Analytics 4)</p>
+                <p className="text-primary/70">
+                  Utilizziamo Google Analytics 4 per statistiche di navigazione aggregate, solo con il tuo
+                  consenso. Implementiamo Google Consent Mode v2 per garantire il rispetto delle preferenze
+                  espresse. Per dettagli:{" "}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-coral underline underline-offset-2">
+                    policies.google.com/privacy
+                  </a>.
+                  Per opt-out: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-coral underline underline-offset-2">
+                    Google Analytics Opt-out
                   </a>.
                 </p>
               </div>
@@ -164,9 +216,10 @@ export default function PrivacyPage() {
               5. Trasferimento dati extra-UE
             </h2>
             <p className="text-sm leading-relaxed">
-              Anthropic e Resend hanno sede negli USA. Il trasferimento è coperto da clausole
-              contrattuali standard (SCC) approvate dalla Commissione Europea. Non vengono
-              trasferiti altri dati al di fuori dell&apos;UE.
+              Anthropic, SerpAPI, Jina AI, Google e Resend hanno sede negli USA. Il trasferimento è
+              coperto da clausole contrattuali standard (SCC) approvate dalla Commissione Europea o da
+              meccanismi equivalenti (es. Data Privacy Framework UE-USA). Non vengono trasferiti altri
+              dati al di fuori dell&apos;UE.
             </p>
           </section>
 
@@ -177,7 +230,8 @@ export default function PrivacyPage() {
             <p className="text-sm leading-relaxed">
               I dati del calcolatore e del modulo contatti sono conservati nelle email ricevute per
               un massimo di 24 mesi, salvo obblighi di legge o richiesta di cancellazione anticipata.
-              Le preferenze cookie vengono memorizzate nel tuo browser e non su server (localStorage).
+              Le preferenze cookie vengono memorizzate nel tuo browser (localStorage) con durata di
+              12 mesi e non su server.
             </p>
           </section>
 
