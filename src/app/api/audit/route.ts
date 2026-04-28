@@ -366,7 +366,7 @@ Rispondi SOLO con JSON valido, nient'altro.
     { "nome": "...", "descrizione": "...", "risparmio": "..." }
   ],
   "insight_finale": "1-2 frasi: verità scomoda basata su ciò che hai trovato (o non trovato) online. Prima persona come Luca.",
-  "prossimo_passo": "Specifico per questa situazione. Puoi menzionare lucavizza.it/contatti"
+  "prossimo_passo": "1-2 frasi specifiche per questa situazione: cosa faresti SUBITO se fossi al loro posto. NON includere URL o link — c'è già un bottone di contatto sotto il report."
 }`;
 }
 

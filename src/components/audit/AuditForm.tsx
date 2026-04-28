@@ -952,9 +952,16 @@ export default function AuditForm() {
                 >
                   Prossimo passo
                 </p>
-                <p className="text-primary/80 leading-relaxed">
+                <p className="text-primary/80 leading-relaxed mb-5">
                   {result.prossimo_passo}
                 </p>
+                <Link
+                  href="/contatti"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-base hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-[1.02]"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Parliamo →
+                </Link>
               </motion.div>
 
               <motion.div
@@ -963,13 +970,7 @@ export default function AuditForm() {
                 transition={{ delay: 1.1 }}
                 className="flex flex-col sm:flex-row gap-4"
               >
-                <Link
-                  href="/contatti"
-                  className="flex-1 px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-[1.02] text-center flex items-center justify-center gap-2"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Parliamo →
-                </Link>
+                <div className="flex-1" />
                 <button
                   onClick={() => {
                     setStep("calculator");
