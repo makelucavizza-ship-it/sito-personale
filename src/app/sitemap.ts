@@ -9,9 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/chi-sono`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/servizi/marketing-digitale`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/servizi/automazione-ai`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${base}/portfolio`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/agenzie`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/risorse/bandi-digitalizzazione-romagna`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/audit`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/contatti`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
