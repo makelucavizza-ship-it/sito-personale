@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -65,6 +66,13 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         <Analytics />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-7PTK1QG0CG" strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-7PTK1QG0CG');
+        `}</Script>
       </body>
     </html>
   );
