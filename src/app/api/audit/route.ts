@@ -155,34 +155,54 @@ async function scrapeBusinessInfo(
 
   const parts: string[] = [];
   const query = `${nomeAttivita} ${citta}`;
+  // Fallback query: solo prima parola significativa + città (cattura "Walter" da "Pizzeria Walter")
+  const firstWord = nomeAttivita.split(" ").filter((w) => w.length > 3)[0] ?? nomeAttivita.split(" ")[0];
+  const queryShort = `${firstWord} ${citta}`;
   const serperKey = process.env.SERPER_API_KEY;
   const tavilyKey = process.env.TAVILY_API_KEY;
 
-  // 1a. Serper.dev (free 2.500 req, then paid) — Google results + knowledge graph
+  // 1a. Serper.dev — Google results + knowledge graph
   if (serperKey) {
     try {
-      const [reviews, web] = await Promise.allSettled([
+      // Prova prima la query completa, poi quella corta se non trova knowledge graph
+      const [reviewsFull, webFull] = await Promise.allSettled([
         serperSearch(`${query} recensioni`, serperKey),
-        serperSearch(`${query} sito ufficiale`, serperKey),
+        serperSearch(query, serperKey),
       ]);
-      if (reviews.status === "fulfilled" && reviews.value) {
-        parts.push(`Recensioni e presenza:\n${reviews.value}`);
+
+      let reviewsText = reviewsFull.status === "fulfilled" ? reviewsFull.value : "";
+      let webText = webFull.status === "fulfilled" ? webFull.value : "";
+
+      // Se la query completa non ha trovato knowledge graph, prova con nome corto
+      const hasKG = reviewsText.includes("Scheda Google:") || webText.includes("Scheda Google:");
+      if (!hasKG && queryShort !== query) {
+        const [r2, w2] = await Promise.allSettled([
+          serperSearch(`${queryShort} recensioni`, serperKey),
+          serperSearch(queryShort, serperKey),
+        ]);
+        if (r2.status === "fulfilled" && r2.value.includes("Scheda Google:")) reviewsText = r2.value;
+        if (w2.status === "fulfilled" && w2.value.includes("Scheda Google:")) webText = w2.value;
+        // usa comunque i risultati anche senza KG
+        if (!reviewsText && r2.status === "fulfilled") reviewsText = r2.value;
+        if (!webText && w2.status === "fulfilled") webText = w2.value;
       }
-      if (web.status === "fulfilled" && web.value) {
-        const websiteUrl = extractFirstUrl(web.value);
-        if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("serper.")) {
-          try {
-            const content = await jinaReader(websiteUrl);
-            parts.push(`Contenuto sito (${websiteUrl}):\n${content}`);
-          } catch { /* skip */ }
-        } else {
-          parts.push(`Risultati web:\n${web.value}`);
-        }
+
+      if (reviewsText) parts.push(`Recensioni e presenza:\n${reviewsText}`);
+
+      // Cerca sito web tra i risultati e scrapa con Jina
+      const websiteUrl = extractFirstUrl(webText);
+      if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.com/Search")) {
+        try {
+          const content = await jinaReader(websiteUrl);
+          parts.push(`Contenuto sito (${websiteUrl}):\n${content}`);
+        } catch { /* skip */ }
+      } else if (webText) {
+        parts.push(`Risultati web:\n${webText}`);
       }
     } catch { /* fall through */ }
   }
 
-  // 1b. Tavily (1.000 req/mese free) — AI-optimized search with content
+  // 1b. Tavily (1.000 req/mese free)
   if (parts.length === 0 && tavilyKey) {
     try {
       const result = await tavilySearch(`${query} recensioni sito web presenza online`, tavilyKey);
@@ -190,7 +210,7 @@ async function scrapeBusinessInfo(
     } catch { /* fall through */ }
   }
 
-  // 2. Jina AI Search (free, no key) — fallback or supplement
+  // 2. Jina AI Search (free, no key)
   if (parts.length === 0) {
     try {
       const jinaResult = await jinaSearch(`${query} recensioni sito web presenza online`);
@@ -207,7 +227,7 @@ async function scrapeBusinessInfo(
     } catch { /* fall through */ }
   }
 
-  // 3. DuckDuckGo Instant Answer — quick facts fallback
+  // 3. DuckDuckGo Instant Answer — last resort
   if (parts.length === 0) {
     try {
       const res = await fetch(
@@ -493,40 +513,34 @@ export async function POST(req: NextRequest) {
     // use fallback
   }
 
-  if (process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL) {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+  const resendKey = process.env.RESEND_API_KEY;
+  const resendFrom = process.env.RESEND_FROM_EMAIL;
 
-    await Promise.allSettled([
+  if (resendKey && resendKey !== "placeholder" && resendFrom && resendFrom !== "placeholder") {
+    const resend = new Resend(resendKey);
+
+    const emailResults = await Promise.allSettled([
       resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL,
+        from: resendFrom,
         to: email,
         subject: `Il tuo report: ${result.titolo}`,
-        html: buildUserEmailHtml(
-          result,
-          nome ?? "",
-          nomeAttivita ?? "",
-          citta ?? "",
-          settore,
-          sliders
-        ),
+        html: buildUserEmailHtml(result, nome ?? "", nomeAttivita ?? "", citta ?? "", settore, sliders),
       }),
       resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL,
+        from: resendFrom,
         to: "make.luca.vizza@gmail.com",
-        subject: `Nuovo audit: ${nomeAttivita || nome} — ${citta || settore}`,
-        html: buildAdminEmailHtml(
-          result,
-          nome ?? "",
-          nomeAttivita ?? "",
-          citta ?? "",
-          email,
-          settore,
-          sliders,
-          sectorAnswers ?? {},
-          webInfo
-        ),
+        subject: "Nuovo Cliente per Luca",
+        html: buildAdminEmailHtml(result, nome ?? "", nomeAttivita ?? "", citta ?? "", email, settore, sliders, sectorAnswers ?? {}, webInfo),
       }),
     ]);
+
+    emailResults.forEach((r, i) => {
+      if (r.status === "rejected") {
+        console.error(`Email ${i === 0 ? "utente" : "admin"} fallita:`, r.reason);
+      }
+    });
+  } else {
+    console.warn("Resend non configurato — email non inviate. Verifica RESEND_API_KEY e RESEND_FROM_EMAIL in Vercel.");
   }
 
   return NextResponse.json(result);
