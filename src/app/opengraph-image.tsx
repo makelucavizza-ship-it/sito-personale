@@ -5,38 +5,46 @@ export const alt = "Luca Vizza — Marketing Digitale & AI Automation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default function OGImage() {
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#f5f0eb",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
+          backgroundColor: "#474747",
+          fontFamily: "sans-serif",
+          position: "relative",
         }}
       >
-        <div style={{ display: "flex", gap: 8, marginBottom: 24 }}>
-          {["#3ad3ef", "#ffbd59", "#5bc783", "#544fb3", "#5ed5bf", "#ffbd59", "#5bc783", "#544fb3"].map(
-            (c, i) => (
-              <div key={i} style={{ width: 48, height: 6, background: c, borderRadius: 3 }} />
-            )
-          )}
+        {/* Color bar accent */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 40 }}>
+          {["#3ad3ef", "#ffbd59", "#5bc783", "#544fb3", "#5ed5bf", "#ee826d"].map((c) => (
+            <div key={c} style={{ width: 36, height: 6, borderRadius: 3, backgroundColor: c }} />
+          ))}
         </div>
-        <div style={{ fontSize: 96, fontWeight: 800, color: "#474747", lineHeight: 1 }}>
-          LUCA VIZZA
+
+        {/* Main text */}
+        <div style={{ fontSize: 72, fontWeight: 800, color: "#f5f0eb", lineHeight: 1.1, marginBottom: 24 }}>
+          Luca Vizza
         </div>
-        <div style={{ fontSize: 40, color: "#ee826d", marginTop: 16 }}>
-          Marketing Digitale &amp; AI Automation
+        <div style={{ fontSize: 36, fontWeight: 400, color: "#ee826d", marginBottom: 32 }}>
+          Marketing Digitale & AI Automation
         </div>
-        <div style={{ fontSize: 28, color: "#474747", opacity: 0.5, marginTop: 24 }}>
-          Cresciamo insieme con l&apos;AI — lucavizza.it
+        <div style={{ fontSize: 24, color: "#f5f0eb99", maxWidth: 700, lineHeight: 1.5 }}>
+          {"Cresciamo insieme con l'AI — per PMI italiane"}
+        </div>
+
+        {/* Bottom right domain */}
+        <div style={{ position: "absolute", bottom: 80, right: 80, fontSize: 20, color: "#f5f0eb40" }}>
+          lucavizza.it
         </div>
       </div>
     ),
-    size
+    { ...size }
   );
 }
