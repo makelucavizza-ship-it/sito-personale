@@ -224,6 +224,8 @@ async function scrapeBusinessInfo(
   const serperKey = process.env.SERPER_API_KEY;
   const tavilyKey = process.env.TAVILY_API_KEY;
 
+  console.log(`[scrape] query="${query}" short="${queryShort}" serper=${!!serperKey} tavily=${!!tavilyKey}`);
+
   // 1a. Serper.dev — Maps (GMB) + Search in parallelo
   if (serperKey) {
     try {
@@ -234,14 +236,16 @@ async function scrapeBusinessInfo(
         queryShort !== query ? serperSearch(queryShort, serperKey) : Promise.resolve(""),
       ]);
 
-      // Maps — prendi il primo risultato non vuoto (query completa o nome distintivo)
+      console.log(`[scrape] maps=${mapsResult.status} mapsFb=${mapsFallback.status} search=${searchResult.status} searchFb=${searchFallback.status}`);
+      if (mapsResult.status === "rejected") console.error("[scrape] maps error:", mapsResult.reason);
+      if (searchResult.status === "rejected") console.error("[scrape] search error:", searchResult.reason);
+
       const mapsText =
         (mapsResult.status === "fulfilled" && mapsResult.value) ? mapsResult.value :
         (mapsFallback.status === "fulfilled" && mapsFallback.value) ? mapsFallback.value : "";
 
       if (mapsText) parts.push(`Profilo Google Business:\n${mapsText}`);
 
-      // Search organica — per trovare sito, TripAdvisor, social
       const searchText =
         (searchResult.status === "fulfilled" && searchResult.value) ? searchResult.value :
         (searchFallback.status === "fulfilled" && searchFallback.value) ? searchFallback.value : "";
@@ -256,7 +260,13 @@ async function scrapeBusinessInfo(
         }
         parts.push(`Risultati ricerca:\n${searchText}`);
       }
-    } catch { /* fall through */ }
+
+      console.log(`[scrape] parts after serper: ${parts.length}`);
+    } catch (e) {
+      console.error("[scrape] serper block error:", e);
+    }
+  } else {
+    console.warn("[scrape] SERPER_API_KEY non configurata — fallback a Jina");
   }
 
   // 1b. Tavily (1.000 req/mese free)
@@ -336,7 +346,6 @@ Data di oggi: ${oggi}. Usa questa data se citi periodi, stagioni o aggiornamenti
 
 Hai appena analizzato la situazione di ${nome || "un imprenditore"}${nomeAttivita ? `, titolare di "${nomeAttivita}"` : ""}${citta ? ` a ${citta}` : ""}, settore: ${settore}.
 
-REGOLA ASSOLUTA SUL NOME: rivolgiti all'utente SEMPRE come "${nome || "questa persona"}" — MAI inventare soprannomi, MAI usare il nome del ristorante come nome della persona, MAI usare forme affettuose non richieste.
 
 DATI CALCOLATORE:
 - Ore/settimana su prenotazioni: ${sliders.prenotazioni}h
