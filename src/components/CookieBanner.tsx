@@ -21,6 +21,18 @@ export default function CookieBanner() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) {
       setVisible(true);
+      return;
+    }
+    try {
+      const { timestamp } = JSON.parse(stored);
+      const twelveMonths = 365 * 24 * 60 * 60 * 1000;
+      if (!timestamp || Date.now() - timestamp > twelveMonths) {
+        localStorage.removeItem(STORAGE_KEY);
+        setVisible(true);
+      }
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
+      setVisible(true);
     }
   }, []);
 
