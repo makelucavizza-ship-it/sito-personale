@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -63,6 +64,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
