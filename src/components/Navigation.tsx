@@ -113,6 +113,15 @@ export default function Navigation() {
                   Calcolatore gratuito
                 </Link>
               </li>
+              <li className="border-t border-primary/10 pt-4">
+                <Link
+                  href="/privacy"
+                  className="text-sm text-primary/50 hover:text-primary transition-colors underline underline-offset-2"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Informativa Privacy
+                </Link>
+              </li>
               <li className="pt-2 flex justify-end opacity-40 pointer-events-none">
                 <Image src="/pesce-mandarino-1-nobg.png" alt="" width={80} height={42} />
               </li>

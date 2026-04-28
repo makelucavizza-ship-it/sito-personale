@@ -109,9 +109,9 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <Link
               href="/privacy"
-              className="text-xs text-bg/40 hover:text-bg/70 transition-colors"
+              className="text-xs text-bg/60 hover:text-bg transition-colors underline underline-offset-2"
             >
-              Privacy
+              Informativa Privacy
             </Link>
             <Link
               href="/contatti"
