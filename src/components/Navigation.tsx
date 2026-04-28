@@ -64,9 +64,9 @@ export default function Navigation() {
           >
             Calcolatore gratuito
           </Link>
-          <div className="pointer-events-none select-none opacity-50 hidden lg:block">
+          <Link href="/pesce" className="opacity-50 hover:opacity-80 transition-opacity duration-300 hidden lg:block" title="🐠">
             <Image src="/pesce-mandarino-1-nobg.png" alt="" width={60} height={31} className="drop-shadow-sm" />
-          </div>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -122,8 +122,10 @@ export default function Navigation() {
                   Informativa Privacy
                 </Link>
               </li>
-              <li className="pt-2 flex justify-end opacity-40 pointer-events-none">
-                <Image src="/pesce-mandarino-1-nobg.png" alt="" width={80} height={42} />
+              <li className="pt-2 flex justify-end">
+                <Link href="/pesce" onClick={() => setMenuOpen(false)} className="opacity-40 hover:opacity-70 transition-opacity duration-300">
+                  <Image src="/pesce-mandarino-1-nobg.png" alt="" width={80} height={42} />
+                </Link>
               </li>
             </ul>
           </motion.div>
