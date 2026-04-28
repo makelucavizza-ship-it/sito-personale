@@ -161,22 +161,6 @@ async function tavilySearch(query: string, apiKey: string): Promise<string> {
   return lines.join("\n\n");
 }
 
-async function jinaSearch(query: string): Promise<string> {
-  const res = await fetch(
-    `https://s.jina.ai/${encodeURIComponent(query)}`,
-    {
-      headers: {
-        Accept: "application/json",
-        "X-Retain-Images": "none",
-        "X-No-Cache": "true",
-      },
-      signal: AbortSignal.timeout(12000),
-    }
-  );
-  if (!res.ok) throw new Error(`Jina search ${res.status}`);
-  const text = await res.text();
-  return text.slice(0, 3000);
-}
 
 async function jinaReader(url: string): Promise<string> {
   const res = await fetch(`https://r.jina.ai/${url}`, {
@@ -277,28 +261,21 @@ async function scrapeBusinessInfo(
     } catch { /* fall through */ }
   }
 
-  // 2. Jina AI Search (free, no key) — cerca su più query in parallelo
+  // 2. Jina Reader su URL costruiti direttamente (no search key needed)
   if (parts.length === 0) {
-    try {
-      const jinaQueries = [
-        `${query} tripadvisor OR "google maps" OR facebook OR instagram`,
-        `${queryShort} ristorante recensioni`,
-      ];
-      const jinaResults = await Promise.allSettled(jinaQueries.map(jinaSearch));
-      for (const r of jinaResults) {
-        if (r.status === "fulfilled" && r.value.trim()) {
-          parts.push(`Risultati ricerca online:\n${r.value}`);
-          const foundUrl = extractFirstUrl(r.value);
-          if (foundUrl && !foundUrl.includes("jina.ai") && !foundUrl.includes("google.")) {
-            try {
-              const content = await jinaReader(foundUrl);
-              parts.push(`Contenuto pagina trovata:\n${content}`);
-            } catch { /* skip */ }
-          }
+    const directUrls = [
+      `https://www.tripadvisor.it/Search?q=${encodeURIComponent(query)}`,
+      `https://www.paginegialle.it/${encodeURIComponent(citta.toLowerCase().replace(/\s+/g, "-"))}/ristoranti/${encodeURIComponent(distintivo.toLowerCase().replace(/\s+/g, "-"))}`,
+    ];
+    for (const url of directUrls) {
+      try {
+        const content = await jinaReader(url);
+        if (content && content.length > 200) {
+          parts.push(`Dati trovati online (${url}):\n${content.slice(0, 1500)}`);
           break;
         }
-      }
-    } catch { /* fall through */ }
+      } catch { /* skip */ }
+    }
   }
 
   // 3. DuckDuckGo Instant Answer — last resort
