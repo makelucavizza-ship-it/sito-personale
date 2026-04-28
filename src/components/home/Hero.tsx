@@ -114,21 +114,21 @@ export default function Hero() {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-primary/70 max-w-md mb-10 leading-relaxed">
-              Scopri quanto tempo e soldi stai perdendo senza AI.
+              Scopri quanto tempo e soldi stai perdendo senza AI — con il calcolatore gratuito.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-wrap gap-3 items-center">
               <Link
                 href="/audit"
-                className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block text-center"
+                className="px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-base hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
-                Scopri quanto tempo e soldi stai perdendo senza AI →
+                Calcolatore gratuito →
               </Link>
               <Link
                 href="/chi-sono"
-                className="px-8 py-4 rounded-full border-2 border-primary/20 text-primary font-bold text-lg hover:border-primary/50 transition-all inline-block text-center"
+                className="px-7 py-3.5 rounded-full border-2 border-primary/20 text-primary font-bold text-base hover:border-primary/50 transition-all inline-block"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
                 Chi sono
