@@ -70,14 +70,19 @@ export default function RootLayout({
         <Script id="ga4-consent" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
+          var EU = ['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB',
+                    'GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL',
+                    'NO','PL','PT','RO','SE','SI','SK','CH'];
           try {
             var c = JSON.parse(localStorage.getItem('lv_cookie_consent') || 'null');
+            // Regioni EU/SEE: segui il consenso dell'utente
             gtag('consent', 'default', {
               analytics_storage: c && c.analytics ? 'granted' : 'denied',
               ad_storage: c && c.marketing ? 'granted' : 'denied',
               ad_user_data: c && c.marketing ? 'granted' : 'denied',
               ad_personalization: c && c.marketing ? 'granted' : 'denied',
               wait_for_update: 500,
+              region: EU,
             });
           } catch(e) {
             gtag('consent', 'default', {
@@ -86,8 +91,16 @@ export default function RootLayout({
               ad_user_data: 'denied',
               ad_personalization: 'denied',
               wait_for_update: 500,
+              region: EU,
             });
           }
+          // Fuori EU: granted di default (nessun banner richiesto)
+          gtag('consent', 'default', {
+            analytics_storage: 'granted',
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+          });
         `}</Script>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7PTK1QG0CG" strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">{`
