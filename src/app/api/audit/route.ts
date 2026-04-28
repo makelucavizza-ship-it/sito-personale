@@ -53,34 +53,62 @@ function extractJSON(text: string): string {
   return text.trim();
 }
 
-async function braveSearch(query: string, apiKey: string): Promise<string> {
-  const res = await fetch(
-    `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=5&country=it&search_lang=it`,
-    {
-      headers: {
-        Accept: "application/json",
-        "Accept-Encoding": "gzip",
-        "X-Subscription-Token": apiKey,
-      },
-      signal: AbortSignal.timeout(7000),
-    }
-  );
-  if (!res.ok) throw new Error(`Brave ${res.status}`);
+async function serperSearch(query: string, apiKey: string): Promise<string> {
+  const res = await fetch("https://google.serper.dev/search", {
+    method: "POST",
+    headers: {
+      "X-API-KEY": apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ q: query, gl: "it", hl: "it", num: 5 }),
+    signal: AbortSignal.timeout(7000),
+  });
+  if (!res.ok) throw new Error(`Serper ${res.status}`);
   const data = await res.json();
-  const results = (data.web?.results ?? []) as Array<{
+  const organic = (data.organic ?? []) as Array<{
     title: string;
-    url: string;
-    description?: string;
-    extra_snippets?: string[];
+    link: string;
+    snippet?: string;
+    sitelinks?: Array<{ title: string; link: string }>;
   }>;
-  return results
-    .map(
-      (r) =>
-        `[${r.title}](${r.url})\n${r.description ?? ""}${
-          r.extra_snippets?.length ? "\n" + r.extra_snippets.join(" ") : ""
-        }`
-    )
-    .join("\n\n");
+  const knowledgeGraph = data.knowledgeGraph as
+    | { title?: string; description?: string; rating?: number; reviews?: number; address?: string; website?: string }
+    | undefined;
+
+  const lines: string[] = [];
+  if (knowledgeGraph?.description) {
+    lines.push(
+      `Scheda Google: ${knowledgeGraph.title ?? ""}` +
+      (knowledgeGraph.rating ? ` — ★ ${knowledgeGraph.rating} (${knowledgeGraph.reviews ?? "?"} recensioni)` : "") +
+      (knowledgeGraph.address ? ` — ${knowledgeGraph.address}` : "") +
+      `\n${knowledgeGraph.description}` +
+      (knowledgeGraph.website ? `\nSito: ${knowledgeGraph.website}` : "")
+    );
+  }
+  lines.push(...organic.map((r) => `[${r.title}](${r.link})\n${r.snippet ?? ""}`));
+  return lines.join("\n\n");
+}
+
+async function tavilySearch(query: string, apiKey: string): Promise<string> {
+  const res = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_key: apiKey,
+      query,
+      search_depth: "basic",
+      include_answer: true,
+      max_results: 5,
+    }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!res.ok) throw new Error(`Tavily ${res.status}`);
+  const data = await res.json();
+  const lines: string[] = [];
+  if (data.answer) lines.push(`Risposta diretta: ${data.answer}`);
+  const results = (data.results ?? []) as Array<{ title: string; url: string; content: string }>;
+  lines.push(...results.map((r) => `[${r.title}](${r.url})\n${r.content?.slice(0, 400) ?? ""}`));
+  return lines.join("\n\n");
 }
 
 async function jinaSearch(query: string): Promise<string> {
@@ -127,30 +155,39 @@ async function scrapeBusinessInfo(
 
   const parts: string[] = [];
   const query = `${nomeAttivita} ${citta}`;
-  const braveKey = process.env.BRAVE_SEARCH_API_KEY;
+  const serperKey = process.env.SERPER_API_KEY;
+  const tavilyKey = process.env.TAVILY_API_KEY;
 
-  // 1. Brave Search (if key configured) — best quality
-  if (braveKey) {
+  // 1a. Serper.dev (free 2.500 req, then paid) — Google results + knowledge graph
+  if (serperKey) {
     try {
       const [reviews, web] = await Promise.allSettled([
-        braveSearch(`${query} recensioni google tripadvisor`, braveKey),
-        braveSearch(`${query} sito ufficiale`, braveKey),
+        serperSearch(`${query} recensioni`, serperKey),
+        serperSearch(`${query} sito ufficiale`, serperKey),
       ]);
       if (reviews.status === "fulfilled" && reviews.value) {
         parts.push(`Recensioni e presenza:\n${reviews.value}`);
       }
       if (web.status === "fulfilled" && web.value) {
         const websiteUrl = extractFirstUrl(web.value);
-        if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.")) {
+        if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("serper.")) {
           try {
             const content = await jinaReader(websiteUrl);
-            parts.push(`Contenuto sito web (${websiteUrl}):\n${content}`);
+            parts.push(`Contenuto sito (${websiteUrl}):\n${content}`);
           } catch { /* skip */ }
         } else {
           parts.push(`Risultati web:\n${web.value}`);
         }
       }
-    } catch { /* fall through to Jina */ }
+    } catch { /* fall through */ }
+  }
+
+  // 1b. Tavily (1.000 req/mese free) — AI-optimized search with content
+  if (parts.length === 0 && tavilyKey) {
+    try {
+      const result = await tavilySearch(`${query} recensioni sito web presenza online`, tavilyKey);
+      if (result) parts.push(`Risultati ricerca:\n${result}`);
+    } catch { /* fall through */ }
   }
 
   // 2. Jina AI Search (free, no key) — fallback or supplement
