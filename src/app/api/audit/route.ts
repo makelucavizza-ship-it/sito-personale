@@ -347,6 +347,7 @@ ISTRUZIONI IMPORTANTI:
 6. CONTRADDIZIONI nel form: se i numeri del calcolatore contraddicono le risposte testuali, dai priorità alle risposte qualitative. I numeri possono essere inseriti per curiosità, le parole descrivono la realtà.
 7. Usa i numeri reali del calcolatore (€${annualValue.toLocaleString("it-IT")}/anno, ${totalOre}h/settimana)
 8. Sii diretto e specifico per il settore ${settore} a ${citta || "Italia"}
+9. NON nominare mai strumenti o piattaforme specifiche di terze parti (es. TheFork, Resy, Plateform, ManyChat, Mailchimp, Hootsuite, ecc.). Descrivi invece la logica e il risultato: "un sistema che raccoglie prenotazioni automaticamente" invece di "TheFork". L'obiettivo è che l'utente capisca il valore e si rivolga a Luca per implementarlo, non che vada su una piattaforma da solo.
 
 Rispondi SOLO con JSON valido, nient'altro.
 
