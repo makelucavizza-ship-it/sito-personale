@@ -155,41 +155,58 @@ async function scrapeBusinessInfo(
 
   const parts: string[] = [];
   const query = `${nomeAttivita} ${citta}`;
-  // Fallback query: solo prima parola significativa + città (cattura "Walter" da "Pizzeria Walter")
-  const firstWord = nomeAttivita.split(" ").filter((w) => w.length > 3)[0] ?? nomeAttivita.split(" ")[0];
-  const queryShort = `${firstWord} ${citta}`;
+
+  // Estrai il nome distintivo scartando parole generiche di settore
+  const GENERIC = new Set([
+    "pizzeria","ristorante","trattoria","osteria","bar","caffè","caffe","pub","gelateria",
+    "pasticceria","panetteria","panificio","hotel","albergo","b&b","hostel","agriturismo",
+    "negozio","boutique","shop","store","studio","agenzia","centro","salone","salon",
+    "beauty","wellness","farmacia","parafarmacia","officina","autofficina","carrozzeria",
+    "dal","dalla","da","di","del","della","dei","degli","alle","all","il","la","lo","le",
+  ]);
+  const distintivo = nomeAttivita
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((w) => w.length > 1 && !GENERIC.has(w))
+    .join(" ");
+  const queryShort = distintivo ? `${distintivo} ${citta}` : query;
+
   const serperKey = process.env.SERPER_API_KEY;
   const tavilyKey = process.env.TAVILY_API_KEY;
 
-  // 1a. Serper.dev — Google results + knowledge graph
+  // 1a. Serper.dev — lancia query completa e query distintiva in parallelo
   if (serperKey) {
     try {
-      // Prova prima la query completa, poi quella corta se non trova knowledge graph
-      const [reviewsFull, webFull] = await Promise.allSettled([
-        serperSearch(`${query} recensioni`, serperKey),
-        serperSearch(query, serperKey),
-      ]);
+      const queries = Array.from(new Set([
+        `${query} recensioni`,
+        queryShort !== query ? `${queryShort} recensioni` : null,
+        query,
+        queryShort !== query ? queryShort : null,
+      ]).values()).filter(Boolean) as string[];
 
-      let reviewsText = reviewsFull.status === "fulfilled" ? reviewsFull.value : "";
-      let webText = webFull.status === "fulfilled" ? webFull.value : "";
+      const results = await Promise.allSettled(queries.map((q) => serperSearch(q, serperKey)));
 
-      // Se la query completa non ha trovato knowledge graph, prova con nome corto
-      const hasKG = reviewsText.includes("Scheda Google:") || webText.includes("Scheda Google:");
-      if (!hasKG && queryShort !== query) {
-        const [r2, w2] = await Promise.allSettled([
-          serperSearch(`${queryShort} recensioni`, serperKey),
-          serperSearch(queryShort, serperKey),
-        ]);
-        if (r2.status === "fulfilled" && r2.value.includes("Scheda Google:")) reviewsText = r2.value;
-        if (w2.status === "fulfilled" && w2.value.includes("Scheda Google:")) webText = w2.value;
-        // usa comunque i risultati anche senza KG
-        if (!reviewsText && r2.status === "fulfilled") reviewsText = r2.value;
-        if (!webText && w2.status === "fulfilled") webText = w2.value;
+      // Preferisci il risultato con knowledge graph, altrimenti prendi il primo valido
+      let reviewsText = "";
+      let webText = "";
+
+      for (const r of results.slice(0, 2)) {
+        if (r.status === "fulfilled" && r.value) {
+          if (!reviewsText || (!reviewsText.includes("Scheda Google:") && r.value.includes("Scheda Google:"))) {
+            reviewsText = r.value;
+          }
+        }
+      }
+      for (const r of results.slice(2)) {
+        if (r.status === "fulfilled" && r.value) {
+          if (!webText || (!webText.includes("Scheda Google:") && r.value.includes("Scheda Google:"))) {
+            webText = r.value;
+          }
+        }
       }
 
       if (reviewsText) parts.push(`Recensioni e presenza:\n${reviewsText}`);
 
-      // Cerca sito web tra i risultati e scrapa con Jina
       const websiteUrl = extractFirstUrl(webText);
       if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.com/Search")) {
         try {
