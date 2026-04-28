@@ -143,6 +143,7 @@ export default function AuditForm() {
   const [nomeAttivita, setNomeAttivita] = useState("");
   const [citta, setCitta] = useState("");
   const [email, setEmail] = useState("");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [result, setResult] = useState<AuditResult | null>(null);
   const [error, setError] = useState("");
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
@@ -643,7 +644,7 @@ export default function AuditForm() {
                   Ottimo, ci siamo quasi.
                 </h2>
                 <p className="text-bg/60">
-                  Dove mando il tuo report personalizzato?
+                  Dicci chi sei — il report apparirà qui sotto in tempo reale.
                 </p>
               </div>
 
@@ -726,17 +727,47 @@ export default function AuditForm() {
                     className="w-full px-4 py-3 rounded-xl border border-bg/20 bg-bg/10 text-bg placeholder-bg/30 focus:outline-none focus:border-coral transition-colors"
                   />
                 </div>
+                {/* Privacy checkbox */}
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative flex-shrink-0 mt-0.5">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={privacyAccepted}
+                      onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                      className="sr-only"
+                    />
+                    <div
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+                        privacyAccepted
+                          ? "bg-coral border-coral"
+                          : "border-bg/30 bg-bg/10 group-hover:border-bg/50"
+                      }`}
+                    >
+                      {privacyAccepted && <Check size={11} className="text-white" strokeWidth={3} />}
+                    </div>
+                  </div>
+                  <span className="text-bg/50 text-xs leading-relaxed">
+                    Ho letto e accetto l&apos;
+                    <Link href="/privacy" target="_blank" className="text-coral underline underline-offset-2 hover:text-coral/80">
+                      informativa sulla privacy
+                    </Link>
+                    . I miei dati saranno usati per generare il report e per contattarmi se vorrò parlarne.
+                  </span>
+                </label>
+
                 <motion.button
                   type="submit"
-                  className="w-full px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg hover:from-[#d4602a] hover:to-[#b84d24] transition-all flex items-center justify-center gap-2 mt-4"
+                  disabled={!privacyAccepted}
+                  className="w-full px-8 py-5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold text-lg transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:from-[#d4602a] hover:enabled:to-[#b84d24]"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
-                  whileTap={{ scale: 0.97 }}
+                  whileTap={{ scale: privacyAccepted ? 0.97 : 1 }}
                 >
                   <Sparkles size={20} />
                   Genera il mio report →
                 </motion.button>
                 <p className="text-bg/30 text-xs text-center">
-                  Niente spam. Solo il tuo report.
+                  Il report è generato qui in tempo reale — nessuna attesa, nessuna email.
                 </p>
               </form>
             </motion.div>
