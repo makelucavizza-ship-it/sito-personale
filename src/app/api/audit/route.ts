@@ -65,17 +65,36 @@ async function serperSearch(query: string, apiKey: string): Promise<string> {
   });
   if (!res.ok) throw new Error(`Serper ${res.status}`);
   const data = await res.json();
+
   const organic = (data.organic ?? []) as Array<{
-    title: string;
-    link: string;
-    snippet?: string;
-    sitelinks?: Array<{ title: string; link: string }>;
+    title: string; link: string; snippet?: string;
   }>;
   const knowledgeGraph = data.knowledgeGraph as
     | { title?: string; description?: string; rating?: number; reviews?: number; address?: string; website?: string }
     | undefined;
+  // Local Pack — è qui che Serper mette le attività locali con rating/recensioni
+  const places = (data.places ?? []) as Array<{
+    title?: string; address?: string; rating?: number; ratingCount?: number;
+    website?: string; phone?: string; hours?: string; type?: string;
+  }>;
 
   const lines: string[] = [];
+
+  // 1. Local Pack (priorità massima per attività locali)
+  if (places.length > 0) {
+    const p = places[0];
+    lines.push(
+      `Scheda Google Business: ${p.title ?? ""}` +
+      (p.type ? ` (${p.type})` : "") +
+      (p.rating ? ` — ★ ${p.rating} (${p.ratingCount ?? "?"} recensioni)` : "") +
+      (p.address ? ` — ${p.address}` : "") +
+      (p.phone ? ` — Tel: ${p.phone}` : "") +
+      (p.hours ? ` — Orari: ${p.hours}` : "") +
+      (p.website ? `\nSito: ${p.website}` : "")
+    );
+  }
+
+  // 2. Knowledge Graph (per entità ben note)
   if (knowledgeGraph?.description) {
     lines.push(
       `Scheda Google: ${knowledgeGraph.title ?? ""}` +
@@ -85,6 +104,8 @@ async function serperSearch(query: string, apiKey: string): Promise<string> {
       (knowledgeGraph.website ? `\nSito: ${knowledgeGraph.website}` : "")
     );
   }
+
+  // 3. Risultati organici
   lines.push(...organic.map((r) => `[${r.title}](${r.link})\n${r.snippet ?? ""}`));
   return lines.join("\n\n");
 }
@@ -308,6 +329,7 @@ ISTRUZIONI IMPORTANTI:
 4. Usa i numeri reali del calcolatore (€${annualValue.toLocaleString("it-IT")}/anno, ${totalOre}h/settimana)
 5. Sii diretto e specifico per il settore ${settore} a ${citta || "Italia"}
 6. Scrivi come parleresti a questa persona specifica, non come un report generico
+7. CONTRADDIZIONI: se i numeri del calcolatore (es. 0h su prenotazioni) contraddicono le risposte testuali (es. "sono sommerso di chiamate"), dai sempre più peso alle risposte testuali — i numeri potrebbero essere stati inseriti per errore o per curiosità. Usa le risposte qualitative come fonte primaria della situazione reale.
 
 Rispondi SOLO con JSON valido, nient'altro.
 
