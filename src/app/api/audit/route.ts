@@ -162,12 +162,28 @@ async function tavilySearch(query: string, apiKey: string): Promise<string> {
 }
 
 
+async function jinaSearch(query: string): Promise<string> {
+  const key = process.env.JINA_API_KEY;
+  const res = await fetch(`https://s.jina.ai/${encodeURIComponent(query)}`, {
+    headers: {
+      Accept: "application/json",
+      "X-Retain-Images": "none",
+      ...(key ? { Authorization: `Bearer ${key}` } : {}),
+    },
+    signal: AbortSignal.timeout(12000),
+  });
+  if (!res.ok) throw new Error(`Jina search ${res.status}`);
+  const text = await res.text();
+  return text.slice(0, 3000);
+}
+
 async function jinaReader(url: string): Promise<string> {
+  const key = process.env.JINA_API_KEY;
   const res = await fetch(`https://r.jina.ai/${url}`, {
     headers: {
       Accept: "text/plain",
       "X-Retain-Images": "none",
-      "X-No-Cache": "true",
+      ...(key ? { Authorization: `Bearer ${key}` } : {}),
     },
     signal: AbortSignal.timeout(10000),
   });
@@ -261,17 +277,36 @@ async function scrapeBusinessInfo(
     } catch { /* fall through */ }
   }
 
-  // 2. Jina Reader su URL costruiti direttamente (no search key needed)
+  // 2. Jina AI Search (con chiave)
+  if (parts.length === 0) {
+    try {
+      const jinaResult = await jinaSearch(`${query} tripadvisor OR google maps OR facebook OR instagram recensioni`);
+      if (jinaResult.trim()) {
+        parts.push(`Risultati ricerca online:\n${jinaResult}`);
+        const foundUrl = extractFirstUrl(jinaResult);
+        if (foundUrl && !foundUrl.includes("jina.ai") && !foundUrl.includes("google.com/search")) {
+          try {
+            const content = await jinaReader(foundUrl);
+            if (content.length > 200) parts.push(`Contenuto pagina (${foundUrl}):\n${content.slice(0, 1500)}`);
+          } catch { /* skip */ }
+        }
+      }
+    } catch (e) {
+      console.error("[scrape] Jina search error:", e);
+    }
+  }
+
+  // 3. Jina Reader su URL diretti come ultimo tentativo
   if (parts.length === 0) {
     const directUrls = [
       `https://www.tripadvisor.it/Search?q=${encodeURIComponent(query)}`,
-      `https://www.paginegialle.it/${encodeURIComponent(citta.toLowerCase().replace(/\s+/g, "-"))}/ristoranti/${encodeURIComponent(distintivo.toLowerCase().replace(/\s+/g, "-"))}`,
+      `https://www.paginegialle.it/${citta.toLowerCase().replace(/\s+/g, "-")}/ristoranti/${distintivo.toLowerCase().replace(/\s+/g, "-")}`,
     ];
     for (const url of directUrls) {
       try {
         const content = await jinaReader(url);
         if (content && content.length > 200) {
-          parts.push(`Dati trovati online (${url}):\n${content.slice(0, 1500)}`);
+          parts.push(`Dati trovati online:\n${content.slice(0, 1500)}`);
           break;
         }
       } catch { /* skip */ }
