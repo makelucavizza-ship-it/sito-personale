@@ -53,88 +53,58 @@ function extractJSON(text: string): string {
   return text.trim();
 }
 
-async function serperMaps(query: string, apiKey: string): Promise<string> {
-  const res = await fetch("https://google.serper.dev/maps", {
-    method: "POST",
-    headers: { "X-API-KEY": apiKey, "Content-Type": "application/json" },
-    body: JSON.stringify({ q: query, gl: "it", hl: "it" }),
-    signal: AbortSignal.timeout(7000),
-  });
-  if (!res.ok) throw new Error(`Serper Maps ${res.status}`);
+async function serpApiMaps(query: string, apiKey: string): Promise<string> {
+  const url = `https://serpapi.com/search.json?engine=google_maps&q=${encodeURIComponent(query)}&type=search&hl=it&gl=it&api_key=${apiKey}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+  if (!res.ok) throw new Error(`SerpAPI Maps ${res.status}`);
   const data = await res.json();
-  const places = (data.places ?? []) as Array<{
-    title?: string; address?: string; rating?: number; ratingCount?: number;
-    website?: string; phone?: string; hours?: string; type?: string;
-    thumbnailUrl?: string; cid?: string;
+  const results = (data.local_results ?? []) as Array<{
+    title?: string; type?: string; rating?: number; reviews?: number;
+    address?: string; phone?: string; website?: string; hours?: { schedule?: unknown };
+    open_state?: string;
   }>;
-  if (places.length === 0) return "";
-  return places
-    .slice(0, 3)
-    .map((p) =>
-      `GMB: ${p.title ?? ""}` +
-      (p.type ? ` (${p.type})` : "") +
-      (p.rating ? ` — ★ ${p.rating} (${p.ratingCount ?? "?"} recensioni)` : "") +
-      (p.address ? ` — ${p.address}` : "") +
-      (p.phone ? ` — Tel: ${p.phone}` : "") +
-      (p.hours ? ` — Orari: ${p.hours}` : "") +
-      (p.website ? ` — Sito: ${p.website}` : "")
-    )
-    .join("\n");
+  if (results.length === 0) return "";
+  return results.slice(0, 3).map((p) =>
+    `GMB: ${p.title ?? ""}` +
+    (p.type ? ` (${p.type})` : "") +
+    (p.rating ? ` — ★ ${p.rating} (${p.reviews ?? "?"} recensioni)` : "") +
+    (p.address ? ` — ${p.address}` : "") +
+    (p.phone ? ` — Tel: ${p.phone}` : "") +
+    (p.open_state ? ` — ${p.open_state}` : "") +
+    (p.website ? ` — Sito: ${p.website}` : "")
+  ).join("\n");
 }
 
-async function serperSearch(query: string, apiKey: string): Promise<string> {
-  const res = await fetch("https://google.serper.dev/search", {
-    method: "POST",
-    headers: {
-      "X-API-KEY": apiKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ q: query, gl: "it", hl: "it", num: 5 }),
-    signal: AbortSignal.timeout(7000),
-  });
-  if (!res.ok) throw new Error(`Serper ${res.status}`);
+async function serpApiSearch(query: string, apiKey: string): Promise<string> {
+  const url = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(query)}&hl=it&gl=it&num=5&api_key=${apiKey}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+  if (!res.ok) throw new Error(`SerpAPI Search ${res.status}`);
   const data = await res.json();
 
-  const organic = (data.organic ?? []) as Array<{
-    title: string; link: string; snippet?: string;
-  }>;
-  const knowledgeGraph = data.knowledgeGraph as
+  const organic = (data.organic_results ?? []) as Array<{ title: string; link: string; snippet?: string }>;
+  const kg = data.knowledge_graph as
     | { title?: string; description?: string; rating?: number; reviews?: number; address?: string; website?: string }
     | undefined;
-  // Local Pack — è qui che Serper mette le attività locali con rating/recensioni
-  const places = (data.places ?? []) as Array<{
-    title?: string; address?: string; rating?: number; ratingCount?: number;
-    website?: string; phone?: string; hours?: string; type?: string;
+  const local = (data.local_results ?? []) as Array<{
+    title?: string; rating?: number; reviews?: number; address?: string; website?: string; type?: string;
   }>;
 
   const lines: string[] = [];
-
-  // 1. Local Pack (priorità massima per attività locali)
-  if (places.length > 0) {
-    const p = places[0];
-    lines.push(
-      `Scheda Google Business: ${p.title ?? ""}` +
+  if (local.length > 0) {
+    const p = local[0];
+    lines.push(`Scheda Google Business: ${p.title ?? ""}` +
       (p.type ? ` (${p.type})` : "") +
-      (p.rating ? ` — ★ ${p.rating} (${p.ratingCount ?? "?"} recensioni)` : "") +
+      (p.rating ? ` — ★ ${p.rating} (${p.reviews ?? "?"} recensioni)` : "") +
       (p.address ? ` — ${p.address}` : "") +
-      (p.phone ? ` — Tel: ${p.phone}` : "") +
-      (p.hours ? ` — Orari: ${p.hours}` : "") +
-      (p.website ? `\nSito: ${p.website}` : "")
-    );
+      (p.website ? `\nSito: ${p.website}` : ""));
   }
-
-  // 2. Knowledge Graph (per entità ben note)
-  if (knowledgeGraph?.description) {
-    lines.push(
-      `Scheda Google: ${knowledgeGraph.title ?? ""}` +
-      (knowledgeGraph.rating ? ` — ★ ${knowledgeGraph.rating} (${knowledgeGraph.reviews ?? "?"} recensioni)` : "") +
-      (knowledgeGraph.address ? ` — ${knowledgeGraph.address}` : "") +
-      `\n${knowledgeGraph.description}` +
-      (knowledgeGraph.website ? `\nSito: ${knowledgeGraph.website}` : "")
-    );
+  if (kg?.description) {
+    lines.push(`Scheda Google: ${kg.title ?? ""}` +
+      (kg.rating ? ` — ★ ${kg.rating} (${kg.reviews ?? "?"} rec.)` : "") +
+      (kg.address ? ` — ${kg.address}` : "") +
+      `\n${kg.description}` +
+      (kg.website ? `\nSito: ${kg.website}` : ""));
   }
-
-  // 3. Risultati organici
   lines.push(...organic.map((r) => `[${r.title}](${r.link})\n${r.snippet ?? ""}`));
   return lines.join("\n\n");
 }
@@ -221,35 +191,33 @@ async function scrapeBusinessInfo(
     .join(" ");
   const queryShort = distintivo ? `${distintivo} ${citta}` : query;
 
-  const serperKey = process.env.SERPER_API_KEY;
+  const serpApiKey = process.env.SERPAPI_KEY;
   const tavilyKey = process.env.TAVILY_API_KEY;
 
-  console.log(`[scrape] query="${query}" short="${queryShort}" serper=${!!serperKey} tavily=${!!tavilyKey}`);
+  console.log(`[scrape] query="${query}" short="${queryShort}" serpapi=${!!serpApiKey} tavily=${!!tavilyKey} jina=${!!process.env.JINA_API_KEY}`);
 
-  // 1a. Serper.dev — Maps (GMB) + Search in parallelo
-  if (serperKey) {
+  // 1. SerpAPI — Maps (GMB) + Search Google in parallelo
+  if (serpApiKey) {
     try {
       const [mapsResult, mapsFallback, searchResult, searchFallback] = await Promise.allSettled([
-        serperMaps(query, serperKey),
-        queryShort !== query ? serperMaps(queryShort, serperKey) : Promise.resolve(""),
-        serperSearch(query, serperKey),
-        queryShort !== query ? serperSearch(queryShort, serperKey) : Promise.resolve(""),
+        serpApiMaps(query, serpApiKey),
+        queryShort !== query ? serpApiMaps(queryShort, serpApiKey) : Promise.resolve(""),
+        serpApiSearch(query, serpApiKey),
+        queryShort !== query ? serpApiSearch(queryShort, serpApiKey) : Promise.resolve(""),
       ]);
 
-      console.log(`[scrape] maps=${mapsResult.status} mapsFb=${mapsFallback.status} search=${searchResult.status} searchFb=${searchFallback.status}`);
+      console.log(`[scrape] maps=${mapsResult.status} mapsFb=${mapsFallback.status} search=${searchResult.status}`);
       if (mapsResult.status === "rejected") console.error("[scrape] maps error:", mapsResult.reason);
       if (searchResult.status === "rejected") console.error("[scrape] search error:", searchResult.reason);
 
       const mapsText =
         (mapsResult.status === "fulfilled" && mapsResult.value) ? mapsResult.value :
         (mapsFallback.status === "fulfilled" && mapsFallback.value) ? mapsFallback.value : "";
-
       if (mapsText) parts.push(`Profilo Google Business:\n${mapsText}`);
 
       const searchText =
         (searchResult.status === "fulfilled" && searchResult.value) ? searchResult.value :
         (searchFallback.status === "fulfilled" && searchFallback.value) ? searchFallback.value : "";
-
       if (searchText) {
         const websiteUrl = extractFirstUrl(searchText);
         if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.com/Search")) {
@@ -260,13 +228,12 @@ async function scrapeBusinessInfo(
         }
         parts.push(`Risultati ricerca:\n${searchText}`);
       }
-
-      console.log(`[scrape] parts after serper: ${parts.length}`);
+      console.log(`[scrape] parts after serpapi: ${parts.length}`);
     } catch (e) {
-      console.error("[scrape] serper block error:", e);
+      console.error("[scrape] serpapi block error:", e);
     }
   } else {
-    console.warn("[scrape] SERPER_API_KEY non configurata — fallback a Jina");
+    console.warn("[scrape] SERPAPI_KEY non configurata — fallback a Jina");
   }
 
   // 1b. Tavily (1.000 req/mese free)
