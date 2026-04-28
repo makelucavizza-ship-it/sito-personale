@@ -53,6 +53,35 @@ function extractJSON(text: string): string {
   return text.trim();
 }
 
+async function serperMaps(query: string, apiKey: string): Promise<string> {
+  const res = await fetch("https://google.serper.dev/maps", {
+    method: "POST",
+    headers: { "X-API-KEY": apiKey, "Content-Type": "application/json" },
+    body: JSON.stringify({ q: query, gl: "it", hl: "it" }),
+    signal: AbortSignal.timeout(7000),
+  });
+  if (!res.ok) throw new Error(`Serper Maps ${res.status}`);
+  const data = await res.json();
+  const places = (data.places ?? []) as Array<{
+    title?: string; address?: string; rating?: number; ratingCount?: number;
+    website?: string; phone?: string; hours?: string; type?: string;
+    thumbnailUrl?: string; cid?: string;
+  }>;
+  if (places.length === 0) return "";
+  return places
+    .slice(0, 3)
+    .map((p) =>
+      `GMB: ${p.title ?? ""}` +
+      (p.type ? ` (${p.type})` : "") +
+      (p.rating ? ` — ★ ${p.rating} (${p.ratingCount ?? "?"} recensioni)` : "") +
+      (p.address ? ` — ${p.address}` : "") +
+      (p.phone ? ` — Tel: ${p.phone}` : "") +
+      (p.hours ? ` — Orari: ${p.hours}` : "") +
+      (p.website ? ` — Sito: ${p.website}` : "")
+    )
+    .join("\n");
+}
+
 async function serperSearch(query: string, apiKey: string): Promise<string> {
   const res = await fetch("https://google.serper.dev/search", {
     method: "POST",
@@ -195,47 +224,37 @@ async function scrapeBusinessInfo(
   const serperKey = process.env.SERPER_API_KEY;
   const tavilyKey = process.env.TAVILY_API_KEY;
 
-  // 1a. Serper.dev — lancia query completa e query distintiva in parallelo
+  // 1a. Serper.dev — Maps (GMB) + Search in parallelo
   if (serperKey) {
     try {
-      const queries = Array.from(new Set([
-        `${query} recensioni`,
-        queryShort !== query ? `${queryShort} recensioni` : null,
-        query,
-        queryShort !== query ? queryShort : null,
-      ]).values()).filter(Boolean) as string[];
+      const [mapsResult, mapsFallback, searchResult, searchFallback] = await Promise.allSettled([
+        serperMaps(query, serperKey),
+        queryShort !== query ? serperMaps(queryShort, serperKey) : Promise.resolve(""),
+        serperSearch(query, serperKey),
+        queryShort !== query ? serperSearch(queryShort, serperKey) : Promise.resolve(""),
+      ]);
 
-      const results = await Promise.allSettled(queries.map((q) => serperSearch(q, serperKey)));
+      // Maps — prendi il primo risultato non vuoto (query completa o nome distintivo)
+      const mapsText =
+        (mapsResult.status === "fulfilled" && mapsResult.value) ? mapsResult.value :
+        (mapsFallback.status === "fulfilled" && mapsFallback.value) ? mapsFallback.value : "";
 
-      // Preferisci il risultato con knowledge graph, altrimenti prendi il primo valido
-      let reviewsText = "";
-      let webText = "";
+      if (mapsText) parts.push(`Profilo Google Business:\n${mapsText}`);
 
-      for (const r of results.slice(0, 2)) {
-        if (r.status === "fulfilled" && r.value) {
-          if (!reviewsText || (!reviewsText.includes("Scheda Google:") && r.value.includes("Scheda Google:"))) {
-            reviewsText = r.value;
-          }
+      // Search organica — per trovare sito, TripAdvisor, social
+      const searchText =
+        (searchResult.status === "fulfilled" && searchResult.value) ? searchResult.value :
+        (searchFallback.status === "fulfilled" && searchFallback.value) ? searchFallback.value : "";
+
+      if (searchText) {
+        const websiteUrl = extractFirstUrl(searchText);
+        if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.com/Search")) {
+          try {
+            const content = await jinaReader(websiteUrl);
+            parts.push(`Contenuto sito (${websiteUrl}):\n${content}`);
+          } catch { /* skip */ }
         }
-      }
-      for (const r of results.slice(2)) {
-        if (r.status === "fulfilled" && r.value) {
-          if (!webText || (!webText.includes("Scheda Google:") && r.value.includes("Scheda Google:"))) {
-            webText = r.value;
-          }
-        }
-      }
-
-      if (reviewsText) parts.push(`Recensioni e presenza:\n${reviewsText}`);
-
-      const websiteUrl = extractFirstUrl(webText);
-      if (websiteUrl && !websiteUrl.includes("google.") && !websiteUrl.includes("tripadvisor.com/Search")) {
-        try {
-          const content = await jinaReader(websiteUrl);
-          parts.push(`Contenuto sito (${websiteUrl}):\n${content}`);
-        } catch { /* skip */ }
-      } else if (webText) {
-        parts.push(`Risultati web:\n${webText}`);
+        parts.push(`Risultati ricerca:\n${searchText}`);
       }
     } catch { /* fall through */ }
   }
@@ -324,12 +343,13 @@ ${answersText}
 ${webInfo ? `${webInfo}\n` : ""}
 ISTRUZIONI IMPORTANTI:
 1. Usa il nome "${nomeAttivita || nome}" nella risposta — rendila ultra-personalizzata
-2. Se hai trovato dati online (recensioni, sito, social), citali ESPLICITAMENTE: es. "Ho visto che hai X recensioni su Google" o "Sul tuo sito non c'è un sistema di prenotazione"
-3. Se NON hai trovato dati online, citalo come problema: "Non ti ho trovato facilmente online — questo già dice qualcosa"
-4. Usa i numeri reali del calcolatore (€${annualValue.toLocaleString("it-IT")}/anno, ${totalOre}h/settimana)
-5. Sii diretto e specifico per il settore ${settore} a ${citta || "Italia"}
-6. Scrivi come parleresti a questa persona specifica, non come un report generico
-7. CONTRADDIZIONI: se i numeri del calcolatore (es. 0h su prenotazioni) contraddicono le risposte testuali (es. "sono sommerso di chiamate"), dai sempre più peso alle risposte testuali — i numeri potrebbero essere stati inseriti per errore o per curiosità. Usa le risposte qualitative come fonte primaria della situazione reale.
+2. I DATI WEB HANNO PRIORITÀ ASSOLUTA sulle risposte del form. L'utente potrebbe non sapere di avere un sito, avere una pagina Facebook abbandonata, o avere recensioni negative che non conosce. Usa i dati trovati online come verità oggettiva.
+3. Se hai trovato dati online, citali SEMPRE in modo esplicito: "Ho trovato la tua scheda su Google con X recensioni (★Y)" oppure "Ho trovato il tuo sito ma non ha sistema di prenotazione online".
+4. Se l'utente dice "non ho sito/social" ma li hai trovati online, dillo chiaramente: "In realtà ho trovato... — ma non è ottimizzato/aggiornato/sfruttato".
+5. Se NON hai trovato nulla online, citalo come dato importante: "Non ti ho trovato facilmente online — questo già dice qualcosa sulla tua visibilità digitale".
+6. CONTRADDIZIONI nel form: se i numeri del calcolatore contraddicono le risposte testuali, dai priorità alle risposte qualitative. I numeri possono essere inseriti per curiosità, le parole descrivono la realtà.
+7. Usa i numeri reali del calcolatore (€${annualValue.toLocaleString("it-IT")}/anno, ${totalOre}h/settimana)
+8. Sii diretto e specifico per il settore ${settore} a ${citta || "Italia"}
 
 Rispondi SOLO con JSON valido, nient'altro.
 
