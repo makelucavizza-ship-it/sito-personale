@@ -66,10 +66,33 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         <Analytics />
+        {/* Consent Mode v2 — imposta default PRIMA che GA4 carichi */}
+        <Script id="ga4-consent" strategy="beforeInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          try {
+            var c = JSON.parse(localStorage.getItem('lv_cookie_consent') || 'null');
+            gtag('consent', 'default', {
+              analytics_storage: c && c.analytics ? 'granted' : 'denied',
+              ad_storage: c && c.marketing ? 'granted' : 'denied',
+              ad_user_data: c && c.marketing ? 'granted' : 'denied',
+              ad_personalization: c && c.marketing ? 'granted' : 'denied',
+              wait_for_update: 500,
+            });
+          } catch(e) {
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              wait_for_update: 500,
+            });
+          }
+        `}</Script>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-7PTK1QG0CG" strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
+          function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-7PTK1QG0CG');
         `}</Script>

@@ -38,6 +38,17 @@ export default function CookieBanner() {
 
   function saveConsent(consent: ConsentState) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...consent, timestamp: Date.now() }));
+    // Aggiorna Google Consent Mode v2
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const gtag = (window as any).gtag;
+    if (typeof gtag === "function") {
+      gtag("consent", "update", {
+        analytics_storage: consent.analytics ? "granted" : "denied",
+        ad_storage: consent.marketing ? "granted" : "denied",
+        ad_user_data: consent.marketing ? "granted" : "denied",
+        ad_personalization: consent.marketing ? "granted" : "denied",
+      });
+    }
     setVisible(false);
   }
 
