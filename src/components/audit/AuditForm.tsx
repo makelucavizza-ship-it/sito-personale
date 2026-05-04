@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Clock,
@@ -127,6 +128,7 @@ function SliderItem({
 }
 
 export default function AuditForm() {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<Step>("calculator");
   const [sliders, setSliders] = useState({
@@ -449,7 +451,7 @@ export default function AuditForm() {
                   Sì, dimmi come
                 </motion.button>
                 <motion.button
-                  onClick={() => setStep("sector")}
+                  onClick={() => router.push("/")}
                   className="px-8 py-6 rounded-2xl border border-bg/20 text-bg/60 font-bold text-lg hover:border-bg/40 hover:text-bg/80 transition-all text-center"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                   whileHover={{ scale: 1.02 }}
