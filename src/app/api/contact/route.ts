@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         // Notifica admin
         resend.emails.send({
           from: resendFrom,
-          to: "make.luca.vizza@gmail.com",
+          to: "info@lucavizza.it",
           replyTo: email,
           subject: `Nuovo messaggio da ${nome} — lucavizza.it`,
           html: `
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         resend.emails.send({
           from: resendFrom,
           to: email,
-          replyTo: "make.luca.vizza@gmail.com",
+          replyTo: "info@lucavizza.it",
           subject: "Ho ricevuto il tuo messaggio — Luca Vizza",
           html: `
             <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f5f0eb;padding:32px 24px;">
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
                 </p>
                 <p style="color:#474747;line-height:1.7;margin:0;">
                   Se hai bisogno di qualcosa di urgente, puoi scrivermi direttamente su
-                  <a href="mailto:make.luca.vizza@gmail.com" style="color:#ee826d;text-decoration:none;font-weight:bold;">make.luca.vizza@gmail.com</a>.
+                  <a href="mailto:info@lucavizza.it" style="color:#ee826d;text-decoration:none;font-weight:bold;">info@lucavizza.it</a>.
                 </p>
               </div>
 

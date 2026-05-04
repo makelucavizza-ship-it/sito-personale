@@ -587,7 +587,7 @@ export async function POST(req: NextRequest) {
       }),
       resend.emails.send({
         from: resendFrom,
-        to: "make.luca.vizza@gmail.com",
+        to: "info@lucavizza.it",
         subject: "Nuovo Cliente per Luca",
         html: buildAdminEmailHtml(result, nome ?? "", nomeAttivita ?? "", citta ?? "", email, settore, sliders, sectorAnswers ?? {}, webInfo),
       }),

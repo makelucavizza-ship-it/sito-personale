@@ -34,7 +34,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="text-sm leading-relaxed">
               Luca Vizza — freelance marketing digitale e AI automation.<br />
-              Email: <a href="mailto:make.luca.vizza@gmail.com" className="text-coral underline underline-offset-2">make.luca.vizza@gmail.com</a><br />
+              Email: <a href="mailto:info@lucavizza.it" className="text-coral underline underline-offset-2">info@lucavizza.it</a><br />
               P.IVA: in fase di attivazione.<br />
               Per qualsiasi richiesta relativa ai tuoi dati, scrivi all&apos;indirizzo sopra.
             </p>
@@ -129,8 +129,8 @@ export default function PrivacyPage() {
               <p className="text-primary/70">
                 Puoi modificare le tue preferenze in qualsiasi momento tramite il banner cookie (cancella
                 i dati del sito nel tuo browser per riaprirlo) oppure scrivendoci a{" "}
-                <a href="mailto:make.luca.vizza@gmail.com" className="text-coral underline underline-offset-2">
-                  make.luca.vizza@gmail.com
+                <a href="mailto:info@lucavizza.it" className="text-coral underline underline-offset-2">
+                  info@lucavizza.it
                 </a>.
                 Il consenso ha durata di 12 mesi, dopodiché verrà richiesto nuovamente.
               </p>
@@ -254,8 +254,8 @@ export default function PrivacyPage() {
             </ul>
             <p className="text-sm mt-4">
               Per esercitare i tuoi diritti, scrivi a:{" "}
-              <a href="mailto:make.luca.vizza@gmail.com" className="text-coral underline underline-offset-2">
-                make.luca.vizza@gmail.com
+              <a href="mailto:info@lucavizza.it" className="text-coral underline underline-offset-2">
+                info@lucavizza.it
               </a>. Rispondo entro 30 giorni.
             </p>
           </section>
