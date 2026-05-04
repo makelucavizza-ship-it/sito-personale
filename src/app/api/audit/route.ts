@@ -387,6 +387,7 @@ function buildUserEmailHtml(
   <div style="max-width:600px;margin:0 auto;padding:32px 24px;">
 
     <div style="background:#474747;border-radius:16px;padding:32px;margin-bottom:24px;">
+      <img src="https://lucavizza.it/logo-full.png" alt="Luca Vizza" style="height:36px;width:auto;display:block;margin-bottom:24px;" />
       <p style="color:#ee826d;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin:0 0 12px;">IL TUO REPORT</p>
       <h1 style="color:#f5f0eb;font-size:24px;margin:0 0 8px;line-height:1.3;">${result.titolo}</h1>
       <p style="color:rgba(245,240,235,0.5);font-size:13px;margin:0;">${nomeAttivita || nome}${citta ? ` · ${citta}` : ""} · ${settore}</p>
@@ -460,6 +461,7 @@ function buildAdminEmailHtml(
 
   <!-- Header -->
   <div style="background:#474747;border-radius:16px;padding:28px 32px;margin-bottom:24px;">
+    <img src="https://lucavizza.it/logo-full.png" alt="Luca Vizza" style="height:32px;width:auto;display:block;margin-bottom:20px;" />
     <p style="color:#ee826d;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px;">NUOVO CLIENTE</p>
     <h1 style="color:#f5f0eb;font-size:22px;margin:0 0 4px;">${nome || "Anonimo"}${nomeAttivita ? ` — ${nomeAttivita}` : ""}</h1>
     <p style="color:rgba(245,240,235,0.5);font-size:13px;margin:0;">${now}</p>
