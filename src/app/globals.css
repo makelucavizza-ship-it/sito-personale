@@ -16,15 +16,6 @@
   --color-bg: #f5f0eb;
 }
 
-* {
-  cursor: none;
-}
-
-@media (max-width: 767px) {
-  * {
-    cursor: auto;
-  }
-}
 
 html {
   scroll-behavior: smooth;

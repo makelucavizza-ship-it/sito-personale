@@ -3,7 +3,6 @@ import { Syne, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
-import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
@@ -60,7 +59,6 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${syne.variable} ${dmSerif.variable}`}>
       <body>
-        <CustomCursor />
         <Navigation />
         <main>{children}</main>
         <Footer />
