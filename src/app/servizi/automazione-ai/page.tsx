@@ -122,7 +122,7 @@ export default function AutomazioneAIPage() {
                 },
                 {
                   label: "Come funziona",
-                  desc: "Voce AI naturale, risponde in italiano, gestisce più chiamate in contemporanea. Il trascritto di ogni chiamata ti arriva via email o WhatsApp.",
+                  desc: "Risponde in italiano con una voce naturale, gestisce più chiamate in contemporanea. Il trascritto ti arriva via email o WhatsApp.",
                   color: "#3ad3ef",
                 },
                 {

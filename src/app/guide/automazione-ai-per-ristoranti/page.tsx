@@ -165,9 +165,9 @@ export default function GuideAIRistoranti() {
                 o sistemi costosissimi che richiedono mesi di implementazione. Non è così.
               </p>
               <p className="text-primary/70 leading-relaxed">
-                Gli strumenti descritti in questa guida si attivano in pochi giorni,
-                costano meno di un dipendente part-time e si integrano con gli strumenti
-                che già usi — WhatsApp, Google Calendar, il tuo telefono.
+                Gli strumenti descritti in questa guida si attivano in pochi giorni e si integrano
+                con quello che già usi: WhatsApp, Google Calendar, il tuo gestionale. Il costo
+                è spesso inferiore a quello di un dipendente part-time.
               </p>
             </section>
 

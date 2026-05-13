@@ -167,7 +167,7 @@ export default function GuideAgenteVocale() {
                   {
                     step: "3.",
                     title: "Sintesi vocale",
-                    desc: "La risposta generata viene convertita in voce — non la voce robotica degli anni '90, ma una voce naturale che suona come una persona reale. Puoi scegliere tono, velocità e persino nome dell'agente.",
+                    desc: "La risposta viene convertita in voce. Oggi la sintesi vocale suona come una persona reale, non come il robotico degli anni '90. Puoi scegliere il tono e il nome dell'agente.",
                     color: "#ffbd59",
                   },
                   {
