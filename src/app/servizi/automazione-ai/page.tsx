@@ -4,9 +4,12 @@ import { Bot, Zap, Sparkles, BarChart3, Mail, Plug } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "AI Automation",
+  title: "Agente Vocale AI e Automazioni per PMI",
   description:
-    "Automazioni AI per PMI italiane: chatbot, workflow automatizzati, integrazione strumenti. Libera il tuo team dal lavoro ripetitivo.",
+    "Agente vocale AI H24, CRM personalizzato, WhatsApp marketing e workflow automatizzati per PMI italiane. Smetti di perdere chiamate e libera il tuo team dal lavoro ripetitivo.",
+  alternates: {
+    canonical: "https://lucavizza.it/servizi/automazione-ai",
+  },
 };
 
 const USECASES: { icon: LucideIcon; title: string; desc: string; color: string }[] = [

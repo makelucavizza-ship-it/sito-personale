@@ -5,7 +5,10 @@ import ColorBar from "@/components/ColorBar";
 export const metadata: Metadata = {
   title: "Contatti",
   description:
-    "Contatta Luca Vizza per una consulenza di marketing digitale o AI automation. Risposta entro 24 ore.",
+    "Scrivi a Luca Vizza per un progetto di AI automation o marketing digitale. Risposta garantita entro 24 ore. Oppure prova prima il calcolatore gratuito.",
+  alternates: {
+    canonical: "https://lucavizza.it/contatti",
+  },
 };
 
 export default function ContattiPage() {

@@ -4,9 +4,12 @@ import Image from "next/image";
 import ColorBar from "@/components/ColorBar";
 
 export const metadata: Metadata = {
-  title: "Chi sono",
+  title: { absolute: "Chi sono | Luca Vizza — Freelance AI e Marketing" },
   description:
-    "Mi chiamo Luca Vizza. A 36 anni apro la partita IVA. Ho scelto un rischio consapevole invece di una timorosa sicurezza. Aiuto le PMI italiane a usare il digitale e l'AI per lavorare meglio.",
+    "Mi chiamo Luca Vizza, freelance di AI automation e marketing digitale per PMI italiane. Costruisco agenti vocali, automazioni e strategie di marketing che cambiano la giornata lavorativa di chi li usa.",
+  alternates: {
+    canonical: "https://lucavizza.it/chi-sono",
+  },
 };
 
 export default function ChiSonoPage() {

@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Per le Agenzie",
+  title: { absolute: "Collaborazioni con Agenzie | Luca Vizza — AI Automation" },
   description:
-    "Freelance affidabile per agenzie di marketing che cercano risorse esterne. Subappalto, overflow di lavoro, competenze specifiche in AI e digital.",
+    "Freelance per agenzie che cercano competenze AI specialistiche: agenti vocali, automazioni, workflow n8n/Make. White label disponibile. Risposta entro 24 ore.",
+  alternates: {
+    canonical: "https://lucavizza.it/agenzie",
+  },
 };
 
 export default function AgenziePage() {

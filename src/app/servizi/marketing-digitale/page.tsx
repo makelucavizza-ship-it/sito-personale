@@ -4,7 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Freelance Marketing Digitale per PMI",
   description:
-    "Strategie di marketing digitale per PMI italiane: social media, advertising, email marketing, SEO, content strategy. Risultati misurabili.",
+    "Marketing digitale per PMI italiane: Meta & Google Ads, social media, SEO, email marketing integrati con automazioni AI. Ogni euro speso deve tornare indietro moltiplicato.",
+  alternates: {
+    canonical: "https://lucavizza.it/servizi/marketing-digitale",
+  },
 };
 
 const SERVICES = [
