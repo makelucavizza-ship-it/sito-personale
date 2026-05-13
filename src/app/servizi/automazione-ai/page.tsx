@@ -208,6 +208,47 @@ export default function AutomazioneAIPage() {
         </div>
       </section>
 
+      {/* Approfondisci */}
+      <section className="px-6 pb-8 max-w-5xl mx-auto">
+        <h2
+          className="text-2xl font-bold text-primary mb-5"
+          style={{ fontFamily: "Phenomena, sans-serif" }}
+        >
+          Approfondisci
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[
+            {
+              href: "/guide/come-non-perdere-chiamate-ristorante",
+              label: "Come non perdere chiamate al ristorante →",
+              desc: "Quante prenotazioni perdi durante il servizio e come risolverlo",
+              color: "#ee826d",
+            },
+            {
+              href: "/guide/agente-vocale-ai-cos-e-come-funziona",
+              label: "Agente vocale AI: cos'è e come funziona →",
+              desc: "Spiegazione senza tecnicismi per capire se fa al caso tuo",
+              color: "#3ad3ef",
+            },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="block p-5 rounded-xl border-2 hover:shadow-sm transition-all"
+              style={{ borderColor: l.color + "40", backgroundColor: l.color + "06" }}
+            >
+              <span
+                className="font-bold text-primary hover:text-coral transition-colors text-sm block mb-1"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                {l.label}
+              </span>
+              <span className="text-xs text-primary/50">{l.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="px-6 py-16 text-center max-w-3xl mx-auto">
         <h2

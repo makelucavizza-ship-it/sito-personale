@@ -14,7 +14,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/contatti`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/portfolio`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/risorse/bandi-digitalizzazione-romagna`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    // /guide pages — verranno aggiunte nella parte 4
+    { url: `${base}/guide`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/guide/agente-vocale-ai-cos-e-come-funziona`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/guide/come-non-perdere-chiamate-ristorante`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/guide/automazione-ai-per-ristoranti`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/guide/automazione-ai-per-saloni-centri-estetici`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
   ];
 
   const portfolioPages: MetadataRoute.Sitemap = getPortfolioItems().map((item) => ({
