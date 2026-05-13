@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Marketing Digitale",
+  title: "Freelance Marketing Digitale per PMI",
   description:
     "Strategie di marketing digitale per PMI italiane: social media, advertising, email marketing, SEO, content strategy. Risultati misurabili.",
 };
@@ -58,12 +58,12 @@ export default function MarketingDigitalePage() {
           Servizio
         </span>
         <h1
-          className="text-5xl md:text-7xl font-bold text-primary leading-none mb-6"
+          className="text-4xl md:text-6xl font-bold text-primary leading-tight mb-4"
           style={{ fontFamily: "Phenomena, sans-serif" }}
         >
-          Marketing
+          Marketing digitale che converte,
           <br />
-          <span className="text-coral">Digitale</span>
+          <span className="text-coral">non che impressiona.</span>
         </h1>
         <p className="text-xl text-primary/70 max-w-2xl mb-10 leading-relaxed">
           Non vendo follower o impression. Costruisco strategie che portano
@@ -121,6 +121,28 @@ export default function MarketingDigitalePage() {
         </div>
       </section>
 
+      {/* Integrazione AI */}
+      <section className="px-6 py-12 max-w-5xl mx-auto">
+        <div className="rounded-3xl border-2 border-accent-3/30 bg-accent-3/5 px-8 py-10">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-primary mb-4"
+            style={{ fontFamily: "Phenomena, sans-serif" }}
+          >
+            Perché questo marketing funziona meglio
+          </h2>
+          <p className="text-primary/70 leading-relaxed max-w-2xl mb-4">
+            Il marketing che faccio è progettato per lavorare insieme alle automazioni AI,
+            non in parallelo. Portare traffico con le ads è inutile se le chiamate generate
+            vanno perse perché il titolare è occupato — e questo accade ogni giorno nelle PMI.
+          </p>
+          <p className="text-primary/70 leading-relaxed max-w-2xl">
+            Quando ads, agente vocale e CRM lavorano insieme, ogni euro speso in pubblicità
+            si trasforma in un contatto raccolto, qualificato e seguito. È questa integrazione
+            il vero vantaggio competitivo — non i follower o il numero di campagne attive.
+          </p>
+        </div>
+      </section>
+
       {/* Metodo */}
       <section className="px-6 py-16 max-w-5xl mx-auto">
         <h2
@@ -131,7 +153,11 @@ export default function MarketingDigitalePage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[
-            { step: "01", title: "Audit", desc: "Analisi della situazione attuale: cosa funziona, cosa no, dove ci sono opportunità." },
+            {
+              step: "01",
+              title: "Audit",
+              desc: "Analisi dei canali attivi: Google Ads, Meta, sito web e scheda Google My Business. Emerge cosa si sta sprecando, quali opportunità non sono sfruttate e se i canali parlano la stessa lingua. L'output è un documento sintetico con le priorità di intervento — non un report da 40 pagine.",
+            },
             { step: "02", title: "Strategia", desc: "Piano d'azione personalizzato con obiettivi chiari e KPI misurabili." },
             { step: "03", title: "Esecuzione", desc: "Implementazione con aggiornamenti frequenti e aggiustamenti in tempo reale." },
             { step: "04", title: "Report", desc: "Report mensili trasparenti. Sai sempre cosa succede e perché." },
@@ -176,11 +202,11 @@ export default function MarketingDigitalePage() {
             Calcolatore gratuito
           </Link>
           <Link
-            href="/portfolio"
+            href="/contatti"
             className="px-8 py-4 rounded-full border-2 border-primary/20 text-primary font-bold hover:border-primary/40 transition-colors"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Vedi il portfolio
+            Parlami del tuo progetto →
           </Link>
         </div>
       </section>

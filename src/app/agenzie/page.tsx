@@ -20,19 +20,18 @@ export default function AgenziePage() {
             Per le agenzie
           </span>
           <h1
-            className="text-5xl md:text-7xl font-bold text-primary leading-none mb-6"
+            className="text-4xl md:text-6xl font-bold text-primary leading-tight mb-6"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Hai troppo
+            Il tuo cliente vuole l&apos;AI.
             <br />
-            lavoro?
-            <br />
-            <span className="text-accent-4">Parliamo.</span>
+            <span className="text-accent-4">Tu sai già a chi affidarti?</span>
           </h1>
           <p className="text-xl text-primary/70 max-w-2xl mb-10 leading-relaxed">
-            Collaboro con agenzie di marketing come risorsa esterna affidabile:
-            subappalto su progetti specifici, overflow di lavoro, o competenze
-            specialistiche che non hai in-house.
+            Quando un cliente chiede automazioni AI, agenti vocali o workflow
+            intelligenti, molte agenzie non sanno da dove iniziare. Io mi
+            occupo esattamente di questo — in white label, integrato nei tuoi
+            processi, senza che il cliente finale sappia che ci sono io.
           </p>
           <Link
             href="/contatti"
@@ -54,14 +53,14 @@ export default function AgenziePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
+                title: "Competenze AI che pochi hanno",
+                desc: "Integro strumenti AI nei progetti: agenti vocali, automazioni, chatbot, workflow n8n/Make. Un valore aggiunto differenziante che puoi vendere ai tuoi clienti.",
+                color: "#5ed5bf",
+              },
+              {
                 title: "Affidabilità prima di tutto",
                 desc: "Rispetto le scadenze, comunico in modo proattivo e segnalo subito qualsiasi problema. Niente sorprese.",
                 color: "#544fb3",
-              },
-              {
-                title: "Competenze AI che pochi hanno",
-                desc: "Integro strumenti AI nei progetti: automazioni, chatbot, generazione contenuti. Un valore aggiunto differenziante per i tuoi clienti.",
-                color: "#5ed5bf",
               },
               {
                 title: "White label disponibile",
@@ -130,38 +129,47 @@ export default function AgenziePage() {
           >
             Come funziona
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="space-y-6 max-w-3xl">
             {[
               {
                 step: "01",
-                title: "Briefing",
-                desc: "Mi mandi un brief del progetto o cliente. Rispondo entro 24h con disponibilità e stima.",
+                title: "Rapporto con il cliente finale",
+                desc: "Di default non entro mai in contatto diretto con il cliente finale — tutto passa attraverso di te. Se per un progetto specifico preferisci che io partecipi in modo visibile, lo definiamo esplicitamente nell'accordo. Il tuo brand rimane al centro.",
+                color: "#5ed5bf",
               },
               {
                 step: "02",
-                title: "Accordo",
-                desc: "Definiamo scope, tempi e modalità di collaborazione. Tutto chiaro per iscritto.",
+                title: "Se qualcosa va storto",
+                desc: "Hai un canale diretto con me (Slack, WhatsApp o email dedicata — decidiamo insieme). Le revisioni hanno un SLA indicativo di 48 ore lavorative. Se un progetto si blocca per ragioni esterne, ti avviso subito e propongo un piano alternativo — non sparisco.",
+                color: "#544fb3",
               },
               {
                 step: "03",
-                title: "Esecuzione",
-                desc: "Lavoro in autonomia o integrato nel tuo team, con aggiornamenti regolari sulla mia pipeline.",
+                title: "Tempi di consegna tipici",
+                desc: "Setup agente vocale AI: 5–7 giorni lavorativi. Audit marketing con documento priorità: 3–4 giorni. Setup campagne Ads (Meta o Google): 5–10 giorni. Workflow automation (n8n/Make): 3–7 giorni a seconda della complessità. Tempi calcolati dalla raccolta delle informazioni complete.",
+                color: "#3ad3ef",
               },
             ].map((item) => (
-              <div key={item.step}>
+              <div
+                key={item.step}
+                className="flex gap-6 p-6 rounded-2xl border"
+                style={{ borderColor: item.color + "30", backgroundColor: item.color + "06" }}
+              >
                 <span
-                  className="text-5xl font-bold text-accent-4/20 block mb-2"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                  className="text-4xl font-bold flex-shrink-0 leading-none mt-1"
+                  style={{ fontFamily: "Phenomena, sans-serif", color: item.color + "50" }}
                 >
                   {item.step}
                 </span>
-                <h3
-                  className="text-xl font-bold text-primary mb-2"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  {item.title}
-                </h3>
-                <p className="text-primary/60 text-sm">{item.desc}</p>
+                <div>
+                  <h3
+                    className="text-xl font-bold text-primary mb-2"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-primary/60 text-sm leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>

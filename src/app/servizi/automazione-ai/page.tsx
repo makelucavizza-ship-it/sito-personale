@@ -74,6 +74,79 @@ export default function AutomazioneAIPage() {
         </p>
       </section>
 
+      {/* Agente vocale AI */}
+      <section className="px-6 py-16 max-w-5xl mx-auto">
+        <div className="bg-primary rounded-3xl px-8 py-12 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent-3/10 rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+              <span
+                className="inline-block text-xs font-bold text-accent-3 uppercase tracking-widest mb-4"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                Il servizio più richiesto
+              </span>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-bg leading-tight mb-4"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                Agente vocale AI:
+                <br />
+                il telefono risponde
+                <br />
+                anche quando sei occupato.
+              </h2>
+              <p className="text-bg/60 text-base leading-relaxed mb-6">
+                Un agente vocale AI risponde alle chiamate in entrata al posto tuo: raccoglie
+                prenotazioni, risponde alle domande frequenti e trasferisce solo le chiamate
+                che richiedono davvero la tua attenzione. Voce naturale, attivo H24, si integra
+                con il tuo numero di telefono esistente senza cambiare nulla.
+              </p>
+              <Link
+                href="/contatti"
+                className="inline-block px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                Parliamo del tuo caso →
+              </Link>
+            </div>
+            <div className="space-y-4">
+              {[
+                {
+                  label: "Per chi ha senso",
+                  desc: "Ristoranti, saloni di bellezza, studi medici, officine, bed & breakfast — qualsiasi attività che riceve molte chiamate con staff limitato.",
+                  color: "#5bc783",
+                },
+                {
+                  label: "Come funziona",
+                  desc: "Voce AI naturale, risponde in italiano, gestisce più chiamate in contemporanea. Il trascritto di ogni chiamata ti arriva via email o WhatsApp.",
+                  color: "#3ad3ef",
+                },
+                {
+                  label: "Tempi di setup",
+                  desc: "5–7 giorni lavorativi dalla raccolta delle informazioni alla prima chiamata gestita dall'agente.",
+                  color: "#ffbd59",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl p-4 border"
+                  style={{ borderColor: item.color + "40", backgroundColor: item.color + "10" }}
+                >
+                  <span
+                    className="text-xs font-bold uppercase tracking-widest block mb-1"
+                    style={{ color: item.color }}
+                  >
+                    {item.label}
+                  </span>
+                  <p className="text-bg/70 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Use cases */}
       <section className="px-6 py-16 max-w-5xl mx-auto">
         <h2

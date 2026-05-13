@@ -233,8 +233,12 @@ export default function ChiSonoPage() {
           <p className="text-primary/60 mb-2 max-w-xl mx-auto">
             Sono di base in Romagna, lavoro da remoto in tutta Italia.
           </p>
-          <p className="text-primary/60 mb-8 max-w-xl mx-auto">
+          <p className="text-primary/60 mb-6 max-w-xl mx-auto">
             Se ti interessa capire come posso aiutarti, scrivimi.
+          </p>
+          <p className="text-base font-semibold text-primary mb-8 max-w-lg mx-auto px-6 py-4 rounded-2xl border border-accent-1/30 bg-accent-1/5">
+            Se gestisci un&apos;attività e perdi chiamate, sprechi tempo in copia-incolla
+            o non sai da dove iniziare col digitale — posso aiutarti.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
