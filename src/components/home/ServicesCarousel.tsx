@@ -137,8 +137,11 @@ export default function ServicesCarousel() {
           >
             Cosa faccio
           </h2>
-          <p className="text-primary/60 text-lg">
+          <p className="text-primary/60 text-lg mb-4">
             Prima l&apos;AI e l&apos;automazione, poi il marketing. In quest&apos;ordine.
+          </p>
+          <p className="text-primary/50 text-base max-w-2xl leading-relaxed">
+            Se porti traffico con gli ads ma il telefono squilla a vuoto perché sei occupato, quel budget è sprecato. Prima si automatizzano i processi interni — le risposte ai clienti, le prenotazioni, i follow-up — poi si porta traffico. Altrimenti il marketing amplifica il caos invece di generare fatturato.
           </p>
         </motion.div>
       </div>

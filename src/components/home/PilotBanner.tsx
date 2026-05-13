@@ -38,21 +38,22 @@ export default function PilotBanner() {
                   className="text-xs font-bold text-accent-3 uppercase tracking-widest"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                 >
-                  Progetto pilota — posti limitati
+                  Selezione aperta — posti limitati
                 </span>
               </div>
               <h3
                 className="text-2xl md:text-3xl font-bold text-bg leading-snug mb-3"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
-                Lavoro gratis con 5 aziende
+                Sto selezionando 5 aziende
                 <br />
-                fino a settembre 2026.
+                con cui lavorare a costo zero.
               </h3>
               <p className="text-bg/60 text-sm md:text-base max-w-lg leading-relaxed">
-                Sto costruendo il mio portfolio. In cambio del tuo tempo e
-                feedback onesto, ricevi marketing digitale e AI automation
-                a costo zero. Nessun trucco.
+                In cambio chiedo feedback onesto e il permesso di usare i
+                risultati come caso studio. Non è un&apos;offerta per tutti —
+                è un accordo specifico con aziende motivate.
+                Posti rimasti: 5.
               </p>
             </div>
             <Link

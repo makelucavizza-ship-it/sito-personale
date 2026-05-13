@@ -99,15 +99,21 @@ export default function Hero() {
 
             {/* Headline */}
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-none mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mb-3"
               style={{ fontFamily: "Phenomena, sans-serif", letterSpacing: "-0.03em" }}
             >
-              Cresciamo
+              Automazione AI e marketing digitale
               <br />
-              <span className="text-coral">insieme</span>
-              <br />
-              con l&apos;AI.
+              <span className="text-coral">per PMI italiane.</span>
             </h1>
+
+            {/* Claim visivo */}
+            <p
+              className="text-xl md:text-2xl text-primary/50 mb-6"
+              style={{ fontFamily: "Phenomena, sans-serif" }}
+            >
+              Cresciamo insieme con l&apos;AI.
+            </p>
 
             {/* Color bar */}
             <ColorBar className="w-48 mb-8" height={5} />
@@ -134,6 +140,9 @@ export default function Hero() {
                 Chi sono
               </Link>
             </div>
+            <p className="text-primary/40 text-xs mt-3 max-w-sm leading-relaxed">
+              In 3 minuti ricevi una stima personalizzata dei processi automatizzabili nella tua attività.
+            </p>
           </motion.div>
 
           {/* Right: photo */}

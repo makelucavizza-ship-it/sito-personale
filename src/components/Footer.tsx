@@ -22,9 +22,6 @@ export default function Footer() {
               <br />
               per PMI italiane.
             </p>
-            <p className="text-bg/40 text-xs mt-4">
-              P.IVA in fase di attivazione
-            </p>
           </div>
 
           {/* Links */}

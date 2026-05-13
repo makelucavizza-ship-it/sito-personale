@@ -15,6 +15,16 @@ export const metadata: Metadata = {
     "email marketing",
     "Meta Ads Google Ads freelance",
   ],
+  openGraph: {
+    title: "Luca Vizza — Marketing Digitale & AI Automation per PMI italiane",
+    description:
+      "Freelance di marketing digitale e AI automation per PMI italiane. Social media, advertising, automazioni AI, email marketing. Basato in Romagna, lavoro in tutta Italia.",
+  },
+  twitter: {
+    title: "Luca Vizza — Marketing Digitale & AI Automation per PMI italiane",
+    description:
+      "Freelance di marketing digitale e AI automation per PMI italiane. Social media, advertising, automazioni AI, email marketing.",
+  },
 };
 import PilotBanner from "@/components/home/PilotBanner";
 import ServicesCarousel from "@/components/home/ServicesCarousel";
