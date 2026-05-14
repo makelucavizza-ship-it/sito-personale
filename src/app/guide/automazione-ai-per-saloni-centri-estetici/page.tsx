@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
+import GuideLayout from "@/components/GuideLayout";
 
 export const metadata: Metadata = {
   title: { absolute: "Automazione AI per Saloni e Centri Estetici | Luca Vizza" },
   description:
-    "Il telefono squilla mentre hai le mani occupate. Gli appuntamenti su carta o WhatsApp manuale. Zero follow-up. Ecco come l'AI risolve i problemi specifici di saloni e centri estetici.",
+    "Come saloni e centri estetici eliminano le chiamate perse durante i trattamenti. Automazione appuntamenti, reminder e follow-up clienti — guida pratica.",
   alternates: {
     canonical: "https://lucavizza.it/guide/automazione-ai-per-saloni-centri-estetici",
+    languages: { it: "https://lucavizza.it/guide/automazione-ai-per-saloni-centri-estetici" },
   },
 };
+
+const SECTIONS = [
+  { id: "il-problema", title: "Il problema specifico del settore" },
+  { id: "le-soluzioni", title: "Le soluzioni AI per saloni e centri estetici" },
+  { id: "risparmio-ore", title: "Quante ore si risparmia davvero?" },
+  { id: "faq", title: "Domande frequenti" },
+];
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -119,212 +128,210 @@ export default function GuideAISaloni() {
             </p>
           </header>
 
-          <article className="space-y-12 pb-16">
+          <GuideLayout sections={SECTIONS} wordCount={750}>
+            <article className="space-y-12 pb-16">
 
-            {/* Il problema del settore */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-4"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Il problema specifico del settore
-              </h2>
-              <p className="text-primary/70 leading-relaxed mb-4">
-                Saloni e centri estetici hanno una caratteristica che li accomuna:
-                il titolare e i collaboratori lavorano con le mani — e quando lavori con le mani,
-                non puoi rispondere al telefono. Non è pigrizia o disorganizzazione.
-                È la natura del lavoro.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { problem: "Chiamate perse durante i trattamenti", impact: "Nuovi clienti che vanno dalla concorrenza", color: "#ee826d" },
-                  { problem: "Appuntamenti su carta o WhatsApp manuale", impact: "Errori, sovrapposizioni, tempo sprecato", color: "#ffbd59" },
-                  { problem: "Zero follow-up ai clienti che non tornano", impact: "Perdita silenziosa di clienti abituali", color: "#544fb3" },
-                ].map((p) => (
-                  <div
-                    key={p.problem}
-                    className="p-4 rounded-xl border-2"
-                    style={{ borderColor: p.color + "40", backgroundColor: p.color + "08" }}
-                  >
-                    <p className="text-sm font-bold text-primary mb-1" style={{ fontFamily: "Phenomena, sans-serif" }}>
-                      {p.problem}
-                    </p>
-                    <p className="text-xs text-primary/50 leading-relaxed">{p.impact}</p>
+              <section id="il-problema">
+                <h2
+                  className="text-2xl font-bold text-primary mb-4"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Il problema specifico del settore
+                </h2>
+                <p className="text-primary/70 leading-relaxed mb-4">
+                  Saloni e centri estetici hanno una caratteristica che li accomuna:
+                  il titolare e i collaboratori lavorano con le mani — e quando lavori con le mani,
+                  non puoi rispondere al telefono. Non è pigrizia o disorganizzazione.
+                  È la natura del lavoro.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { problem: "Chiamate perse durante i trattamenti", impact: "Nuovi clienti che vanno dalla concorrenza", color: "#ee826d" },
+                    { problem: "Appuntamenti su carta o WhatsApp manuale", impact: "Errori, sovrapposizioni, tempo sprecato", color: "#ffbd59" },
+                    { problem: "Zero follow-up ai clienti che non tornano", impact: "Perdita silenziosa di clienti abituali", color: "#544fb3" },
+                  ].map((p) => (
+                    <div
+                      key={p.problem}
+                      className="p-4 rounded-xl border-2"
+                      style={{ borderColor: p.color + "40", backgroundColor: p.color + "08" }}
+                    >
+                      <p className="text-sm font-bold text-primary mb-1" style={{ fontFamily: "Phenomena, sans-serif" }}>
+                        {p.problem}
+                      </p>
+                      <p className="text-xs text-primary/50 leading-relaxed">{p.impact}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section id="le-soluzioni">
+                <h2
+                  className="text-2xl font-bold text-primary mb-6"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Le soluzioni AI per saloni e centri estetici
+                </h2>
+                <div className="space-y-5">
+                  {[
+                    {
+                      title: "Agente vocale per le prenotazioni",
+                      desc: "Risponde al telefono mentre sei occupata, prende il nome, il servizio richiesto e l'orario preferito. Controlla la disponibilità in tempo reale e conferma l'appuntamento — tutto in automatico. Il cliente riceve una conferma via SMS o WhatsApp.",
+                      saving: "1-2 ore al giorno di telefonate interrotte",
+                      color: "#544fb3",
+                    },
+                    {
+                      title: "Reminder automatici per ridurre le no-show",
+                      desc: "24 ore prima dell'appuntamento, il sistema invia un reminder via WhatsApp. Il cliente può confermare con un messaggio o chiedere di spostare. Le no-show si riducono del 30-50% — ogni appuntamento recuperato è fatturato diretto.",
+                      saving: "2-3 appuntamenti recuperati al mese",
+                      color: "#5bc783",
+                    },
+                    {
+                      title: "Risposta automatica alle recensioni Google",
+                      desc: "Ricevi una notifica per ogni nuova recensione con una bozza di risposta professionale già pronta. La approvi, la modifichi o la pubblichi direttamente. Nessuna recensione rimane senza risposta — segnale importante per Google.",
+                      saving: "1-2 ore a settimana di gestione reputazione",
+                      color: "#ffbd59",
+                    },
+                    {
+                      title: "CRM clienti con storico trattamenti",
+                      desc: "Tiene traccia di ogni cliente: ultima visita, trattamenti preferiti, prodotti acquistati. Ti avvisa quando un cliente abituale non torna da 45 giorni — puoi inviargli un messaggio personalizzato con un'offerta o semplicemente per far sentire la tua presenza.",
+                      saving: "Aumento fidelizzazione clienti del 15-20%",
+                      color: "#3ad3ef",
+                    },
+                  ].map((s) => (
+                    <div
+                      key={s.title}
+                      className="flex gap-4 p-5 rounded-xl border-2"
+                      style={{ borderColor: s.color + "40", backgroundColor: s.color + "06" }}
+                    >
+                      <div className="w-1 rounded-full flex-shrink-0 mt-1" style={{ backgroundColor: s.color }} />
+                      <div>
+                        <h3
+                          className="font-bold text-primary mb-2"
+                          style={{ fontFamily: "Phenomena, sans-serif" }}
+                        >
+                          {s.title}
+                        </h3>
+                        <p className="text-primary/60 text-sm leading-relaxed mb-3">{s.desc}</p>
+                        <span
+                          className="text-xs px-3 py-1 rounded-full font-medium"
+                          style={{ backgroundColor: s.color + "20", color: s.color }}
+                        >
+                          Risparmio: {s.saving}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section id="risparmio-ore">
+                <h2
+                  className="text-2xl font-bold text-primary mb-4"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Quante ore si risparmia davvero?
+                </h2>
+                <div className="p-6 rounded-xl bg-primary/5 border border-primary/10">
+                  <p className="text-primary/70 leading-relaxed mb-4">
+                    Stima per un salone con 30-40 appuntamenti a settimana:
+                  </p>
+                  <div className="space-y-3">
+                    {[
+                      { item: "Chiamate per prenotazioni gestite dall'agente vocale", hours: "5-8 ore/settimana" },
+                      { item: "Reminder inviati manualmente via WhatsApp", hours: "2-3 ore/settimana" },
+                      { item: "Risposta a messaggi Instagram/Google (info, prezzi, disponibilità)", hours: "2-4 ore/settimana" },
+                      { item: "Gestione revisioni agenda e disdette dell'ultimo minuto", hours: "1-2 ore/settimana" },
+                    ].map((r) => (
+                      <div key={r.item} className="flex items-center justify-between gap-4">
+                        <span className="text-sm text-primary/60">{r.item}</span>
+                        <span className="text-sm font-bold text-accent-4 flex-shrink-0">{r.hours}</span>
+                      </div>
+                    ))}
+                    <div className="pt-3 border-t border-primary/10 flex items-center justify-between">
+                      <span className="font-bold text-primary">Totale stimato</span>
+                      <span className="font-bold text-accent-3">10-17 ore/settimana</span>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </section>
+                </div>
+              </section>
 
-            {/* Soluzioni */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-6"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Le soluzioni AI per saloni e centri estetici
-              </h2>
-              <div className="space-y-5">
-                {[
-                  {
-                    title: "Agente vocale per le prenotazioni",
-                    desc: "Risponde al telefono mentre sei occupata, prende il nome, il servizio richiesto e l'orario preferito. Controlla la disponibilità in tempo reale e conferma l'appuntamento — tutto in automatico. Il cliente riceve una conferma via SMS o WhatsApp.",
-                    saving: "1-2 ore al giorno di telefonate interrotte",
-                    color: "#544fb3",
-                  },
-                  {
-                    title: "Reminder automatici per ridurre le no-show",
-                    desc: "24 ore prima dell'appuntamento, il sistema invia un reminder via WhatsApp. Il cliente può confermare con un messaggio o chiedere di spostare. Le no-show si riducono del 30-50% — ogni appuntamento recuperato è fatturato diretto.",
-                    saving: "2-3 appuntamenti recuperati al mese",
-                    color: "#5bc783",
-                  },
-                  {
-                    title: "Risposta automatica alle recensioni Google",
-                    desc: "Ricevi una notifica per ogni nuova recensione con una bozza di risposta professionale già pronta. La approvi, la modifichi o la pubblichi direttamente. Nessuna recensione rimane senza risposta — segnale importante per Google.",
-                    saving: "1-2 ore a settimana di gestione reputazione",
-                    color: "#ffbd59",
-                  },
-                  {
-                    title: "CRM clienti con storico trattamenti",
-                    desc: "Tiene traccia di ogni cliente: ultima visita, trattamenti preferiti, prodotti acquistati. Ti avvisa quando un cliente abituale non torna da 45 giorni — puoi inviargli un messaggio personalizzato con un'offerta o semplicemente per far sentire la tua presenza.",
-                    saving: "Aumento fidelizzazione clienti del 15-20%",
-                    color: "#3ad3ef",
-                  },
-                ].map((s) => (
-                  <div
-                    key={s.title}
-                    className="flex gap-4 p-5 rounded-xl border-2"
-                    style={{ borderColor: s.color + "40", backgroundColor: s.color + "06" }}
+              {/* Internal links */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-5 rounded-xl border border-accent-1/30 bg-accent-1/5">
+                  <p className="text-sm text-primary/60 mb-2">Capire meglio l&apos;agente vocale:</p>
+                  <Link
+                    href="/guide/agente-vocale-ai-cos-e-come-funziona"
+                    className="font-bold text-primary hover:text-coral transition-colors text-sm"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
                   >
-                    <div className="w-1 rounded-full flex-shrink-0 mt-1" style={{ backgroundColor: s.color }} />
-                    <div>
-                      <h3
+                    Agente vocale AI: cos&apos;è e come funziona →
+                  </Link>
+                </div>
+                <div className="p-5 rounded-xl border border-accent-3/30 bg-accent-3/5">
+                  <p className="text-sm text-primary/60 mb-2">Il servizio completo:</p>
+                  <Link
+                    href="/servizi/automazione-ai"
+                    className="font-bold text-primary hover:text-coral transition-colors text-sm"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Scopri AI Automation →
+                  </Link>
+                </div>
+              </div>
+
+              <section id="faq">
+                <h2
+                  className="text-2xl font-bold text-primary mb-6"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Domande frequenti
+                </h2>
+                <dl className="space-y-6">
+                  {FAQS.map((faq) => (
+                    <div key={faq.q} className="border-t border-primary/10 pt-6">
+                      <dt
                         className="font-bold text-primary mb-2"
                         style={{ fontFamily: "Phenomena, sans-serif" }}
                       >
-                        {s.title}
-                      </h3>
-                      <p className="text-primary/60 text-sm leading-relaxed mb-3">{s.desc}</p>
-                      <span
-                        className="text-xs px-3 py-1 rounded-full font-medium"
-                        style={{ backgroundColor: s.color + "20", color: s.color }}
-                      >
-                        Risparmio: {s.saving}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Risparmio ore */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-4"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Quante ore si risparmia davvero?
-              </h2>
-              <div className="p-6 rounded-xl bg-primary/5 border border-primary/10">
-                <p className="text-primary/70 leading-relaxed mb-4">
-                  Stima per un salone con 30-40 appuntamenti a settimana:
-                </p>
-                <div className="space-y-3">
-                  {[
-                    { item: "Chiamate per prenotazioni gestite dall'agente vocale", hours: "5-8 ore/settimana" },
-                    { item: "Reminder inviati manualmente via WhatsApp", hours: "2-3 ore/settimana" },
-                    { item: "Risposta a messaggi Instagram/Google (info, prezzi, disponibilità)", hours: "2-4 ore/settimana" },
-                    { item: "Gestione revisioni agenda e disdette dell'ultimo minuto", hours: "1-2 ore/settimana" },
-                  ].map((r) => (
-                    <div key={r.item} className="flex items-center justify-between gap-4">
-                      <span className="text-sm text-primary/60">{r.item}</span>
-                      <span className="text-sm font-bold text-accent-4 flex-shrink-0">{r.hours}</span>
+                        {faq.q}
+                      </dt>
+                      <dd className="text-primary/60 text-sm leading-relaxed">{faq.a}</dd>
                     </div>
                   ))}
-                  <div className="pt-3 border-t border-primary/10 flex items-center justify-between">
-                    <span className="font-bold text-primary">Totale stimato</span>
-                    <span className="font-bold text-accent-3">10-17 ore/settimana</span>
-                  </div>
+                </dl>
+              </section>
+
+              {/* CTA */}
+              <section className="bg-primary rounded-3xl px-8 py-10 text-center">
+                <h2
+                  className="text-2xl font-bold text-bg mb-3"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Quanto tempo stai perdendo ogni settimana?
+                </h2>
+                <p className="text-bg/60 mb-6 text-sm">
+                  Fai il calcolatore gratuito: in 3 minuti ricevi una stima personalizzata
+                  dei processi automatizzabili nella tua attività.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    href="/audit"
+                    className="px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Calcolatore gratuito →
+                  </Link>
+                  <Link
+                    href="/contatti"
+                    className="px-7 py-3.5 rounded-full border-2 border-bg/20 text-bg font-bold hover:border-bg/50 transition-all inline-block"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Parliamo
+                  </Link>
                 </div>
-              </div>
-            </section>
-
-            {/* Internal links */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-xl border border-accent-1/30 bg-accent-1/5">
-                <p className="text-sm text-primary/60 mb-2">Capire meglio l&apos;agente vocale:</p>
-                <Link
-                  href="/guide/agente-vocale-ai-cos-e-come-funziona"
-                  className="font-bold text-primary hover:text-coral transition-colors text-sm"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Agente vocale AI: cos&apos;è e come funziona →
-                </Link>
-              </div>
-              <div className="p-5 rounded-xl border border-accent-3/30 bg-accent-3/5">
-                <p className="text-sm text-primary/60 mb-2">Il servizio completo:</p>
-                <Link
-                  href="/servizi/automazione-ai"
-                  className="font-bold text-primary hover:text-coral transition-colors text-sm"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Scopri AI Automation →
-                </Link>
-              </div>
-            </div>
-
-            {/* FAQ */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-6"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Domande frequenti
-              </h2>
-              <dl className="space-y-6">
-                {FAQS.map((faq) => (
-                  <div key={faq.q} className="border-t border-primary/10 pt-6">
-                    <dt
-                      className="font-bold text-primary mb-2"
-                      style={{ fontFamily: "Phenomena, sans-serif" }}
-                    >
-                      {faq.q}
-                    </dt>
-                    <dd className="text-primary/60 text-sm leading-relaxed">{faq.a}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            {/* CTA */}
-            <section className="bg-primary rounded-3xl px-8 py-10 text-center">
-              <h2
-                className="text-2xl font-bold text-bg mb-3"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Quanto tempo stai perdendo ogni settimana?
-              </h2>
-              <p className="text-bg/60 mb-6 text-sm">
-                Fai il calcolatore gratuito: in 3 minuti ricevi una stima personalizzata
-                dei processi automatizzabili nella tua attività.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/audit"
-                  className="px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Calcolatore gratuito →
-                </Link>
-                <Link
-                  href="/contatti"
-                  className="px-7 py-3.5 rounded-full border-2 border-bg/20 text-bg font-bold hover:border-bg/50 transition-all inline-block"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Parliamo
-                </Link>
-              </div>
-            </section>
-          </article>
+              </section>
+            </article>
+          </GuideLayout>
         </div>
       </div>
     </>

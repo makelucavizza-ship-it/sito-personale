@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     "Mi chiamo Luca Vizza, freelance di AI automation e marketing digitale per PMI italiane. Costruisco agenti vocali, automazioni e strategie di marketing che cambiano la giornata lavorativa di chi li usa.",
   alternates: {
     canonical: "https://lucavizza.it/chi-sono",
+    languages: { it: "https://lucavizza.it/chi-sono" },
   },
 };
 

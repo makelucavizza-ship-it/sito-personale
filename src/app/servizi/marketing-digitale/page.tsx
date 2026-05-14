@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "Marketing digitale per PMI italiane: Meta & Google Ads, social media, SEO, email marketing integrati con automazioni AI. Ogni euro speso deve tornare indietro moltiplicato.",
   alternates: {
     canonical: "https://lucavizza.it/servizi/marketing-digitale",
+    languages: { it: "https://lucavizza.it/servizi/marketing-digitale" },
   },
 };
 

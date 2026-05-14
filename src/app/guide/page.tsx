@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Guide pratiche e gratuite su come l'AI può cambiare un'attività concreta: agente vocale, automazioni, ristoranti, saloni. Nessuna vendita, solo informazioni utili.",
   alternates: {
     canonical: "https://lucavizza.it/guide",
+    languages: { it: "https://lucavizza.it/guide" },
   },
 };
 
@@ -39,6 +40,34 @@ const GUIDE = [
     desc: "Il telefono squilla mentre hai le mani occupate. Gli appuntamenti sono su carta o WhatsApp. Zero follow-up. Ecco come risolvere tutto e quante ore si risparmia.",
     tag: "Benessere",
     color: "#544fb3",
+  },
+  {
+    href: "/guide/quanto-costa-non-rispondere-al-telefono",
+    title: "Quanto costa non rispondere al telefono",
+    desc: "Il costo reale di una chiamata persa, settore per settore. Formula per calcolare la perdita annua e confronto tra il costo dell'inazione e quello delle soluzioni disponibili.",
+    tag: "Analisi",
+    color: "#ee826d",
+  },
+  {
+    href: "/guide/automazione-ai-per-studi-medici-e-ambulatori",
+    title: "Automazione AI per studi medici e ambulatori",
+    desc: "Come studi medici e ambulatori gestiscono appuntamenti, disdette e reminder con l'AI — rispettando il GDPR. Guida pratica per professionisti sanitari.",
+    tag: "Sanità",
+    color: "#5bc783",
+  },
+  {
+    href: "/guide/come-automatizzare-gli-appuntamenti-senza-centralino",
+    title: "Come automatizzare gli appuntamenti senza centralino",
+    desc: "Quali fasi del processo appuntamenti si automatizzano, quali strumenti usare e quando hai ancora bisogno di un operatore umano. Guida cross-settore.",
+    tag: "Operatività",
+    color: "#3ad3ef",
+  },
+  {
+    href: "/guide/marketing-digitale-per-pmi-da-dove-iniziare",
+    title: "Marketing digitale per PMI: da dove iniziare",
+    desc: "Gli errori più comuni e la sequenza giusta: prima automatizza i processi, poi porta traffico. Framework pratico con checklist 3 mesi.",
+    tag: "Marketing",
+    color: "#ffbd59",
   },
 ];
 

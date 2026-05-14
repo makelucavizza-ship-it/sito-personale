@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
+import GuideLayout from "@/components/GuideLayout";
 
 export const metadata: Metadata = {
   title: { absolute: "Automazione AI per Ristoranti: Guida Pratica | Luca Vizza" },
   description:
-    "5 strumenti AI concreti già usati da ristoranti normali: agente vocale, gestione prenotazioni, risposta recensioni, CRM clienti, WhatsApp marketing. Cosa fanno e quanto tempo fanno risparmiare.",
+    "Tutto quello che un ristorante può automatizzare con l'AI oggi: chiamate, prenotazioni, recensioni, CRM e WhatsApp. Guida pratica con casi d'uso reali.",
   alternates: {
     canonical: "https://lucavizza.it/guide/automazione-ai-per-ristoranti",
+    languages: { it: "https://lucavizza.it/guide/automazione-ai-per-ristoranti" },
   },
 };
+
+const SECTIONS = [
+  { id: "strumenti", title: "5 strumenti AI concreti per il tuo ristorante" },
+  { id: "faq", title: "Domande frequenti" },
+];
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -156,146 +163,146 @@ export default function GuideAIRistoranti() {
             </p>
           </header>
 
-          <article className="space-y-12 pb-16">
+          <GuideLayout sections={SECTIONS} wordCount={850}>
+            <article className="space-y-12 pb-16">
 
-            {/* Intro */}
-            <section>
-              <p className="text-primary/70 leading-relaxed mb-4">
-                Quando si parla di &ldquo;AI per ristoranti&rdquo; si pensa subito a robot in cucina
-                o sistemi costosissimi che richiedono mesi di implementazione. Non è così.
-              </p>
-              <p className="text-primary/70 leading-relaxed">
-                Gli strumenti descritti in questa guida si attivano in pochi giorni e si integrano
-                con quello che già usi: WhatsApp, Google Calendar, il tuo gestionale. Il costo
-                è spesso inferiore a quello di un dipendente part-time.
-              </p>
-            </section>
+              {/* Intro */}
+              <section>
+                <p className="text-primary/70 leading-relaxed mb-4">
+                  Quando si parla di &ldquo;AI per ristoranti&rdquo; si pensa subito a robot in cucina
+                  o sistemi costosissimi che richiedono mesi di implementazione. Non è così.
+                </p>
+                <p className="text-primary/70 leading-relaxed">
+                  Gli strumenti descritti in questa guida si attivano in pochi giorni e si integrano
+                  con quello che già usi: WhatsApp, Google Calendar, il tuo gestionale. Il costo
+                  è spesso inferiore a quello di un dipendente part-time.
+                </p>
+              </section>
 
-            {/* Use cases */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-8"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                5 strumenti AI concreti per il tuo ristorante
-              </h2>
-              <div className="space-y-6">
-                {USE_CASES.map((uc, i) => (
-                  <div
-                    key={uc.title}
-                    className="rounded-2xl border-2 p-6"
-                    style={{ borderColor: uc.color + "40", backgroundColor: uc.color + "06" }}
-                  >
-                    <div className="flex items-start gap-4">
-                      <span
-                        className="text-3xl font-bold flex-shrink-0 leading-none mt-1"
-                        style={{ fontFamily: "Phenomena, sans-serif", color: uc.color + "60" }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <h3
-                          className="text-xl font-bold text-primary mb-3"
-                          style={{ fontFamily: "Phenomena, sans-serif" }}
+              <section id="strumenti">
+                <h2
+                  className="text-2xl font-bold text-primary mb-8"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  5 strumenti AI concreti per il tuo ristorante
+                </h2>
+                <div className="space-y-6">
+                  {USE_CASES.map((uc, i) => (
+                    <div
+                      key={uc.title}
+                      className="rounded-2xl border-2 p-6"
+                      style={{ borderColor: uc.color + "40", backgroundColor: uc.color + "06" }}
+                    >
+                      <div className="flex items-start gap-4">
+                        <span
+                          className="text-3xl font-bold flex-shrink-0 leading-none mt-1"
+                          style={{ fontFamily: "Phenomena, sans-serif", color: uc.color + "60" }}
                         >
-                          {uc.title}
-                        </h3>
-                        <p className="text-primary/70 text-sm leading-relaxed mb-4">{uc.what}</p>
-                        <div className="flex flex-col sm:flex-row gap-3 text-xs">
-                          <span
-                            className="px-3 py-1.5 rounded-lg font-medium"
-                            style={{ backgroundColor: uc.color + "20", color: uc.color }}
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <div>
+                          <h3
+                            className="text-xl font-bold text-primary mb-3"
+                            style={{ fontFamily: "Phenomena, sans-serif" }}
                           >
-                            Risparmio: {uc.saving}
-                          </span>
-                          <span className="px-3 py-1.5 rounded-lg bg-primary/5 text-primary/50">
-                            Chi lo usa: {uc.whoDoesIt}
-                          </span>
+                            {uc.title}
+                          </h3>
+                          <p className="text-primary/70 text-sm leading-relaxed mb-4">{uc.what}</p>
+                          <div className="flex flex-col sm:flex-row gap-3 text-xs">
+                            <span
+                              className="px-3 py-1.5 rounded-lg font-medium"
+                              style={{ backgroundColor: uc.color + "20", color: uc.color }}
+                            >
+                              Risparmio: {uc.saving}
+                            </span>
+                            <span className="px-3 py-1.5 rounded-lg bg-primary/5 text-primary/50">
+                              Chi lo usa: {uc.whoDoesIt}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+                  ))}
+                </div>
+              </section>
 
-            {/* Internal links */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-xl border border-coral/30 bg-coral/5">
-                <p className="text-sm text-primary/60 mb-2">Focus sulle chiamate perse:</p>
-                <Link
-                  href="/guide/come-non-perdere-chiamate-ristorante"
-                  className="font-bold text-primary hover:text-coral transition-colors text-sm"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Come non perdere chiamate al ristorante →
-                </Link>
+              {/* Internal links */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-5 rounded-xl border border-coral/30 bg-coral/5">
+                  <p className="text-sm text-primary/60 mb-2">Focus sulle chiamate perse:</p>
+                  <Link
+                    href="/guide/come-non-perdere-chiamate-ristorante"
+                    className="font-bold text-primary hover:text-coral transition-colors text-sm"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Come non perdere chiamate al ristorante →
+                  </Link>
+                </div>
+                <div className="p-5 rounded-xl border border-accent-1/30 bg-accent-1/5">
+                  <p className="text-sm text-primary/60 mb-2">Il servizio completo:</p>
+                  <Link
+                    href="/servizi/automazione-ai"
+                    className="font-bold text-primary hover:text-coral transition-colors text-sm"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Scopri AI Automation →
+                  </Link>
+                </div>
               </div>
-              <div className="p-5 rounded-xl border border-accent-1/30 bg-accent-1/5">
-                <p className="text-sm text-primary/60 mb-2">Il servizio completo:</p>
-                <Link
-                  href="/servizi/automazione-ai"
-                  className="font-bold text-primary hover:text-coral transition-colors text-sm"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Scopri AI Automation →
-                </Link>
-              </div>
-            </div>
 
-            {/* FAQ */}
-            <section>
-              <h2
-                className="text-2xl font-bold text-primary mb-6"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Domande frequenti
-              </h2>
-              <dl className="space-y-6">
-                {FAQS.map((faq) => (
-                  <div key={faq.q} className="border-t border-primary/10 pt-6">
-                    <dt
-                      className="font-bold text-primary mb-2"
-                      style={{ fontFamily: "Phenomena, sans-serif" }}
-                    >
-                      {faq.q}
-                    </dt>
-                    <dd className="text-primary/60 text-sm leading-relaxed">{faq.a}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
+              <section id="faq">
+                <h2
+                  className="text-2xl font-bold text-primary mb-6"
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  Domande frequenti
+                </h2>
+                <dl className="space-y-6">
+                  {FAQS.map((faq) => (
+                    <div key={faq.q} className="border-t border-primary/10 pt-6">
+                      <dt
+                        className="font-bold text-primary mb-2"
+                        style={{ fontFamily: "Phenomena, sans-serif" }}
+                      >
+                        {faq.q}
+                      </dt>
+                      <dd className="text-primary/60 text-sm leading-relaxed">{faq.a}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
 
-            {/* CTA */}
-            <section className="bg-primary rounded-3xl px-8 py-10 text-center">
-              <h2
-                className="text-2xl font-bold text-bg mb-3"
-                style={{ fontFamily: "Phenomena, sans-serif" }}
-              >
-                Da dove vuoi iniziare?
-              </h2>
-              <p className="text-bg/60 mb-6 text-sm">
-                Il calcolatore gratuito identifica in 3 minuti quale strumento
-                avrebbe il maggiore impatto sulla tua attività.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/audit"
-                  className="px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
+              {/* CTA */}
+              <section className="bg-primary rounded-3xl px-8 py-10 text-center">
+                <h2
+                  className="text-2xl font-bold text-bg mb-3"
                   style={{ fontFamily: "Phenomena, sans-serif" }}
                 >
-                  Calcolatore gratuito →
-                </Link>
-                <Link
-                  href="/contatti"
-                  className="px-7 py-3.5 rounded-full border-2 border-bg/20 text-bg font-bold hover:border-bg/50 transition-all inline-block"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  Parliamo
-                </Link>
-              </div>
-            </section>
-          </article>
+                  Da dove vuoi iniziare?
+                </h2>
+                <p className="text-bg/60 mb-6 text-sm">
+                  Il calcolatore gratuito identifica in 3 minuti quale strumento
+                  avrebbe il maggiore impatto sulla tua attività.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    href="/audit"
+                    className="px-7 py-3.5 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-all hover:scale-105 inline-block"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Calcolatore gratuito →
+                  </Link>
+                  <Link
+                    href="/contatti"
+                    className="px-7 py-3.5 rounded-full border-2 border-bg/20 text-bg font-bold hover:border-bg/50 transition-all inline-block"
+                    style={{ fontFamily: "Phenomena, sans-serif" }}
+                  >
+                    Parliamo
+                  </Link>
+                </div>
+              </section>
+            </article>
+          </GuideLayout>
         </div>
       </div>
     </>

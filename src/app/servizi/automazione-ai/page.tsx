@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     "Agente vocale AI H24, CRM personalizzato, WhatsApp marketing e workflow automatizzati per PMI italiane. Smetti di perdere chiamate e libera il tuo team dal lavoro ripetitivo.",
   alternates: {
     canonical: "https://lucavizza.it/servizi/automazione-ai",
+    languages: { it: "https://lucavizza.it/servizi/automazione-ai" },
   },
 };
 

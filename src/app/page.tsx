@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://lucavizza.it",
+    languages: { it: "https://lucavizza.it" },
   },
   openGraph: {
     title: "Automazione AI e Marketing Digitale per PMI | Luca Vizza",

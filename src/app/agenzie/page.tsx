@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "Freelance per agenzie che cercano competenze AI specialistiche: agenti vocali, automazioni, workflow n8n/Make. White label disponibile. Risposta entro 24 ore.",
   alternates: {
     canonical: "https://lucavizza.it/agenzie",
+    languages: { it: "https://lucavizza.it/agenzie" },
   },
 };
 
