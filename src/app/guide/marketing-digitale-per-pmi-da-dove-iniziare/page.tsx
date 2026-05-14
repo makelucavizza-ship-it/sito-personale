@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { MarketingPMIIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Marketing Digitale per PMI: Da Dove Iniziare | Luca Vizza" },
@@ -125,6 +126,10 @@ export default function GuideMarketingPMI() {
               giusta — e perché l&apos;ordine conta più del budget.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#ffbd5930", backgroundColor: "#ffbd5908" }} aria-label="Illustrazione marketing digitale per PMI">
+            <MarketingPMIIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={900}>
             <article className="space-y-12 pb-16">
@@ -408,6 +413,10 @@ export default function GuideMarketingPMI() {
                   ))}
                 </div>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#ffbd5920", backgroundColor: "#ffbd5905" }} aria-label="Grafico di crescita del marketing digitale per PMI con funnel e megafono">
+                <MarketingPMIIllustration size="inline" />
+              </figure>
 
               {/* Internal links */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

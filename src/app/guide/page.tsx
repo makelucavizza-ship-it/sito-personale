@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
+import {
+  AgenteVocaleIllustration,
+  ChiamateRistoranteIllustration,
+  AIRistorantiIllustration,
+  SaloniIllustration,
+  CostoChamateIllustration,
+  StudiMediciIllustration,
+  AppuntamentiIllustration,
+  MarketingPMIIllustration,
+} from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Guide AI e Automazione per PMI | Luca Vizza" },
@@ -19,6 +29,7 @@ const GUIDE = [
     desc: "Una spiegazione senza tecnicismi di cosa fa un agente vocale AI, come si integra con il tuo numero di telefono e in quali settori ha più senso usarlo.",
     tag: "Fondamentale",
     color: "#3ad3ef",
+    Illustration: AgenteVocaleIllustration,
   },
   {
     href: "/guide/come-non-perdere-chiamate-ristorante",
@@ -26,6 +37,7 @@ const GUIDE = [
     desc: "Quante prenotazioni perde un ristorante durante il servizio? Quali soluzioni esistono, a che costo, e quando un agente vocale AI è la risposta giusta.",
     tag: "Ristorazione",
     color: "#ee826d",
+    Illustration: ChiamateRistoranteIllustration,
   },
   {
     href: "/guide/automazione-ai-per-ristoranti",
@@ -33,6 +45,7 @@ const GUIDE = [
     desc: "Dai 5-6 strumenti AI concreti già usati da ristoranti normali: risposta chiamate, gestione prenotazioni, CRM clienti abituali, WhatsApp marketing e altro.",
     tag: "Ristorazione",
     color: "#5bc783",
+    Illustration: AIRistorantiIllustration,
   },
   {
     href: "/guide/automazione-ai-per-saloni-centri-estetici",
@@ -40,6 +53,7 @@ const GUIDE = [
     desc: "Il telefono squilla mentre hai le mani occupate. Gli appuntamenti sono su carta o WhatsApp. Zero follow-up. Ecco come risolvere tutto e quante ore si risparmia.",
     tag: "Benessere",
     color: "#544fb3",
+    Illustration: SaloniIllustration,
   },
   {
     href: "/guide/quanto-costa-non-rispondere-al-telefono",
@@ -47,6 +61,7 @@ const GUIDE = [
     desc: "Il costo reale di una chiamata persa, settore per settore. Formula per calcolare la perdita annua e confronto tra il costo dell'inazione e quello delle soluzioni disponibili.",
     tag: "Analisi",
     color: "#ee826d",
+    Illustration: CostoChamateIllustration,
   },
   {
     href: "/guide/automazione-ai-per-studi-medici-e-ambulatori",
@@ -54,6 +69,7 @@ const GUIDE = [
     desc: "Come studi medici e ambulatori gestiscono appuntamenti, disdette e reminder con l'AI — rispettando il GDPR. Guida pratica per professionisti sanitari.",
     tag: "Sanità",
     color: "#5bc783",
+    Illustration: StudiMediciIllustration,
   },
   {
     href: "/guide/come-automatizzare-gli-appuntamenti-senza-centralino",
@@ -61,6 +77,7 @@ const GUIDE = [
     desc: "Quali fasi del processo appuntamenti si automatizzano, quali strumenti usare e quando hai ancora bisogno di un operatore umano. Guida cross-settore.",
     tag: "Operatività",
     color: "#3ad3ef",
+    Illustration: AppuntamentiIllustration,
   },
   {
     href: "/guide/marketing-digitale-per-pmi-da-dove-iniziare",
@@ -68,6 +85,7 @@ const GUIDE = [
     desc: "Gli errori più comuni e la sequenza giusta: prima automatizza i processi, poi porta traffico. Framework pratico con checklist 3 mesi.",
     tag: "Marketing",
     color: "#ffbd59",
+    Illustration: MarketingPMIIllustration,
   },
 ];
 
@@ -108,21 +126,31 @@ export default function GuidePage() {
                 className="group block rounded-2xl border-2 p-7 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
                 style={{ borderColor: g.color + "40", backgroundColor: g.color + "06" }}
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-1 rounded-full" style={{ backgroundColor: g.color }} />
-                  <span
-                    className="text-xs font-bold uppercase tracking-widest"
-                    style={{ color: g.color }}
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-1 rounded-full" style={{ backgroundColor: g.color }} />
+                      <span
+                        className="text-xs font-bold uppercase tracking-widest"
+                        style={{ color: g.color }}
+                      >
+                        {g.tag}
+                      </span>
+                    </div>
+                    <h2
+                      className="text-xl font-bold text-primary mb-3 group-hover:text-coral transition-colors leading-snug"
+                      style={{ fontFamily: "Phenomena, sans-serif" }}
+                    >
+                      {g.title}
+                    </h2>
+                  </div>
+                  <div
+                    className="shrink-0 rounded-xl flex items-center justify-center p-2"
+                    style={{ backgroundColor: g.color + "15" }}
                   >
-                    {g.tag}
-                  </span>
+                    <g.Illustration size="card" />
+                  </div>
                 </div>
-                <h2
-                  className="text-xl font-bold text-primary mb-3 group-hover:text-coral transition-colors leading-snug"
-                  style={{ fontFamily: "Phenomena, sans-serif" }}
-                >
-                  {g.title}
-                </h2>
                 <p className="text-primary/60 text-sm leading-relaxed mb-4">{g.desc}</p>
                 <span
                   className="text-sm font-bold"

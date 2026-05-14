@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { StudiMediciIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Automazione AI per Studi Medici e Ambulatori | Luca Vizza" },
@@ -124,6 +125,10 @@ export default function GuideAIStudiMedici() {
               reminder, disdette — nel rispetto del GDPR. Ecco come.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#5bc78330", backgroundColor: "#5bc78308" }} aria-label="Illustrazione automazione AI per studi medici">
+            <StudiMediciIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={850}>
             <article className="space-y-12 pb-16">
@@ -310,6 +315,10 @@ export default function GuideAIStudiMedici() {
                   ))}
                 </div>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#5bc78320", backgroundColor: "#5bc78305" }} aria-label="Illustrazione delle soluzioni AI per studi medici con conformità GDPR">
+                <StudiMediciIllustration size="inline" />
+              </figure>
 
               {/* Internal link */}
               <div className="p-6 rounded-2xl border-2 border-accent-1/30 bg-accent-1/5">

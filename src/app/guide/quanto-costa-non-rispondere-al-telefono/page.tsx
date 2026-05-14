@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { CostoChamateIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Quanto Costa Non Rispondere al Telefono | Luca Vizza" },
@@ -168,6 +169,10 @@ export default function GuideCostoChiamate() {
               in silenzio. Ecco come calcolarlo.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#ee826d30", backgroundColor: "#ee826d08" }} aria-label="Illustrazione costo delle chiamate perse">
+            <CostoChamateIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={900}>
             <article className="space-y-12 pb-16">
@@ -400,6 +405,10 @@ export default function GuideCostoChiamate() {
                   </p>
                 </div>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#ee826d20", backgroundColor: "#ee826d05" }} aria-label="Grafico del fatturato perso per chiamate senza risposta">
+                <CostoChamateIllustration size="inline" />
+              </figure>
 
               {/* Internal links */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

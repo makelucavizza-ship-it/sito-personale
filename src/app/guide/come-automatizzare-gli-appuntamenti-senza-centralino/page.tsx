@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { AppuntamentiIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Come Automatizzare gli Appuntamenti Senza Centralino | Luca Vizza" },
@@ -125,6 +126,10 @@ export default function GuideAutomatizzareAppuntamenti() {
               vengano gestiti. Sono due cose diverse.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#3ad3ef30", backgroundColor: "#3ad3ef08" }} aria-label="Illustrazione automazione appuntamenti senza centralino">
+            <AppuntamentiIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={850}>
             <article className="space-y-12 pb-16">
@@ -354,6 +359,10 @@ export default function GuideAutomatizzareAppuntamenti() {
                   per riconoscere questi casi e trasferire la chiamata.
                 </p>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#3ad3ef20", backgroundColor: "#3ad3ef05" }} aria-label="Schema del ciclo automatizzato degli appuntamenti">
+                <AppuntamentiIllustration size="inline" />
+              </figure>
 
               {/* Internal link */}
               <div className="p-6 rounded-2xl border-2 border-accent-3/30 bg-accent-3/5">

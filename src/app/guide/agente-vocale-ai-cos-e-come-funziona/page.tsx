@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { AgenteVocaleIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Agente Vocale AI: cos'è e come funziona | Luca Vizza" },
@@ -126,6 +127,10 @@ export default function GuideAgenteVocale() {
               davvero. Questa guida lo spiega dall&apos;inizio, senza assumere conoscenze tecniche.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#3ad3ef30", backgroundColor: "#3ad3ef08" }} aria-label="Illustrazione agente vocale AI">
+            <AgenteVocaleIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={800}>
             <article className="prose-custom space-y-12 pb-16">
@@ -311,6 +316,10 @@ export default function GuideAgenteVocale() {
                   </div>
                 </div>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#3ad3ef20", backgroundColor: "#3ad3ef05" }} aria-label="Schema di funzionamento di un agente vocale AI">
+                <AgenteVocaleIllustration size="inline" />
+              </figure>
 
               {/* Internal link */}
               <div className="p-6 rounded-2xl border-2 border-accent-1/30 bg-accent-1/5">

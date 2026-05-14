@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ColorBar from "@/components/ColorBar";
 import GuideLayout from "@/components/GuideLayout";
+import { SaloniIllustration } from "@/components/guide-images";
 
 export const metadata: Metadata = {
   title: { absolute: "Automazione AI per Saloni e Centri Estetici | Luca Vizza" },
@@ -127,6 +128,10 @@ export default function GuideAISaloni() {
               non ricevono nessun reminder. Ecco come cambia la situazione con l&apos;AI.
             </p>
           </header>
+
+          <figure className="mb-8 rounded-2xl border-2 flex items-center justify-center py-6" style={{ borderColor: "#544fb330", backgroundColor: "#544fb308" }} aria-label="Illustrazione automazione AI per saloni e centri estetici">
+            <SaloniIllustration size="hero" />
+          </figure>
 
           <GuideLayout sections={SECTIONS} wordCount={750}>
             <article className="space-y-12 pb-16">
@@ -254,6 +259,10 @@ export default function GuideAISaloni() {
                   </div>
                 </div>
               </section>
+
+              <figure className="hidden md:flex my-2 rounded-xl border justify-center py-4" style={{ borderColor: "#544fb320", backgroundColor: "#544fb305" }} aria-label="Illustrazione automazione per saloni e centri estetici">
+                <SaloniIllustration size="inline" />
+              </figure>
 
               {/* Internal links */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
