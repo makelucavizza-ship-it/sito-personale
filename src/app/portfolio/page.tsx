@@ -103,16 +103,12 @@ export default function PortfolioPage() {
         ) : (
           <section className="py-8">
             <div className="rounded-2xl border-2 border-dashed border-primary/10 p-12 text-center">
-              <p className="text-primary/40 mb-4">Case study in arrivo.</p>
-              <p className="text-sm text-primary/30">
-                Stai lavorando con me su un progetto pilota? Il tuo caso studio
-                sarà tra i primi a essere pubblicato.
-              </p>
+              <p className="text-primary/40">Case study in arrivo.</p>
             </div>
           </section>
         )}
 
-        {/* Pilot CTA */}
+        {/* CTA */}
         <section className="py-16 border-t border-primary/10 text-center">
           <h2
             className="text-3xl font-bold text-primary mb-4"
@@ -121,15 +117,14 @@ export default function PortfolioPage() {
             Vuoi essere nel prossimo case study?
           </h2>
           <p className="text-primary/60 mb-8 max-w-xl mx-auto">
-            Sono il progetto pilota: fino a settembre 2026 lavoro a costo zero
-            con 5 aziende selezionate.
+            Scrivimi per parlare del tuo progetto.
           </p>
           <Link
             href="/contatti"
             className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Candidati al progetto pilota
+            Contattami
           </Link>
         </section>
       </div>

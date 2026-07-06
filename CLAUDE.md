@@ -63,10 +63,9 @@ Componente React globale (`CustomCursor`) che traccia il mouse.
 ## Home — struttura sezioni
 1. Navigation top (sticky) con link a tutte le pagine + CTA "Audit gratuito"
 2. Hero: animazione typewriter delle competenze + headline "Cresciamo insieme con l'AI" + CTA
-3. Banner pilota: "Fino a settembre 2026 seleziono 3-5 aziende con cui lavorare a costo zero in cambio di feedback e case study"
-4. Carosello servizi: card con 5-10 parole, scroll orizzontale
-5. FAQ: 10 domande in accordion (Framer Motion per apertura/chiusura)
-6. Footer con social (LinkedIn, Instagram) + cursore personalizzato per social + P.IVA placeholder
+3. Carosello servizi: card con 5-10 parole, scroll orizzontale
+4. FAQ: 9 domande in accordion (Framer Motion per apertura/chiusura)
+5. Footer con social (LinkedIn, Instagram) + cursore personalizzato per social + P.IVA placeholder
 
 ## Tool Audit (/audit)
 Form condizionale a step per settore:
@@ -131,6 +130,8 @@ RESEND_FROM_EMAIL=       # Email mittente (es. noreply@lucavizza.it)
 13. [ ] Ottimizzazione SEO su tutte le pagine
 
 ## Decisioni tecniche (aggiornare ad ogni step)
+- 2026-07-06: Rimossa la sezione "Guide" (/guide e tutte le pagine correlate) e i link ad essa da Navigation, sitemap e pagine servizi.
+- 2026-07-06: Rimossa la sezione "collab gratuita con 5 aziende" (PilotBanner in home, FAQ dedicata, riferimenti in portfolio) e tutti i riferimenti nel resto del sito.
 - 2026-04-20: Inizializzato progetto. Scelto Next.js 14 App Router per SSR/SSG e routing nativo.
 - 2026-04-20: Tailwind CSS v3 per utility-first styling coerente con design system.
 - 2026-04-20: Framer Motion per animazioni (typewriter, accordion FAQ, carosello).

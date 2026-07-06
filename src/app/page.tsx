@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
-import PilotBanner from "@/components/home/PilotBanner";
 import ServicesCarousel from "@/components/home/ServicesCarousel";
 import FAQ from "@/components/home/FAQ";
 import { HOME_FAQS } from "@/data/home-faqs";
@@ -75,7 +74,6 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
       <Hero />
-      <PilotBanner />
       <ServicesCarousel />
       <FAQ />
     </>

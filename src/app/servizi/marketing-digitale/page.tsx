@@ -185,30 +185,6 @@ export default function MarketingDigitalePage() {
         </div>
       </section>
 
-      {/* Approfondisci */}
-      <section className="px-6 pb-8 max-w-5xl mx-auto">
-        <h2
-          className="text-2xl font-bold text-primary mb-5"
-          style={{ fontFamily: "Phenomena, sans-serif" }}
-        >
-          Approfondisci
-        </h2>
-        <Link
-          href="/guide/automazione-ai-per-ristoranti"
-          className="block p-5 rounded-xl border-2 border-accent-3/40 bg-accent-3/5 hover:shadow-sm transition-all"
-        >
-          <span
-            className="font-bold text-primary hover:text-coral transition-colors text-sm block mb-1"
-            style={{ fontFamily: "Phenomena, sans-serif" }}
-          >
-            Automazione AI per ristoranti →
-          </span>
-          <span className="text-xs text-primary/50">
-            Come marketing digitale e automazioni AI lavorano insieme nel settore food
-          </span>
-        </Link>
-      </section>
-
       {/* CTA */}
       <section className="px-6 py-16 text-center max-w-3xl mx-auto">
         <h2
