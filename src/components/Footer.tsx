@@ -36,6 +36,7 @@ export default function Footer() {
               {[
                 { href: "/servizi/marketing-digitale", label: "Marketing Digitale" },
                 { href: "/servizi/automazione-ai", label: "AI Automation" },
+                { href: "/portfolio", label: "Lavori" },
                 { href: "/chi-sono", label: "Chi sono" },
                 { href: "/agenzie", label: "Per le agenzie" },
                 { href: "/audit", label: "Calcolatore gratuito" },

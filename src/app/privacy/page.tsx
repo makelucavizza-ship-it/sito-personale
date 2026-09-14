@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             <p className="text-sm leading-relaxed">
               Luca Vizza — freelance marketing digitale e AI automation.<br />
               Email: <a href="mailto:info@lucavizza.it" className="text-coral underline underline-offset-2">info@lucavizza.it</a><br />
-              P.IVA: in fase di attivazione.<br />
+              P.IVA 04880630407<br />
               Per qualsiasi richiesta relativa ai tuoi dati, scrivi all&apos;indirizzo sopra.
             </p>
           </section>

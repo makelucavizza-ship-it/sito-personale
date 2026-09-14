@@ -104,7 +104,11 @@ export default function AutomazioneAIPage() {
                 Un agente vocale AI risponde alle chiamate in entrata al posto tuo: raccoglie
                 prenotazioni, risponde alle domande frequenti e trasferisce solo le chiamate
                 che richiedono davvero la tua attenzione. Voce naturale, attivo H24, si integra
-                con il tuo numero di telefono esistente senza cambiare nulla.
+                con il tuo numero di telefono esistente senza cambiare nulla. Trovi alcuni{" "}
+                <Link href="/portfolio" className="text-accent-3 underline underline-offset-2 hover:text-bg transition-colors">
+                  progetti realizzati
+                </Link>{" "}
+                nel portfolio.
               </p>
               <Link
                 href="/contatti"
