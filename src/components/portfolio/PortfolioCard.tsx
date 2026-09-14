@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PortfolioItem, PortfolioStatus } from "@/lib/markdown";
 
-const STATUS_LABEL: Record<PortfolioStatus, string> = {
+export const STATUS_LABEL: Record<PortfolioStatus, string> = {
   online: "Online",
   "in-corso": "In corso",
   "in-arrivo": "In arrivo",
 };
 
-const STATUS_CLASSES: Record<PortfolioStatus, string> = {
+export const STATUS_CLASSES: Record<PortfolioStatus, string> = {
   online: "bg-accent-3 text-white",
   "in-corso": "bg-accent-2 text-primary",
   "in-arrivo": "bg-primary/15 text-primary/70",
