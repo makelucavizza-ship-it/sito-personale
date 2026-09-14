@@ -10,6 +10,17 @@ results:
   - "Costo per prenotazione ridotto del 38%"
   - "2.800 nuovi follower Instagram"
 color: "#ee826d"
+type: ["social", "ads"]
+status: "online"
+year: 2025
+summary: "Strategia social completa e campagne advertising per un ristorante tradizionale romagnolo che voleva aumentare le prenotazioni nel weekend."
+problem: "Il ristorante aveva una buona reputazione locale ma nessuna presenza online strutturata. Le prenotazioni arrivavano solo tramite passaparola e telefono."
+whatIDid:
+  - "Audit e posizionamento — analisi dei competitor locali e definizione del tono di voce"
+  - "Contenuti organici — piano editoriale settimanale con foto professionali dei piatti"
+  - "Advertising — campagne Meta Ads geolocalizzate per aumentare le prenotazioni nel weekend"
+result: "+45% prenotazioni online nei primi 3 mesi, costo per prenotazione ridotto del 38%."
+coverImage: "[DA COMPILARE: path immagine cover]"
 ---
 
 ## La sfida

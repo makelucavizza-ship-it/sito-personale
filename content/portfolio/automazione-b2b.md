@@ -10,6 +10,18 @@ results:
   - "+60% tasso di conversione lead → cliente"
   - "15 ore/settimana risparmiate sulla gestione contatti"
 color: "#5bc783"
+type: ["automazione"]
+status: "online"
+year: 2026
+summary: "Implementazione di un sistema automatizzato di lead nurturing con qualificazione AI per uno studio professionale di Rimini."
+problem: "Lo studio riceveva molte richieste di contatto ma non aveva un sistema per qualificarle e seguirle. Molti potenziali clienti non ricevevano risposta in tempo utile."
+whatIDid:
+  - "Form intelligente — modulo di contatto con domande di qualificazione"
+  - "Automazione n8n — risposta automatica personalizzata entro 5 minuti"
+  - "CRM integration — i lead qualificati inseriti automaticamente con tag e score"
+  - "Sequenza email — follow-up automatico su 7 giorni per i lead non convertiti"
+result: "Tempo di risposta ai lead ridotto da 48h a 5 minuti, +60% conversione lead → cliente."
+coverImage: "[DA COMPILARE: path immagine cover]"
 ---
 
 ## La sfida
