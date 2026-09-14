@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "Case study e progetti di marketing digitale e AI automation. Risultati concreti per PMI italiane.",
-  robots: { index: false, follow: false },
 };
 
 export default function PortfolioPage() {
