@@ -28,6 +28,7 @@ export interface PortfolioItem {
   result?: string;
   clientUrl?: string;
   coverImage: string;
+  siteScreenshot?: string;
   // Schema esistente, mantenuto per compatibilità con le pagine attuali
   services: string[];
   date: string;
@@ -62,6 +63,7 @@ export function getPortfolioItems(): PortfolioItem[] {
         result: data.result,
         clientUrl: data.clientUrl,
         coverImage: data.coverImage ?? "",
+        siteScreenshot: data.siteScreenshot,
         services: data.services ?? [],
         date: data.date ?? "",
         description: data.description ?? "",
@@ -92,6 +94,7 @@ export function getPortfolioItem(slug: string): PortfolioItem | null {
     result: data.result,
     clientUrl: data.clientUrl,
     coverImage: data.coverImage ?? "",
+    siteScreenshot: data.siteScreenshot,
     services: data.services ?? [],
     date: data.date ?? "",
     description: data.description ?? "",

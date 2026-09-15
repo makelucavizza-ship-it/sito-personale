@@ -69,7 +69,7 @@ export default function PortfolioItemPage({ params }: Props) {
           {hasCoverImage(item.coverImage) &&
             (item.type.includes("sito-web") ? (
               <SitePreviewScroll
-                src={item.coverImage}
+                src={item.siteScreenshot ?? item.coverImage}
                 alt={item.title}
                 color={item.color}
               />
