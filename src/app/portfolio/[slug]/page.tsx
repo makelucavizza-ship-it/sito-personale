@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { getPortfolioItem, getPortfolioItems } from "@/lib/markdown";
-import { STATUS_LABEL, STATUS_CLASSES } from "@/components/portfolio/PortfolioCard";
+import { STATUS_LABEL, STATUS_CLASSES, hasCoverImage } from "@/components/portfolio/PortfolioCard";
 
 interface Props {
   params: { slug: string };
@@ -61,7 +62,22 @@ export default function PortfolioItemPage({ params }: Props) {
           >
             {item.client}
           </h1>
-          <p className="text-primary/60 text-lg mb-12 leading-relaxed">{item.summary}</p>
+          <p className="text-primary/60 text-lg mb-8 leading-relaxed">{item.summary}</p>
+
+          {/* Cover */}
+          {hasCoverImage(item.coverImage) && (
+            <div
+              className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden mb-12"
+              style={{ backgroundColor: item.color + "15" }}
+            >
+              <Image
+                src={item.coverImage}
+                alt={item.title}
+                fill
+                className="object-contain p-6"
+              />
+            </div>
+          )}
 
           {/* Problema */}
           {item.problem && (

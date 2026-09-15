@@ -14,7 +14,7 @@ export const STATUS_CLASSES: Record<PortfolioStatus, string> = {
   "in-arrivo": "bg-primary/15 text-primary/70",
 };
 
-function hasCoverImage(coverImage: string) {
+export function hasCoverImage(coverImage: string) {
   return coverImage.startsWith("/") || coverImage.startsWith("http");
 }
 
@@ -33,7 +33,7 @@ export default function PortfolioCard({ item }: { item: PortfolioItem }) {
             src={item.coverImage}
             alt={item.title}
             fill
-            className="object-cover"
+            className="object-contain p-3"
           />
         ) : (
           <span
