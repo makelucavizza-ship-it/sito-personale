@@ -1,23 +1,23 @@
 ---
-title: "[DA COMPILARE: titolo progetto]"
+title: "Nuovo sito web per nutrizionista"
 client: "Alessandra Spadaro — Nutrizionista"
 sector: "Benessere e salute"
 services: ["Sito Web"]
 date: "2026-09-01"
-description: "[DA COMPILARE: descrizione breve — usata come fallback se manca summary]"
+description: "Realizzazione del nuovo sito web per una biologa nutrizionista, con sezioni dedicate a visite, ricette e prenotazione online."
 results: []
 color: "#3ad3ef"
 type: ["sito-web"]
 status: "in-corso"
 year: 2026
-summary: "[DA COMPILARE: sintesi in una frase]"
-problem: "[DA COMPILARE: qual era il problema/bisogno del cliente]"
+summary: "Nuovo sito web per una biologa nutrizionista, con sezioni dedicate a visite, ricette e prenotazione online."
+problem: "Il sito attuale (in copertina) è datato nella struttura e nella presentazione e non rispecchia più il posizionamento della professionista. Serve un sito nuovo, più moderno e organizzato, con sezioni per prenotazioni e contenuti (ricette, articoli)."
 whatIDid:
-  - "[DA COMPILARE: punto 1]"
+  - "Nuovo sito web in fase di realizzazione, in sostituzione di quello attuale"
   - "[DA COMPILARE: punto 2]"
 result: ""
-clientUrl: "[DA COMPILARE: url sito cliente, se disponibile]"
-coverImage: "[DA COMPILARE: path immagine cover]"
+clientUrl: "https://www.alessandraspadaro.it/"
+coverImage: "/portfolio/alessandra-spadaro-nutrizionista.png"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]
