@@ -16,8 +16,8 @@ whatIDid:
   - "Grafiche social per campagne di recruiting (addetti pulizie, steward, guardie giurate)"
   - "Contenuti pensati per chiarire la differenza tra i ruoli e i servizi offerti"
 result: "[DA COMPILARE: risultato, opzionale]"
-clientUrl: "[DA COMPILARE: url Instagram/sito cliente]"
-coverImage: "[DA COMPILARE: screenshot social — vedi nota in chat]"
+clientUrl: "https://www.instagram.com/C.a.p.s.security.service/"
+coverImage: "/portfolio/caps-security-services.jpg"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]

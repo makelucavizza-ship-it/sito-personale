@@ -16,8 +16,8 @@ whatIDid:
   - "[DA COMPILARE: punto 1]"
   - "[DA COMPILARE: punto 2]"
 result: ""
-clientUrl: "[DA COMPILARE: url sito cliente]"
-coverImage: "[DA COMPILARE: screenshot del sito — vedi nota in chat]"
+clientUrl: "https://www.alessandraspadaro.it/"
+coverImage: "/portfolio/alessandra-spadaro-nutrizionista.png"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]

@@ -16,8 +16,8 @@ whatIDid:
   - "Sito web con presentazione chiara dei servizi (vetrate in altezza, pannelli solari) e zona coperta (Romagna e Marche)"
   - "Ottimizzazione Google Business Profile per la ricerca locale"
 result: ""
-clientUrl: "[DA COMPILARE: url sito cliente]"
-coverImage: "[DA COMPILARE: screenshot del sito — vedi nota in chat]"
+clientUrl: ""
+coverImage: "/portfolio/dl-solar-clean.png"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]
