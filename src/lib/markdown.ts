@@ -4,11 +4,31 @@ import matter from "gray-matter";
 
 const contentDir = path.join(process.cwd(), "content");
 
+export type PortfolioType =
+  | "sito-web"
+  | "social"
+  | "local-seo"
+  | "ads"
+  | "automazione";
+
+export type PortfolioStatus = "online" | "in-corso" | "in-arrivo";
+
 export interface PortfolioItem {
   slug: string;
   title: string;
   client: string;
   sector: string;
+  // Nuovo schema (filtri, badge stato, pagina dettaglio)
+  type: PortfolioType[];
+  status: PortfolioStatus;
+  year: number;
+  summary: string;
+  problem: string;
+  whatIDid: string[];
+  result?: string;
+  clientUrl?: string;
+  coverImage: string;
+  // Schema esistente, mantenuto per compatibilità con le pagine attuali
   services: string[];
   date: string;
   description: string;
@@ -33,6 +53,15 @@ export function getPortfolioItems(): PortfolioItem[] {
         title: data.title ?? slug,
         client: data.client ?? "",
         sector: data.sector ?? "",
+        type: data.type ?? [],
+        status: data.status ?? "in-arrivo",
+        year: data.year ?? new Date(data.date ?? Date.now()).getFullYear(),
+        summary: data.summary ?? data.description ?? "",
+        problem: data.problem ?? "",
+        whatIDid: data.whatIDid ?? [],
+        result: data.result,
+        clientUrl: data.clientUrl,
+        coverImage: data.coverImage ?? "",
         services: data.services ?? [],
         date: data.date ?? "",
         description: data.description ?? "",
@@ -54,6 +83,15 @@ export function getPortfolioItem(slug: string): PortfolioItem | null {
     title: data.title ?? slug,
     client: data.client ?? "",
     sector: data.sector ?? "",
+    type: data.type ?? [],
+    status: data.status ?? "in-arrivo",
+    year: data.year ?? new Date(data.date ?? Date.now()).getFullYear(),
+    summary: data.summary ?? data.description ?? "",
+    problem: data.problem ?? "",
+    whatIDid: data.whatIDid ?? [],
+    result: data.result,
+    clientUrl: data.clientUrl,
+    coverImage: data.coverImage ?? "",
     services: data.services ?? [],
     date: data.date ?? "",
     description: data.description ?? "",

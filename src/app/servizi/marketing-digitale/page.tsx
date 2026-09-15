@@ -142,7 +142,12 @@ export default function MarketingDigitalePage() {
           <p className="text-primary/70 leading-relaxed max-w-2xl">
             Quando ads, agente vocale e CRM lavorano insieme, ogni euro speso in pubblicità
             si trasforma in un contatto raccolto, qualificato e seguito. È questa integrazione
-            il vero vantaggio competitivo — non i follower o il numero di campagne attive.
+            il vero vantaggio competitivo — non i follower o il numero di campagne attive, come
+            mostrano alcuni{" "}
+            <Link href="/portfolio" className="text-coral underline underline-offset-2 hover:text-primary transition-colors">
+              casi reali
+            </Link>{" "}
+            già seguiti.
           </p>
         </div>
       </section>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPortfolioItem, getPortfolioItems } from "@/lib/markdown";
+import { STATUS_LABEL, STATUS_CLASSES } from "@/components/portfolio/PortfolioCard";
 
 interface Props {
   params: { slug: string };
@@ -16,7 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return {};
   return {
     title: item.title,
-    description: item.description,
+    description: item.summary,
+    openGraph: {
+      title: item.title,
+      description: item.summary,
+    },
   };
 }
 
@@ -35,70 +40,108 @@ export default function PortfolioItemPage({ params }: Props) {
             ← Portfolio
           </Link>
 
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Hero */}
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <span
-              className="text-xs px-3 py-1 rounded-full text-white"
-              style={{ backgroundColor: item.color }}
+              className={`text-xs px-3 py-1 rounded-full font-medium ${STATUS_CLASSES[item.status]}`}
+            >
+              {STATUS_LABEL[item.status]}
+            </span>
+            <span
+              className="text-xs px-3 py-1 rounded-full border"
+              style={{ borderColor: item.color + "40", color: item.color }}
             >
               {item.sector}
             </span>
-            {item.services.map((s) => (
-              <span
-                key={s}
-                className="text-xs px-3 py-1 rounded-full border"
-                style={{ borderColor: item.color + "40", color: item.color }}
-              >
-                {s}
-              </span>
-            ))}
           </div>
 
           <h1
             className="text-4xl md:text-5xl font-bold text-primary mb-3"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            {item.title}
+            {item.client}
           </h1>
-          <p className="text-primary/40 text-sm mb-8">{item.client}</p>
+          <p className="text-primary/60 text-lg mb-12 leading-relaxed">{item.summary}</p>
 
-          {item.results.length > 0 && (
-            <div
-              className="rounded-2xl p-6 mb-10 border-2"
-              style={{ borderColor: item.color + "40", backgroundColor: item.color + "08" }}
-            >
+          {/* Problema */}
+          {item.problem && (
+            <div className="mb-10">
+              <h2
+                className="text-lg font-bold text-primary mb-3"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                Il problema
+              </h2>
+              <p className="text-primary/70 leading-relaxed">{item.problem}</p>
+            </div>
+          )}
+
+          {/* Cosa ho fatto */}
+          {item.whatIDid.length > 0 && (
+            <div className="mb-10">
               <h2
                 className="text-lg font-bold text-primary mb-4"
                 style={{ fontFamily: "Phenomena, sans-serif" }}
               >
-                Risultati
+                Cosa ho fatto
               </h2>
               <ul className="space-y-3">
-                {item.results.map((r, i) => (
-                  <li key={i} className="flex items-center gap-3">
+                {item.whatIDid.map((point, i) => (
+                  <li key={i} className="flex items-start gap-3">
                     <span
-                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      className="w-2 h-2 rounded-full flex-shrink-0 mt-2"
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="text-primary/80 font-medium">{r}</span>
+                    <span className="text-primary/80">{point}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          <div
-            className="prose prose-neutral max-w-none text-primary/70"
-            dangerouslySetInnerHTML={{ __html: item.content }}
-          />
+          {/* Risultato */}
+          {item.result && (
+            <div
+              className="rounded-2xl p-6 mb-10 border-2"
+              style={{ borderColor: item.color + "40", backgroundColor: item.color + "08" }}
+            >
+              <h2
+                className="text-lg font-bold text-primary mb-3"
+                style={{ fontFamily: "Phenomena, sans-serif" }}
+              >
+                Risultato
+              </h2>
+              <p className="text-primary/80 font-medium">{item.result}</p>
+            </div>
+          )}
+
+          {/* Link al sito del cliente */}
+          {item.clientUrl && item.clientUrl.startsWith("http") && (
+            <a
+              href={item.clientUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
+              style={{ color: item.color }}
+            >
+              Visita il sito →
+            </a>
+          )}
         </section>
 
         <div className="py-8 border-t border-primary/10 text-center">
+          <h2
+            className="text-2xl font-bold text-primary mb-4"
+            style={{ fontFamily: "Phenomena, sans-serif" }}
+          >
+            Vuoi un risultato simile?
+          </h2>
           <Link
-            href="/audit"
+            href="/contatti"
             className="px-8 py-4 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold hover:from-[#d4602a] hover:to-[#b84d24] transition-colors inline-block"
             style={{ fontFamily: "Phenomena, sans-serif" }}
           >
-            Calcolatore gratuito per la tua azienda
+            Contattami
           </Link>
         </div>
       </div>

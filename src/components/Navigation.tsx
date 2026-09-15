@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const links = [
   { href: "/servizi/marketing-digitale", label: "Marketing" },
   { href: "/servizi/automazione-ai", label: "AI Automation" },
+  { href: "/portfolio", label: "Lavori" },
   { href: "/chi-sono", label: "Chi sono" },
   { href: "/agenzie", label: "Agenzie" },
 ];

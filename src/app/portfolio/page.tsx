@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getPortfolioItems } from "@/lib/markdown";
+import PortfolioFilter from "@/components/portfolio/PortfolioFilter";
 
 export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "Case study e progetti di marketing digitale e AI automation. Risultati concreti per PMI italiane.",
-  robots: { index: false, follow: false },
 };
 
 export default function PortfolioPage() {
@@ -14,7 +14,7 @@ export default function PortfolioPage() {
 
   return (
     <div className="pt-24">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Hero */}
         <section className="py-16 relative">
           <span
@@ -40,73 +40,16 @@ export default function PortfolioPage() {
           </p>
         </section>
 
-        {/* Portfolio grid */}
-        {items.length > 0 ? (
-          <section className="py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {items.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/portfolio/${item.slug}`}
-                  className="group rounded-2xl p-7 border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 block"
-                  style={{
-                    borderColor: item.color + "40",
-                    backgroundColor: item.color + "08",
-                  }}
-                >
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span
-                      className="text-xs px-3 py-1 rounded-full text-white"
-                      style={{ backgroundColor: item.color }}
-                    >
-                      {item.sector}
-                    </span>
-                    {item.services.slice(0, 2).map((s) => (
-                      <span
-                        key={s}
-                        className="text-xs px-3 py-1 rounded-full border"
-                        style={{ borderColor: item.color + "40", color: item.color }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h2
-                    className="text-2xl font-bold text-primary mb-2 group-hover:text-coral transition-colors"
-                    style={{ fontFamily: "Phenomena, sans-serif" }}
-                  >
-                    {item.title}
-                  </h2>
-                  <p className="text-primary/50 text-xs mb-4">{item.client}</p>
-                  <p className="text-primary/60 text-sm leading-relaxed mb-6">
-                    {item.description}
-                  </p>
-
-                  {item.results.length > 0 && (
-                    <ul className="space-y-2">
-                      {item.results.slice(0, 2).map((r, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm">
-                          <span
-                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                            style={{ backgroundColor: item.color }}
-                          />
-                          <span className="text-primary/70 font-medium">{r}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </Link>
-              ))}
-            </div>
-          </section>
-        ) : (
-          <section className="py-8">
+        {/* Portfolio grid + filtro */}
+        <section className="py-8">
+          {items.length > 0 ? (
+            <PortfolioFilter items={items} />
+          ) : (
             <div className="rounded-2xl border-2 border-dashed border-primary/10 p-12 text-center">
               <p className="text-primary/40">Case study in arrivo.</p>
             </div>
-          </section>
-        )}
+          )}
+        </section>
 
         {/* CTA */}
         <section className="py-16 border-t border-primary/10 text-center">

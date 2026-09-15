@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/portfolio", "/risorse/bandi-digitalizzazione-romagna"],
+        disallow: ["/risorse/bandi-digitalizzazione-romagna"],
       },
     ],
     sitemap: "https://lucavizza.it/sitemap.xml",
