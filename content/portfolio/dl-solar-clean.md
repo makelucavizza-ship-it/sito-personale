@@ -18,7 +18,6 @@ whatIDid:
 result: ""
 clientUrl: ""
 coverImage: "/portfolio/dl-solar-clean.png"
-siteScreenshot: "/portfolio/dl-solar-clean-full.jpg"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]
