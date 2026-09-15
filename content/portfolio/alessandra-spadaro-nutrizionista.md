@@ -18,6 +18,7 @@ whatIDid:
 result: ""
 clientUrl: "https://www.alessandraspadaro.it/"
 coverImage: "/portfolio/alessandra-spadaro-nutrizionista.png"
+siteScreenshot: "/portfolio/alessandra-spadaro-nutrizionista-full.jpg"
 ---
 
 [DA COMPILARE: eventuale testo esteso del case study]
