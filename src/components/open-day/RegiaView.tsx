@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, RotateCcw, WifiOff } from "lucide-react";
-import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE } from "@/data/open-day";
+import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import QrPanel from "./QrPanel";
 import VoteBarChart from "./VoteBarChart";
-import SlideCarousel from "./SlideCarousel";
+import SlideView from "./SlideView";
 import BrandCorner from "./BrandCorner";
 
 function totalVotes(votes: Record<string, number>): number {
@@ -37,8 +37,8 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   }
 
   return (
-    <div className="min-h-screen bg-primary text-bg flex flex-col relative overflow-hidden">
-      <BrandCorner dark />
+    <div className="min-h-screen bg-bg text-primary flex flex-col relative overflow-hidden">
+      <BrandCorner />
 
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex flex-col items-end gap-2">
         {!connected && (
@@ -53,12 +53,12 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
         )}
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-6 py-24">
+      <div className="flex-1 flex items-center justify-center px-8 md:px-16 py-20">
         {!state ? (
-          <p className="opacity-50">Caricamento…</p>
+          <p className="opacity-40">Caricamento…</p>
         ) : current.kind === "question" ? (
-          <div className="w-full max-w-3xl flex flex-col items-center gap-10 text-center">
-            <p className="text-2xl md:text-4xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
+          <div className="w-full max-w-4xl flex flex-col items-center gap-10 text-center">
+            <p className="text-3xl md:text-5xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {QUESTIONS[current.questionIndex].text}
             </p>
             {current.questionIndex === 0 && totalVotes(votes) === 0 ? (
@@ -69,14 +69,20 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
               </div>
             )}
           </div>
-        ) : current.kind === "slides" ? (
-          <SlideCarousel block={SLIDE_BLOCKS[current.blockIndex]} key={current.blockIndex} />
+        ) : current.kind === "slide" ? (
+          <SlideView
+            block={SLIDE_BLOCKS[current.blockIndex]}
+            slide={SLIDE_BLOCKS[current.blockIndex].slides[current.slideIndex]}
+            index={current.slideIndex}
+            total={SLIDE_BLOCKS[current.blockIndex].slides.length}
+            accent={BLOCK_ACCENTS[current.blockIndex % BLOCK_ACCENTS.length]}
+          />
         ) : (
           <div className="text-center">
-            <p className="text-4xl md:text-7xl font-bold mb-6" style={{ fontFamily: "Phenomena, sans-serif" }}>
+            <p className="text-5xl md:text-8xl font-bold mb-6" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {FINAL_SLIDE.title}
             </p>
-            <p className="text-lg md:text-2xl opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
+            <p className="text-xl md:text-3xl opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
               {FINAL_SLIDE.subtitle}
             </p>
           </div>
@@ -87,7 +93,7 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
         <button
           onClick={() => send("prev")}
           disabled={pending || step === 0}
-          className="flex items-center gap-1 px-5 py-3 rounded-full border border-bg/20 text-bg/80 hover:bg-bg/10 disabled:opacity-30 transition-colors"
+          className="flex items-center gap-1 px-5 py-3 rounded-full border border-primary/20 text-primary/70 hover:bg-primary/5 disabled:opacity-30 transition-colors"
           style={{ fontFamily: "Phenomena, sans-serif" }}
         >
           <ChevronLeft size={18} /> Indietro
@@ -98,7 +104,7 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
           }}
           disabled={pending}
           title="Azzera voti e riparti dall'inizio"
-          className="p-3 rounded-full border border-bg/10 text-bg/40 hover:text-bg/70 hover:bg-bg/10 disabled:opacity-30 transition-colors"
+          className="p-3 rounded-full border border-primary/10 text-primary/30 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-30 transition-colors"
         >
           <RotateCcw size={16} />
         </button>

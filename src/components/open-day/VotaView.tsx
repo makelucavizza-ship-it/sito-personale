@@ -69,7 +69,7 @@ export default function VotaView() {
 
       {!state ? (
         <p className="opacity-50">Caricamento…</p>
-      ) : current.kind === "slides" ? (
+      ) : current.kind === "slide" ? (
         <div className="text-center flex flex-col items-center gap-4">
           <Monitor size={48} className="opacity-40" strokeWidth={1.5} />
           <p className="text-2xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
