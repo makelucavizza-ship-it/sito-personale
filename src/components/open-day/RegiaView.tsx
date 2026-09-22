@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, RotateCcw, WifiOff } from "lucide-react";
 import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
@@ -36,8 +36,23 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
     }
   }
 
+  // Frecce tastiera per avanzare/tornare indietro senza toccare il mouse.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
+        e.preventDefault();
+        send("next");
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        send("prev");
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
+
   return (
-    <div className="min-h-screen bg-bg text-primary flex flex-col relative overflow-hidden">
+    <div className="h-screen w-screen bg-bg text-primary flex flex-col relative overflow-hidden">
       <BrandCorner />
 
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex flex-col items-end gap-2">
@@ -53,12 +68,12 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
         )}
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-8 md:px-16 py-20">
+      <div className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-6 md:px-12 py-4">
         {!state ? (
           <p className="opacity-40">Caricamento…</p>
         ) : current.kind === "question" ? (
-          <div className="w-full max-w-4xl flex flex-col items-center gap-10 text-center">
-            <p className="text-3xl md:text-5xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
+          <div className="w-full max-w-4xl flex flex-col items-center gap-6 text-center">
+            <p className="text-2xl md:text-4xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {QUESTIONS[current.questionIndex].text}
             </p>
             {current.questionIndex === 0 && totalVotes(votes) === 0 ? (
@@ -79,43 +94,48 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
           />
         ) : (
           <div className="text-center">
-            <p className="text-5xl md:text-8xl font-bold mb-6" style={{ fontFamily: "Phenomena, sans-serif" }}>
+            <p className="text-4xl md:text-7xl font-bold mb-4" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {FINAL_SLIDE.title}
             </p>
-            <p className="text-xl md:text-3xl opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
+            <p className="text-lg md:text-2xl opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
               {FINAL_SLIDE.subtitle}
             </p>
           </div>
         )}
       </div>
 
-      <div className="relative z-30 flex items-center justify-center gap-3 pb-10">
-        <button
-          onClick={() => send("prev")}
-          disabled={pending || step === 0}
-          className="flex items-center gap-1 px-5 py-3 rounded-full border border-primary/20 text-primary/70 hover:bg-primary/5 disabled:opacity-30 transition-colors"
-          style={{ fontFamily: "Phenomena, sans-serif" }}
-        >
-          <ChevronLeft size={18} /> Indietro
-        </button>
-        <button
-          onClick={() => {
-            if (window.confirm("Azzerare tutti i voti e tornare all'inizio?")) send("reset");
-          }}
-          disabled={pending}
-          title="Azzera voti e riparti dall'inizio"
-          className="p-3 rounded-full border border-primary/10 text-primary/30 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-30 transition-colors"
-        >
-          <RotateCcw size={16} />
-        </button>
-        <button
-          onClick={() => send("next")}
-          disabled={pending || !state || step >= state.totalSteps - 1}
-          className="flex items-center gap-1 px-6 py-3 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold disabled:opacity-30 transition-colors"
-          style={{ fontFamily: "Phenomena, sans-serif" }}
-        >
-          Avanti <ChevronRight size={18} />
-        </button>
+      <div className="relative z-30 shrink-0 flex flex-col items-center justify-center gap-2 pb-6 pt-2">
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => send("prev")}
+            disabled={pending || step === 0}
+            className="flex items-center gap-1 px-5 py-3 rounded-full border border-primary/20 text-primary/70 hover:bg-primary/5 disabled:opacity-30 transition-colors"
+            style={{ fontFamily: "Phenomena, sans-serif" }}
+          >
+            <ChevronLeft size={18} /> Indietro
+          </button>
+          <button
+            onClick={() => {
+              if (window.confirm("Azzerare tutti i voti e tornare all'inizio?")) send("reset");
+            }}
+            disabled={pending}
+            title="Azzera voti e riparti dall'inizio"
+            className="p-3 rounded-full border border-primary/10 text-primary/30 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-30 transition-colors"
+          >
+            <RotateCcw size={16} />
+          </button>
+          <button
+            onClick={() => send("next")}
+            disabled={pending || !state || step >= state.totalSteps - 1}
+            className="flex items-center gap-1 px-6 py-3 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold disabled:opacity-30 transition-colors"
+            style={{ fontFamily: "Phenomena, sans-serif" }}
+          >
+            Avanti <ChevronRight size={18} />
+          </button>
+        </div>
+        <p className="text-[11px] opacity-30" style={{ fontFamily: "Sailors, Georgia, serif" }}>
+          oppure usa le frecce ← →
+        </p>
       </div>
     </div>
   );
