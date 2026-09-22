@@ -3,9 +3,7 @@ import { Syne, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import CookieBanner from "@/components/CookieBanner";
+import SiteChrome from "@/components/SiteChrome";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -59,10 +57,7 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${syne.variable} ${dmSerif.variable}`}>
       <body>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-        <CookieBanner />
+        <SiteChrome>{children}</SiteChrome>
         <Analytics />
         {/* Consent Mode v2 — imposta default PRIMA che GA4 carichi */}
         <Script id="ga4-consent" strategy="beforeInteractive">{`
