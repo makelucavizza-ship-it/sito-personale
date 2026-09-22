@@ -76,11 +76,21 @@ function SlideContent({ slide }: { slide: OpenDaySlide }) {
   }
 
   if (slide.image) {
+    const isContain = slide.imageFit === "contain";
     return (
       <div className="flex flex-col items-center gap-6">
-        <div className="relative w-full max-w-2xl aspect-video rounded-2xl overflow-hidden shadow-2xl">
-          <Image src={slide.image} alt={slide.keyword} fill className="object-cover" />
-        </div>
+        {isContain ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={slide.image}
+            alt={slide.keyword}
+            className="max-h-[58vh] w-auto rounded-2xl shadow-2xl object-contain"
+          />
+        ) : (
+          <div className="relative w-full max-w-2xl aspect-video rounded-2xl overflow-hidden shadow-2xl">
+            <Image src={slide.image} alt={slide.keyword} fill className="object-cover" />
+          </div>
+        )}
         <p className="text-2xl md:text-4xl font-bold text-center" style={{ fontFamily: "Phenomena, sans-serif" }}>
           {slide.keyword}
         </p>
