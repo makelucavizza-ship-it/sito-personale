@@ -93,6 +93,7 @@ export interface OpenDaySlide {
   lines?: string[];
   icon?: SlideIcon;
   image?: string;
+  imageFit?: "cover" | "contain";
 }
 
 export interface SlideBlock {
@@ -115,7 +116,7 @@ export const SLIDE_BLOCKS: SlideBlock[] = [
   {
     title: "Content, grafica e brand",
     slides: [
-      { keyword: "CAPS Security & Services", lines: ["content reale, ogni settimana"], image: "/portfolio/caps-security-services.jpg" },
+      { keyword: "CAPS Security & Services", lines: ["content reale, ogni settimana"], image: "/open-day/caps-instagram.png", imageFit: "contain" },
       { keyword: "Brand system", lines: ["colori · font · logo"], icon: "palette" },
       { keyword: "Coerenza", icon: "repeat" },
     ],
