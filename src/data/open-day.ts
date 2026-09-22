@@ -168,15 +168,18 @@ export const FINAL_SLIDE = {
   subtitle: "Luca Vizza — Consulente digital marketing e AI",
 };
 
+// Un accento per blocco tematico, usato in regia per titoletti, icone e dettagli — mai come sfondo pieno.
+export const BLOCK_ACCENTS = ["#3ad3ef", "#ffbd59", "#5bc783", "#544fb3", "#5ed5bf", "#ee826d"];
+
 export type OpenDayStep =
   | { kind: "question"; questionIndex: number }
-  | { kind: "slides"; blockIndex: number }
+  | { kind: "slide"; blockIndex: number; slideIndex: number }
   | { kind: "final" };
 
 export const STEPS: OpenDayStep[] = [
   ...QUESTIONS.flatMap((_, i): OpenDayStep[] => [
     { kind: "question", questionIndex: i },
-    { kind: "slides", blockIndex: i },
+    ...SLIDE_BLOCKS[i].slides.map((_, si): OpenDayStep => ({ kind: "slide", blockIndex: i, slideIndex: si })),
   ]),
   { kind: "final" },
 ];
