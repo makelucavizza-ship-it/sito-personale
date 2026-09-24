@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { QUESTIONS } from "@/data/open-day";
-import { addVote } from "@/lib/openDayStore";
+import { addVote, recordSessionAnswer } from "@/lib/openDayStore";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
-  const { questionId, optionKey } = body as { questionId?: string; optionKey?: string };
+  const { questionId, optionKey, sessionId } = body as {
+    questionId?: string;
+    optionKey?: string;
+    sessionId?: string;
+  };
 
   const question = QUESTIONS.find((q) => q.id === questionId);
   if (!question) {
@@ -17,5 +21,10 @@ export async function POST(req: NextRequest) {
   }
 
   const votes = await addVote(question.id, optionKey!);
+
+  if (typeof sessionId === "string" && sessionId.length > 0 && sessionId.length <= 100) {
+    await recordSessionAnswer(sessionId, question.id, optionKey!);
+  }
+
   return NextResponse.json({ votes });
 }
