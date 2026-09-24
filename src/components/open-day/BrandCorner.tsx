@@ -3,13 +3,13 @@ import Image from "next/image";
 export default function BrandCorner() {
   return (
     <>
-      <div className="fixed top-4 left-4 md:top-6 md:left-6 z-40 flex items-center gap-2 md:gap-3 opacity-90">
+      <div className="fixed top-4 left-4 md:top-6 md:left-6 z-40 flex items-center gap-3 md:gap-5">
         <Image
           src="/logo-luca-vizza-wide.png"
           alt="Luca Vizza"
           width={1034}
           height={488}
-          className="h-7 md:h-9 w-auto"
+          className="h-12 md:h-20 w-auto"
           priority
         />
         <Image
@@ -17,7 +17,7 @@ export default function BrandCorner() {
           alt="ITS Academy Turismo Emilia-Romagna"
           width={320}
           height={320}
-          className="h-7 md:h-9 w-auto"
+          className="h-12 md:h-20 w-auto"
           priority
         />
       </div>
