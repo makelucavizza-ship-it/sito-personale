@@ -38,7 +38,7 @@ export const QUESTIONS: OpenDayQuestion[] = [
     emoji: "🎂",
     options: [
       { key: "a", label: "18-21 anni" },
-      { key: "b", label: "21-25 anni" },
+      { key: "b", label: "22-25 anni" },
       { key: "c", label: "26-30 anni" },
       { key: "d", label: "31+ anni" },
     ],
