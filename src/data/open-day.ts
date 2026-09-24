@@ -220,6 +220,27 @@ export const FINAL_SLIDE = {
   title: "Vi aspettiamo in aula!",
 };
 
+// Le prime 5 domande (tutte tranne l'ultima, sulla paura del project work) alimentano
+// il prompt del messaggio personalizzato — riferite per id, non per indice, per restare
+// valide anche se QUESTIONS viene riordinato.
+export const AI_MESSAGE_QUESTION_IDS = QUESTIONS.slice(0, 5).map((q) => q.id);
+
+// La sotto-sezione "nuovi ruoli con l'AI" dentro il blocco slide dei mestieri (indice 3
+// su 5: agenzia, azienda, freelance, AI, creator/bandi) è il momento in cui lo smartphone
+// mostra il messaggio personalizzato al posto di "Guarda lo schermo".
+export const AI_MOMENT_BLOCK_INDEX = 1;
+export const AI_MOMENT_SLIDE_INDEX = 3;
+
+export function isAiMoment(step: OpenDayStep): boolean {
+  return step.kind === "slide" && step.blockIndex === AI_MOMENT_BLOCK_INDEX && step.slideIndex === AI_MOMENT_SLIDE_INDEX;
+}
+
+// Riga fissa, sempre uguale, mai generata.
+export const AI_MESSAGE_INTRO = "Noi AI sappiamo come siete fatti voi umani.";
+
+// Mostrato se la generazione va in timeout o fallisce — mai uno spinner o un errore davanti alla classe.
+export const AI_MESSAGE_FALLBACK = "Il tuo profilo dice che vuoi imparare facendo: qui lo farai davvero.";
+
 // Stessi link social già usati nel Footer del sito.
 export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/makevizza/",
