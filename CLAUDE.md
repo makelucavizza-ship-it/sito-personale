@@ -130,6 +130,7 @@ RESEND_FROM_EMAIL=       # Email mittente (es. noreply@lucavizza.it)
 13. [ ] Ottimizzazione SEO su tutte le pagine
 
 ## Decisioni tecniche (aggiornare ad ogni step)
+- 2026-09-24: Riscritti i contenuti di /open-day con il nuovo speech "1h15" concordato col tutor ITS: 6 domande (3 conoscitive consecutive senza slide, poi 3 domanda+blocco slide su bisogni/mestieri/project work), via i vecchi 7 blocchi tematici. Nuovo modello dati a layout (keyword/quote/split/icon-row/role-list) per le slide al posto del set fisso precedente.
 - 2026-09-22: Aggiunte /open-day e /open-day/vota (non indicizzate, non linkate) per sondaggi live e slide durante l'Open Day ITS Cesena. Stato condiviso su Redis (Upstash, non Supabase — non collegato al progetto) con polling ogni 1.5s invece di WebSocket, per reggere il wifi scolastico. Nuovo componente SiteChrome per escludere Navigation/Footer/CookieBanner su queste route a schermo intero.
 - 2026-07-06: Rimossa la sezione "Guide" (/guide e tutte le pagine correlate) e i link ad essa da Navigation, sitemap e pagine servizi.
 - 2026-07-06: Rimossa la sezione "collab gratuita con 5 aziende" (PilotBanner in home, FAQ dedicata, riferimenti in portfolio) e tutti i riferimenti nel resto del sito.
