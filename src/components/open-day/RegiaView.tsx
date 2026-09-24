@@ -11,6 +11,7 @@ import SlideView from "./SlideView";
 import BrandCorner from "./BrandCorner";
 import SocialLinks from "./SocialLinks";
 import ProgressBar from "./ProgressBar";
+import LiveClock from "./LiveClock";
 
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
@@ -54,6 +55,7 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
     <div className="h-screen w-screen bg-bg text-primary flex flex-col relative overflow-hidden">
       <ProgressBar step={step} total={state?.totalSteps ?? STEPS.length} />
       <BrandCorner />
+      <LiveClock />
 
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex flex-col items-end gap-2">
         {!connected && (
@@ -112,15 +114,16 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
         )}
       </div>
 
-      <div className="relative z-30 shrink-0 flex flex-col items-center justify-center gap-2 pb-6 pt-2">
-        <div className="flex items-center justify-center gap-3">
+      <div className="relative z-30 shrink-0 flex flex-col items-center justify-center gap-1.5 pb-5 pt-2">
+        <div className="flex items-center justify-center gap-2">
           <button
             onClick={() => send("prev")}
             disabled={pending || step === 0}
-            className="flex items-center gap-1 px-5 py-3 rounded-full border border-primary/20 text-primary/70 hover:bg-primary/5 disabled:opacity-30 transition-colors"
-            style={{ fontFamily: "Phenomena, sans-serif" }}
+            aria-label="Indietro"
+            title="Indietro"
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
           >
-            <ChevronLeft size={18} /> Indietro
+            <ChevronLeft size={16} />
           </button>
           <button
             onClick={() => {
@@ -128,20 +131,21 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
             }}
             disabled={pending}
             title="Azzera voti e riparti dall'inizio"
-            className="p-3 rounded-full border border-primary/10 text-primary/30 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-30 transition-colors"
+            className="w-7 h-7 flex items-center justify-center rounded-full border border-primary/10 text-primary/25 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-25 transition-colors"
           >
-            <RotateCcw size={16} />
+            <RotateCcw size={13} />
           </button>
           <button
             onClick={() => send("next")}
             disabled={pending || !state || step >= state.totalSteps - 1}
-            className="flex items-center gap-1 px-6 py-3 rounded-full bg-gradient-to-br from-[#ee826d] to-[#c8582e] text-white font-bold disabled:opacity-30 transition-colors"
-            style={{ fontFamily: "Phenomena, sans-serif" }}
+            aria-label="Avanti"
+            title="Avanti"
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
           >
-            Avanti <ChevronRight size={18} />
+            <ChevronRight size={16} />
           </button>
         </div>
-        <p className="text-[11px] opacity-30" style={{ fontFamily: "Sailors, Georgia, serif" }}>
+        <p className="text-[10px] opacity-25" style={{ fontFamily: "Sailors, Georgia, serif" }}>
           oppure usa le frecce ← →
         </p>
       </div>
