@@ -7,17 +7,17 @@ export default function BrandCorner() {
         <Image
           src="/logo-luca-vizza-wide.png"
           alt="Luca Vizza"
-          width={1034}
-          height={488}
+          width={928}
+          height={296}
           className="h-12 md:h-20 w-auto"
           priority
         />
         <Image
           src="/logo-its-academy.png"
           alt="ITS Academy Turismo Emilia-Romagna"
-          width={320}
-          height={320}
-          className="h-12 md:h-20 w-auto"
+          width={236}
+          height={172}
+          className="h-16 md:h-28 w-auto"
           priority
         />
       </div>

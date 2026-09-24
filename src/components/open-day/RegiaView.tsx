@@ -104,8 +104,8 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
               {FINAL_SLIDE.title}
             </p>
             <div className="flex items-center gap-6 md:gap-10">
-              <Image src="/logo-luca-vizza-wide.png" alt="Luca Vizza" width={1034} height={488} className="h-12 md:h-20 w-auto" />
-              <Image src="/logo-its-academy.png" alt="ITS Academy Turismo Emilia-Romagna" width={320} height={320} className="h-12 md:h-20 w-auto" />
+              <Image src="/logo-luca-vizza-wide.png" alt="Luca Vizza" width={928} height={296} className="h-14 md:h-24 w-auto" />
+              <Image src="/logo-its-academy.png" alt="ITS Academy Turismo Emilia-Romagna" width={236} height={172} className="h-20 md:h-32 w-auto" />
             </div>
             <SocialLinks size={56} />
           </div>
