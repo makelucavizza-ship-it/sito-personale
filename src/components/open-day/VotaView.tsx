@@ -6,6 +6,7 @@ import { getStepAt, QUESTIONS, FINAL_SLIDE } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import VoteBarChart from "./VoteBarChart";
 import BrandCorner from "./BrandCorner";
+import SocialLinks from "./SocialLinks";
 
 const OPTION_COLORS = ["#3ad3ef", "#ffbd59", "#5bc783", "#544fb3", "#5ed5bf", "#ee826d"];
 
@@ -75,12 +76,14 @@ export default function VotaView() {
           <p className="text-2xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
             Guarda lo schermo
           </p>
+          <SocialLinks />
         </div>
       ) : current.kind === "final" ? (
-        <div className="text-center">
+        <div className="text-center flex flex-col items-center gap-4">
           <p className="text-3xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
             {FINAL_SLIDE.title}
           </p>
+          <SocialLinks />
         </div>
       ) : question ? (
         <div className="w-full max-w-md flex flex-col gap-8">

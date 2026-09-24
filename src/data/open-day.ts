@@ -92,7 +92,7 @@ export interface KeywordSlide {
   layout: "keyword";
   keyword: string;
   lines?: string[];
-  icon?: string;
+  emoji?: string;
 }
 
 export interface QuoteSlide {
@@ -103,13 +103,13 @@ export interface QuoteSlide {
 export interface SplitSlide {
   layout: "split";
   heading?: string;
-  left: { icon: string; label: string };
-  right: { icon: string; label: string };
+  left: { emoji: string; label: string };
+  right: { emoji: string; label: string };
 }
 
 export interface IconRowSlide {
   layout: "icon-row";
-  items: { icon: string; label?: string }[];
+  items: { emoji: string; label?: string }[];
   connectArrows?: boolean;
 }
 
@@ -133,16 +133,16 @@ export const SLIDE_BLOCKS: SlideBlock[] = [
       {
         layout: "split",
         heading: "Non solo riviera",
-        left: { icon: "Umbrella", label: "Riviera" },
-        right: { icon: "Mountain", label: "Entroterra" },
+        left: { emoji: "🏖️", label: "Riviera" },
+        right: { emoji: "🏔️", label: "Entroterra" },
       },
       {
         layout: "icon-row",
         items: [
-          { icon: "Search", label: "Visibilità" },
-          { icon: "Megaphone", label: "Racconto" },
-          { icon: "BellRing", label: "Prenotazioni" },
-          { icon: "Bot", label: "AI" },
+          { emoji: "🔍", label: "Visibilità" },
+          { emoji: "📣", label: "Racconto" },
+          { emoji: "🛎", label: "Prenotazioni" },
+          { emoji: "🤖", label: "AI" },
         ],
       },
     ],
@@ -191,8 +191,8 @@ export const SLIDE_BLOCKS: SlideBlock[] = [
       {
         layout: "split",
         heading: "Due strade in più",
-        left: { icon: "Clapperboard", label: "Creator indipendente" },
-        right: { icon: "FileText", label: "Bandi" },
+        left: { emoji: "🎥", label: "Creator indipendente" },
+        right: { emoji: "📝", label: "Bandi" },
       },
     ],
   },
@@ -203,12 +203,12 @@ export const SLIDE_BLOCKS: SlideBlock[] = [
         layout: "icon-row",
         connectArrows: true,
         items: [
-          { icon: "Search" },
-          { icon: "Target" },
-          { icon: "Users" },
-          { icon: "Compass" },
-          { icon: "Megaphone" },
-          { icon: "BarChart3" },
+          { emoji: "🔎" },
+          { emoji: "🎯" },
+          { emoji: "👥" },
+          { emoji: "🧭" },
+          { emoji: "📣" },
+          { emoji: "📊" },
         ],
       },
       { layout: "quote", text: "Il tuo primo cliente vero." },
@@ -218,6 +218,12 @@ export const SLIDE_BLOCKS: SlideBlock[] = [
 
 export const FINAL_SLIDE = {
   title: "Vi aspettiamo in aula!",
+};
+
+// Stessi link social già usati nel Footer del sito.
+export const SOCIAL_LINKS = {
+  instagram: "https://www.instagram.com/makevizza/",
+  linkedin: "https://www.linkedin.com/in/luca-vizza",
 };
 
 // Un accento per blocco tematico, usato in regia per titoletti, icone e dettagli — mai come sfondo pieno.
