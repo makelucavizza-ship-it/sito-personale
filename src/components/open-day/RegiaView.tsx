@@ -57,6 +57,18 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
       <BrandCorner />
       <LiveClock />
 
+      {current.kind === "slide" && isAiMoment(current) && (
+        <div
+          className="fixed top-6 md:top-8 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 md:gap-3 animate-blink"
+          style={{ color: BLOCK_ACCENTS[1] }}
+        >
+          <Smartphone size={18} strokeWidth={1.5} className="md:w-6 md:h-6" />
+          <p className="text-sm md:text-lg font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
+            Guarda il tuo smartphone!
+          </p>
+        </div>
+      )}
+
       <div className="fixed top-20 right-4 md:top-28 md:right-6 z-50 flex flex-col items-end gap-2">
         {!connected && (
           <div className="flex items-center gap-2 text-xs bg-[#ee826d] text-white px-3 py-1.5 rounded-full">
@@ -91,13 +103,6 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
             <div className="w-full mt-2">
               <VoteBarChart options={QUESTIONS[current.questionIndex].options} votes={votes} large />
             </div>
-          </div>
-        ) : isAiMoment(current) ? (
-          <div className="flex flex-col items-center gap-6 text-center animate-blink">
-            <Smartphone size={72} style={{ color: BLOCK_ACCENTS[1] }} strokeWidth={1.5} />
-            <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif", color: BLOCK_ACCENTS[1] }}>
-              Guarda il tuo smartphone!
-            </p>
           </div>
         ) : current.kind === "slide" ? (
           <SlideView
