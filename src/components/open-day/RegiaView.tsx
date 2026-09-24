@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, RotateCcw, WifiOff } from "lucide-react";
-import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS } from "@/data/open-day";
+import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS, STEPS } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import QrPanel from "./QrPanel";
 import VoteBarChart from "./VoteBarChart";
 import SlideView from "./SlideView";
 import BrandCorner from "./BrandCorner";
 import SocialLinks from "./SocialLinks";
+import ProgressBar from "./ProgressBar";
 
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
@@ -51,6 +52,7 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
 
   return (
     <div className="h-screen w-screen bg-bg text-primary flex flex-col relative overflow-hidden">
+      <ProgressBar step={step} total={state?.totalSteps ?? STEPS.length} />
       <BrandCorner />
 
       <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex flex-col items-end gap-2">
