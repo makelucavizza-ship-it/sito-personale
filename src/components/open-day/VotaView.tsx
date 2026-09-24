@@ -69,7 +69,7 @@ export default function VotaView() {
 
       {!state ? (
         <p className="opacity-50">Caricamento…</p>
-      ) : current.kind === "slide" ? (
+      ) : current.kind === "slide" || current.kind === "opening" ? (
         <div className="text-center flex flex-col items-center gap-4">
           <Monitor size={48} className="opacity-40" strokeWidth={1.5} />
           <p className="text-2xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
@@ -78,11 +78,8 @@ export default function VotaView() {
         </div>
       ) : current.kind === "final" ? (
         <div className="text-center">
-          <p className="text-3xl font-bold mb-3" style={{ fontFamily: "Phenomena, sans-serif" }}>
+          <p className="text-3xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
             {FINAL_SLIDE.title}
-          </p>
-          <p className="opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
-            {FINAL_SLIDE.subtitle}
           </p>
         </div>
       ) : question ? (

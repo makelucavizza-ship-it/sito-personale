@@ -9,10 +9,6 @@ import VoteBarChart from "./VoteBarChart";
 import SlideView from "./SlideView";
 import BrandCorner from "./BrandCorner";
 
-function totalVotes(votes: Record<string, number>): number {
-  return Object.values(votes).reduce((a, b) => a + b, 0);
-}
-
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
   const [pending, setPending] = useState(false);
@@ -71,18 +67,24 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
       <div className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-6 md:px-12 py-4">
         {!state ? (
           <p className="opacity-40">Caricamento…</p>
+        ) : current.kind === "opening" ? (
+          <div className="w-full flex flex-col items-center gap-8 text-center">
+            <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
+              Chi sei?
+            </p>
+            <QrPanel size={320} />
+          </div>
         ) : current.kind === "question" ? (
-          <div className="w-full max-w-4xl flex flex-col items-center gap-6 text-center">
+          <div className="w-full max-w-4xl flex flex-col items-center gap-3 md:gap-4 text-center">
+            {QUESTIONS[current.questionIndex].emoji && (
+              <span className="text-4xl md:text-6xl leading-none">{QUESTIONS[current.questionIndex].emoji}</span>
+            )}
             <p className="text-2xl md:text-4xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {QUESTIONS[current.questionIndex].text}
             </p>
-            {current.questionIndex === 0 && totalVotes(votes) === 0 ? (
-              <QrPanel />
-            ) : (
-              <div className="w-full">
-                <VoteBarChart options={QUESTIONS[current.questionIndex].options} votes={votes} large />
-              </div>
-            )}
+            <div className="w-full mt-2">
+              <VoteBarChart options={QUESTIONS[current.questionIndex].options} votes={votes} large />
+            </div>
           </div>
         ) : current.kind === "slide" ? (
           <SlideView
@@ -94,11 +96,8 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
           />
         ) : (
           <div className="text-center">
-            <p className="text-4xl md:text-7xl font-bold mb-4" style={{ fontFamily: "Phenomena, sans-serif" }}>
+            <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {FINAL_SLIDE.title}
-            </p>
-            <p className="text-lg md:text-2xl opacity-60" style={{ fontFamily: "Sailors, Georgia, serif" }}>
-              {FINAL_SLIDE.subtitle}
             </p>
           </div>
         )}

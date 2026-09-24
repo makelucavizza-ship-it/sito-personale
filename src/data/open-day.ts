@@ -1,5 +1,5 @@
-// Contenuti e macchina a stati per /open-day — Open Day ITS Cesena, 2026-09-22.
-// Domande dal documento "Discorso Open Day ITS Cesena", slide dal documento "Slide da proiettare (Canva)".
+// Contenuti e macchina a stati per /open-day — Open Day ITS Cesena, 2026-09-24.
+// Domande e slide dal documento "Discorso Open Day ITS Cesena — 1h15" e dalla scheda "Slide da proiettare (LIM)".
 
 export interface QuestionOption {
   key: string;
@@ -10,91 +10,116 @@ export interface OpenDayQuestion {
   id: string;
   text: string;
   options: QuestionOption[];
+  // Emoji mostrata SOLO in regia, accanto alla domanda — richiesta per le 3 domande conoscitive di apertura.
+  emoji?: string;
 }
 
+// Le opzioni delle prime 3 domande (conoscitive) non sono elencate nel documento originale:
+// sono state dedotte dal contesto (i commenti che Luca dà a voce dopo il grafico) — da rivedere/adattare se serve.
 export const QUESTIONS: OpenDayQuestion[] = [
   {
-    id: "q1-eta-its",
-    text: "Secondo te, che età ha in media chi si iscrive a un percorso ITS?",
+    id: "q1-scuola",
+    text: "Che scuola hai frequentato?",
+    emoji: "🏫",
     options: [
-      { key: "a", label: "18-19 anni, appena diplomati" },
-      { key: "b", label: "Un mix di età diverse, anche persone che già lavorano" },
-      { key: "c", label: "Non lo so" },
+      { key: "a", label: "Istituto tecnico" },
+      { key: "b", label: "Istituto professionale" },
+      { key: "c", label: "Liceo" },
+      { key: "d", label: "Altro" },
     ],
   },
   {
-    id: "q2-lavoro-comune",
-    text: "Secondo te, qual è il lavoro più comune per chi finisce questo corso?",
+    id: "q2-eta",
+    text: "Quanti anni hai?",
+    emoji: "🎂",
     options: [
-      { key: "a", label: "Fare foto e video per i social" },
-      { key: "b", label: "Gestire campagne pubblicitarie" },
-      { key: "c", label: "Costruire siti e gestire dati" },
-      { key: "d", label: "Non ne ho idea" },
+      { key: "a", label: "18-19 anni" },
+      { key: "b", label: "20-24 anni" },
+      { key: "c", label: "25 anni o più" },
     ],
   },
   {
-    id: "q3-frequenza-social",
-    text: "Quante volte a settimana pensi che un'azienda debba pubblicare sui social per funzionare davvero?",
+    id: "q3-interessi",
+    text: "Cosa ti interessa di più?",
+    emoji: "❤️",
     options: [
-      { key: "a", label: "Tutti i giorni" },
-      { key: "b", label: "2-3 volte, ma con costanza" },
-      { key: "c", label: "Quando capita, se c'è tempo" },
-      { key: "d", label: "Non lo so" },
+      { key: "a", label: "Social" },
+      { key: "b", label: "Grafica" },
+      { key: "c", label: "Tecnologia" },
+      { key: "d", label: "Viaggi" },
+      { key: "e", label: "Comunicazione" },
     ],
   },
   {
-    id: "q4-budget-ads",
-    text: "Secondo te, quanto budget minimo serve per una campagna pubblicitaria efficace?",
+    id: "q4-problema-turismo",
+    text: "Secondo te qual è il problema più grande per un'attività turistica romagnola oggi?",
     options: [
-      { key: "a", label: "Serve un budget alto, migliaia di euro" },
-      { key: "b", label: "Bastano anche poche decine o centinaia di euro se è mirata" },
-      { key: "c", label: "Non serve budget, basta il contenuto" },
-      { key: "d", label: "Non lo so" },
+      { key: "a", label: "Non si fa trovare online" },
+      { key: "b", label: "Non sa raccontare l'esperienza" },
+      { key: "c", label: "Non fa prenotare direttamente" },
+      { key: "d", label: "Non usa l'intelligenza artificiale" },
     ],
   },
   {
-    id: "q5-clienti-persi",
-    text: "Secondo te, cosa fa perdere più clienti a una piccola azienda?",
+    id: "q5-ambiti-lavorativi",
+    text: "Quale di questi ambiti lavorativi ti incuriosisce di più?",
     options: [
-      { key: "a", label: "Non avere abbastanza follower" },
-      { key: "b", label: "Avere un sito lento o vecchio" },
-      { key: "c", label: "Non rispondere in tempo alle richieste" },
-      { key: "d", label: "Non lo so" },
+      { key: "a", label: "Agenzia di marketing" },
+      { key: "b", label: "Azienda, team marketing interno" },
+      { key: "c", label: "Libero professionista" },
+      { key: "d", label: "Ruoli legati all'intelligenza artificiale" },
     ],
   },
   {
-    id: "q6-dopo-corso",
-    text: "Dopo questo corso pensi che lavorerai:",
+    id: "q6-paura-project-work",
+    text: "Cosa ti spaventerebbe di più nel realizzare un progetto vero per un cliente vero?",
     options: [
-      { key: "a", label: "Per una grande azienda" },
-      { key: "b", label: "In proprio, come libero professionista" },
-      { key: "c", label: "Non lo so ancora" },
-    ],
-  },
-  {
-    id: "q7-ai-lavoro",
-    text: "L'intelligenza artificiale, nel lavoro che farai dopo questo corso, sarà:",
-    options: [
-      { key: "a", label: "Il tuo lavoro principale" },
-      { key: "b", label: "Uno strumento che userai ogni giorno" },
-      { key: "c", label: "Qualcosa che non ti riguarda" },
-      { key: "d", label: "Non lo so" },
+      { key: "a", label: "Non sapere da dove iniziare" },
+      { key: "b", label: "Il rapporto con il cliente" },
+      { key: "c", label: "Le scadenze" },
+      { key: "d", label: "Parlare in pubblico / presentare il lavoro" },
     ],
   },
 ];
 
-export type SlideIcon =
-  | "sparkles" | "buildings" | "palette" | "repeat" | "calendar" | "grid"
-  | "message" | "megaphone" | "funnel" | "target" | "crm" | "numbers"
-  | "stage" | "case-study" | "site" | "news" | "clock" | "quote";
+// Dopo la domanda con questo indice parte il blocco di slide con lo stesso indice in SLIDE_BLOCKS.
+// Le prime 3 domande (conoscitive) non hanno slide dopo: si passa subito alla domanda successiva.
+export const QUESTION_SLIDE_BLOCK: (number | null)[] = [null, null, null, 0, 1, 2];
 
-export interface OpenDaySlide {
+export type SlideLayout = "keyword" | "quote" | "split" | "icon-row" | "role-list";
+
+export interface KeywordSlide {
+  layout: "keyword";
   keyword: string;
   lines?: string[];
-  icon?: SlideIcon;
-  image?: string;
-  imageFit?: "cover" | "contain";
+  icon?: string;
 }
+
+export interface QuoteSlide {
+  layout: "quote";
+  text: string;
+}
+
+export interface SplitSlide {
+  layout: "split";
+  heading?: string;
+  left: { icon: string; label: string };
+  right: { icon: string; label: string };
+}
+
+export interface IconRowSlide {
+  layout: "icon-row";
+  items: { icon: string; label?: string }[];
+  connectArrows?: boolean;
+}
+
+export interface RoleListSlide {
+  layout: "role-list";
+  title: string;
+  roles: { emoji: string; label: string }[];
+}
+
+export type OpenDaySlide = KeywordSlide | QuoteSlide | SplitSlide | IconRowSlide | RoleListSlide;
 
 export interface SlideBlock {
   title: string;
@@ -103,84 +128,119 @@ export interface SlideBlock {
 
 export const SLIDE_BLOCKS: SlideBlock[] = [
   {
-    title: "Apertura e storia personale",
+    title: "Di cosa hanno bisogno aziende, enti e professionisti",
     slides: [
-      { keyword: "18 → 34", lines: ["due età, un solo percorso"], icon: "sparkles" },
       {
-        keyword: "Clienti veri",
-        lines: ["CAPS · DLSolarClean · Famiglia Pecci", "Alessandra Spadaro · Novagulp"],
-        icon: "buildings",
+        layout: "split",
+        heading: "Non solo riviera",
+        left: { icon: "Umbrella", label: "Riviera" },
+        right: { icon: "Mountain", label: "Entroterra" },
+      },
+      {
+        layout: "icon-row",
+        items: [
+          { icon: "Search", label: "Visibilità" },
+          { icon: "Megaphone", label: "Racconto" },
+          { icon: "BellRing", label: "Prenotazioni" },
+          { icon: "Bot", label: "AI" },
+        ],
       },
     ],
   },
   {
-    title: "Content, grafica e brand",
+    title: "I mestieri che puoi fare dopo il corso",
     slides: [
-      { keyword: "CAPS Security & Services", lines: ["content reale, ogni settimana"], image: "/open-day/caps-instagram.png", imageFit: "contain" },
-      { keyword: "Brand system", lines: ["colori · font · logo"], icon: "palette" },
-      { keyword: "Coerenza", icon: "repeat" },
+      {
+        layout: "role-list",
+        title: "In agenzia di marketing",
+        roles: [
+          { emoji: "📱", label: "Social Media" },
+          { emoji: "🎯", label: "Advertising" },
+          { emoji: "🔍", label: "SEO" },
+          { emoji: "📊", label: "Strategist" },
+        ],
+      },
+      {
+        layout: "role-list",
+        title: "In azienda, team marketing",
+        roles: [
+          { emoji: "🏨", label: "Marketing interno" },
+          { emoji: "📸", label: "Content & Social" },
+          { emoji: "💌", label: "CRM & Email" },
+          { emoji: "📈", label: "Revenue & Analyst" },
+        ],
+      },
+      {
+        layout: "role-list",
+        title: "Da liberi professionisti",
+        roles: [
+          { emoji: "💻", label: "Consulente digital" },
+          { emoji: "🎨", label: "Grafico / video maker" },
+          { emoji: "🌐", label: "Web designer" },
+        ],
+      },
+      {
+        layout: "role-list",
+        title: "I nuovi ruoli con l'AI",
+        roles: [
+          { emoji: "🤖", label: "AI Content Specialist" },
+          { emoji: "⚙️", label: "Marketing Automation" },
+          { emoji: "🧭", label: "AI Workflow Designer" },
+        ],
+      },
+      {
+        layout: "split",
+        heading: "Due strade in più",
+        left: { icon: "Clapperboard", label: "Creator indipendente" },
+        right: { icon: "FileText", label: "Bandi" },
+      },
     ],
   },
   {
-    title: "Social media management",
+    title: "Project work",
     slides: [
-      { keyword: "Calendario editoriale", lines: ["si pianifica, non si improvvisa"], icon: "calendar" },
-      { keyword: "Caotico → Pianificato", icon: "grid" },
-      { keyword: "Rispondere conta", icon: "message" },
-    ],
-  },
-  {
-    title: "Advertising",
-    slides: [
-      { keyword: "Famiglia Pecci", lines: ["sponsorizzata attiva, ora"], icon: "megaphone" },
-      { keyword: "Dalla ricerca al carrello", icon: "funnel" },
-      { keyword: "Budget mirato, risultati veri", icon: "target" },
-    ],
-  },
-  {
-    title: "Web design e CRM",
-    slides: [
-      { keyword: "DLSolarClean", lines: ["da invisibile a online"], image: "/portfolio/dl-solar-clean-full.jpg" },
-      { keyword: "Richiesta → Contatto → Follow-up → Cliente", icon: "crm" },
-      { keyword: "100 richieste — 50 perse", icon: "numbers" },
-    ],
-  },
-  {
-    title: "Stage e portfolio",
-    slides: [
-      { keyword: "Febbraio → Maggio 2026", lines: ["stage in azienda"], icon: "stage" },
-      { keyword: "Cliente → Problema → Soluzione → Risultato", icon: "case-study" },
-      { keyword: "lucavizza.it", lines: ["il mio sito, il mio primo caso studio"], icon: "site" },
-    ],
-  },
-  {
-    title: "Intelligenza artificiale",
-    slides: [
-      { keyword: "\"Specie al silicio\"", lines: ["la notizia di oggi"], icon: "news" },
-      { keyword: "1 settimana → 1 giorno", icon: "clock" },
-      { keyword: "AI first, poi marketing.", icon: "quote" },
+      {
+        layout: "icon-row",
+        connectArrows: true,
+        items: [
+          { icon: "Search" },
+          { icon: "Target" },
+          { icon: "Users" },
+          { icon: "Compass" },
+          { icon: "Megaphone" },
+          { icon: "BarChart3" },
+        ],
+      },
+      { layout: "quote", text: "Il tuo primo cliente vero." },
     ],
   },
 ];
 
 export const FINAL_SLIDE = {
   title: "Vi aspettiamo in aula!",
-  subtitle: "Luca Vizza — Consulente digital marketing e AI",
 };
 
 // Un accento per blocco tematico, usato in regia per titoletti, icone e dettagli — mai come sfondo pieno.
-export const BLOCK_ACCENTS = ["#3ad3ef", "#ffbd59", "#5bc783", "#544fb3", "#5ed5bf", "#ee826d"];
+export const BLOCK_ACCENTS = ["#3ad3ef", "#544fb3", "#ee826d"];
 
 export type OpenDayStep =
+  | { kind: "opening" }
   | { kind: "question"; questionIndex: number }
   | { kind: "slide"; blockIndex: number; slideIndex: number }
   | { kind: "final" };
 
 export const STEPS: OpenDayStep[] = [
-  ...QUESTIONS.flatMap((_, i): OpenDayStep[] => [
-    { kind: "question", questionIndex: i },
-    ...SLIDE_BLOCKS[i].slides.map((_, si): OpenDayStep => ({ kind: "slide", blockIndex: i, slideIndex: si })),
-  ]),
+  { kind: "opening" },
+  ...QUESTIONS.flatMap((_, i): OpenDayStep[] => {
+    const steps: OpenDayStep[] = [{ kind: "question", questionIndex: i }];
+    const blockIndex = QUESTION_SLIDE_BLOCK[i];
+    if (blockIndex !== null) {
+      steps.push(
+        ...SLIDE_BLOCKS[blockIndex].slides.map((_, si): OpenDayStep => ({ kind: "slide", blockIndex, slideIndex: si }))
+      );
+    }
+    return steps;
+  }),
   { kind: "final" },
 ];
 
