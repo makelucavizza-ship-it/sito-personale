@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, RotateCcw, WifiOff } from "lucide-react";
-import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS, STEPS } from "@/data/open-day";
+import { ChevronLeft, ChevronRight, RotateCcw, WifiOff, Smartphone } from "lucide-react";
+import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS, STEPS, isAiMoment } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import QrPanel from "./QrPanel";
 import VoteBarChart from "./VoteBarChart";
@@ -91,6 +91,13 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
             <div className="w-full mt-2">
               <VoteBarChart options={QUESTIONS[current.questionIndex].options} votes={votes} large />
             </div>
+          </div>
+        ) : isAiMoment(current) ? (
+          <div className="flex flex-col items-center gap-6 text-center animate-blink">
+            <Smartphone size={72} style={{ color: BLOCK_ACCENTS[1] }} strokeWidth={1.5} />
+            <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif", color: BLOCK_ACCENTS[1] }}>
+              Guarda il tuo smartphone!
+            </p>
           </div>
         ) : current.kind === "slide" ? (
           <SlideView
