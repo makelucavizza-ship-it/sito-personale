@@ -57,7 +57,7 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
       <BrandCorner />
       <LiveClock />
 
-      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50 flex flex-col items-end gap-2">
+      <div className="fixed top-20 right-4 md:top-28 md:right-6 z-50 flex flex-col items-end gap-2">
         {!connected && (
           <div className="flex items-center gap-2 text-xs bg-[#ee826d] text-white px-3 py-1.5 rounded-full">
             <WifiOff size={14} /> riconnessione…

@@ -50,14 +50,33 @@ export async function getVotes(questionId: string): Promise<Record<string, numbe
   return out;
 }
 
-export async function addVote(questionId: string, optionKey: string): Promise<Record<string, number>> {
+// previousOptionKey: se lo studente sta cambiando risposta alla stessa domanda, sposta il
+// voto invece di sommarne uno nuovo (decrementa la vecchia opzione, incrementa la nuova).
+export async function addVote(
+  questionId: string,
+  optionKey: string,
+  previousOptionKey?: string | null
+): Promise<Record<string, number>> {
+  const isChange = !!previousOptionKey && previousOptionKey !== optionKey;
+
   if (!redis) {
     const current = memoryVotes.get(questionId) ?? {};
-    current[optionKey] = (current[optionKey] ?? 0) + 1;
+    if (isChange) {
+      current[previousOptionKey!] = Math.max(0, (current[previousOptionKey!] ?? 0) - 1);
+    }
+    if (isChange || !previousOptionKey) {
+      current[optionKey] = (current[optionKey] ?? 0) + 1;
+    }
     memoryVotes.set(questionId, current);
     return current;
   }
-  await redis.hincrby(voteKey(questionId), optionKey, 1);
+
+  if (isChange) {
+    await redis.hincrby(voteKey(questionId), previousOptionKey!, -1);
+  }
+  if (isChange || !previousOptionKey) {
+    await redis.hincrby(voteKey(questionId), optionKey, 1);
+  }
   return getVotes(questionId);
 }
 
