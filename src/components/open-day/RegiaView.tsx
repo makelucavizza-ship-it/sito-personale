@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, RotateCcw, WifiOff } from "lucide-react";
 import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
@@ -8,6 +9,7 @@ import QrPanel from "./QrPanel";
 import VoteBarChart from "./VoteBarChart";
 import SlideView from "./SlideView";
 import BrandCorner from "./BrandCorner";
+import SocialLinks from "./SocialLinks";
 
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
@@ -95,10 +97,15 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
             accent={BLOCK_ACCENTS[current.blockIndex % BLOCK_ACCENTS.length]}
           />
         ) : (
-          <div className="text-center">
-            <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
+          <div className="flex flex-col items-center gap-6 md:gap-8 text-center">
+            <p className="text-3xl md:text-6xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
               {FINAL_SLIDE.title}
             </p>
+            <div className="flex items-center gap-6 md:gap-10">
+              <Image src="/logo-luca-vizza-wide.png" alt="Luca Vizza" width={1034} height={488} className="h-12 md:h-20 w-auto" />
+              <Image src="/logo-its-academy.png" alt="ITS Academy Turismo Emilia-Romagna" width={320} height={320} className="h-12 md:h-20 w-auto" />
+            </div>
+            <SocialLinks size={56} />
           </div>
         )}
       </div>

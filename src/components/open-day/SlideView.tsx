@@ -1,29 +1,16 @@
 "use client";
 
-import {
-  Search, Megaphone, BellRing, Bot, Umbrella, Mountain, Target, Users, Compass,
-  BarChart3, Clapperboard, FileText, type LucideIcon,
-} from "lucide-react";
 import type { OpenDaySlide, SlideBlock } from "@/data/open-day";
 
-const ICONS: Record<string, LucideIcon> = {
-  Search, Megaphone, BellRing, Bot, Umbrella, Mountain, Target, Users, Compass,
-  BarChart3, Clapperboard, FileText,
-};
-
-function IconChip({
-  name,
+function EmojiChip({
+  emoji,
   accent,
-  size = 40,
   compact = false,
 }: {
-  name: string;
+  emoji: string;
   accent: string;
-  size?: number;
   compact?: boolean;
 }) {
-  const Icon = ICONS[name];
-  if (!Icon) return null;
   return (
     <div
       className={
@@ -33,7 +20,7 @@ function IconChip({
       }
       style={{ backgroundColor: `${accent}18` }}
     >
-      <Icon size={size} style={{ color: accent }} strokeWidth={1.5} />
+      <span className={compact ? "text-xl md:text-3xl" : "text-2xl md:text-5xl"}>{emoji}</span>
     </div>
   );
 }
@@ -41,10 +28,9 @@ function IconChip({
 function SlideContent({ slide, accent }: { slide: OpenDaySlide; accent: string }) {
   switch (slide.layout) {
     case "keyword": {
-      const Icon = slide.icon ? ICONS[slide.icon] : null;
       return (
         <div className="flex flex-col items-center gap-4 md:gap-6 text-center px-4 max-w-5xl">
-          {Icon && <IconChip name={slide.icon!} accent={accent} />}
+          {slide.emoji && <EmojiChip emoji={slide.emoji} accent={accent} />}
           <p className="text-5xl md:text-7xl lg:text-8xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
             {slide.keyword}
           </p>
@@ -78,7 +64,7 @@ function SlideContent({ slide, accent }: { slide: OpenDaySlide; accent: string }
           <div className="flex items-center justify-center gap-8 md:gap-24">
             {[slide.left, slide.right].map((side, i) => (
               <div key={i} className="flex flex-col items-center gap-3 md:gap-4">
-                <IconChip name={side.icon} accent={accent} size={44} />
+                <EmojiChip emoji={side.emoji} accent={accent} />
                 <p className="text-base md:text-2xl opacity-70" style={{ fontFamily: "Sailors, Georgia, serif" }}>
                   {side.label}
                 </p>
@@ -95,7 +81,7 @@ function SlideContent({ slide, accent }: { slide: OpenDaySlide; accent: string }
           {slide.items.map((item, i) => (
             <div key={i} className={`flex items-center ${dense ? "gap-2 md:gap-4" : "gap-3 md:gap-8"}`}>
               <div className="flex flex-col items-center gap-2 md:gap-3">
-                <IconChip name={item.icon} accent={accent} size={dense ? 22 : 32} compact={dense} />
+                <EmojiChip emoji={item.emoji} accent={accent} compact={dense} />
                 {item.label && (
                   <p className="text-sm md:text-lg opacity-70" style={{ fontFamily: "Sailors, Georgia, serif" }}>
                     {item.label}
