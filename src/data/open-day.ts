@@ -259,13 +259,18 @@ export const SOCIAL_LINKS = {
 // Un accento per blocco tematico, usato in regia per titoletti, icone e dettagli — mai come sfondo pieno.
 export const BLOCK_ACCENTS = ["#3ad3ef", "#544fb3", "#ee826d"];
 
+// Prima slide, prima ancora del QR code: titolo della lezione proiettato in apertura.
+export const LESSON_TITLE = "Le professioni del digital marketing per il turismo";
+
 export type OpenDayStep =
+  | { kind: "title" }
   | { kind: "opening" }
   | { kind: "question"; questionIndex: number }
   | { kind: "slide"; blockIndex: number; slideIndex: number }
   | { kind: "final" };
 
 export const STEPS: OpenDayStep[] = [
+  { kind: "title" },
   { kind: "opening" },
   ...QUESTIONS.flatMap((_, i): OpenDayStep[] => {
     const steps: OpenDayStep[] = [{ kind: "question", questionIndex: i }];

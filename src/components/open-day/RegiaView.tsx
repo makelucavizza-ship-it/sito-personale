@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, RotateCcw, WifiOff, Smartphone } from "lucide-react";
-import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, BLOCK_ACCENTS, STEPS, isAiMoment } from "@/data/open-day";
+import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, LESSON_TITLE, BLOCK_ACCENTS, STEPS, isAiMoment } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import QrPanel from "./QrPanel";
 import VoteBarChart from "./VoteBarChart";
@@ -12,6 +12,7 @@ import BrandCorner from "./BrandCorner";
 import SocialLinks from "./SocialLinks";
 import ProgressBar from "./ProgressBar";
 import LiveClock from "./LiveClock";
+import FloatingEmojis from "./FloatingEmojis";
 
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
@@ -85,6 +86,16 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
       <div className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-6 md:px-12 py-4">
         {!state ? (
           <p className="opacity-40">Caricamento…</p>
+        ) : current.kind === "title" ? (
+          <div className="relative w-full h-full flex items-center justify-center text-center">
+            <FloatingEmojis />
+            <p
+              className="relative z-10 text-4xl md:text-7xl font-bold leading-snug max-w-5xl px-4"
+              style={{ fontFamily: "Phenomena, sans-serif" }}
+            >
+              {LESSON_TITLE}
+            </p>
+          </div>
         ) : current.kind === "opening" ? (
           <div className="w-full flex flex-col items-center gap-8 text-center">
             <p className="text-4xl md:text-7xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>

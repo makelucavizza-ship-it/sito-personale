@@ -165,7 +165,7 @@ export default function VotaView() {
             {aiMessage ?? AI_MESSAGE_FALLBACK}
           </p>
         </div>
-      ) : current.kind === "slide" || current.kind === "opening" ? (
+      ) : current.kind === "slide" || current.kind === "opening" || current.kind === "title" ? (
         <div className="text-center flex flex-col items-center gap-4">
           <Monitor size={48} className="opacity-40" strokeWidth={1.5} />
           <p className="text-2xl font-bold" style={{ fontFamily: "Phenomena, sans-serif" }}>
