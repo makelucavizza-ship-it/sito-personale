@@ -41,6 +41,7 @@ export default function Footer() {
                 { href: "/agenzie", label: "Per le agenzie" },
                 { href: "/audit", label: "Calcolatore gratuito" },
                 { href: "/contatti", label: "Contatti" },
+                { href: "/open-day", label: "Open Day ITS Academy" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
