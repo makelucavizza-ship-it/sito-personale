@@ -93,17 +93,29 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
             <QrPanel size={320} />
           </div>
         ) : current.kind === "question" ? (
-          <div className="w-full max-w-4xl flex flex-col items-center gap-3 md:gap-4 text-center">
-            {QUESTIONS[current.questionIndex].emoji && (
-              <span className="text-4xl md:text-6xl leading-none">{QUESTIONS[current.questionIndex].emoji}</span>
-            )}
-            <p className="text-2xl md:text-4xl font-bold leading-snug" style={{ fontFamily: "Phenomena, sans-serif" }}>
-              {QUESTIONS[current.questionIndex].text}
-            </p>
-            <div className="w-full mt-2">
-              <VoteBarChart options={QUESTIONS[current.questionIndex].options} votes={votes} large />
-            </div>
-          </div>
+          (() => {
+            const q = QUESTIONS[current.questionIndex];
+            // Con tante opzioni (7+) il grafico è già alto, e le domande senza emoji con un testo
+            // lungo occupano due righe intere: in entrambi i casi emoji e titolo si stringono di
+            // più per lasciare spazio, così non finiscono sotto ai loghi fissi in alto.
+            const compact = q.options.length > 6 || q.text.length > 45;
+            return (
+              <div className={`w-full max-w-4xl flex flex-col items-center text-center ${compact ? "gap-1.5 md:gap-2" : "gap-3 md:gap-4"}`}>
+                {q.emoji && (
+                  <span className={`leading-none ${compact ? "text-2xl md:text-4xl" : "text-4xl md:text-6xl"}`}>{q.emoji}</span>
+                )}
+                <p
+                  className={`font-bold leading-snug ${compact ? "text-lg md:text-2xl" : "text-2xl md:text-4xl"}`}
+                  style={{ fontFamily: "Phenomena, sans-serif" }}
+                >
+                  {q.text}
+                </p>
+                <div className="w-full mt-2">
+                  <VoteBarChart options={q.options} votes={votes} large compact={compact} />
+                </div>
+              </div>
+            );
+          })()
         ) : current.kind === "slide" ? (
           <SlideView
             block={SLIDE_BLOCKS[current.blockIndex]}

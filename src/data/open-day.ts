@@ -29,7 +29,8 @@ export const QUESTIONS: OpenDayQuestion[] = [
       { key: "e", label: "Istituto alberghiero" },
       { key: "f", label: "Grafico pubblicitario" },
       { key: "g", label: "Istituto tecnico informatico" },
-      { key: "h", label: "Altro" },
+      { key: "h", label: "Ragioneria" },
+      { key: "i", label: "Altro" },
     ],
   },
   {
