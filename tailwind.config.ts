@@ -31,10 +31,15 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(8deg)" },
+        },
       },
       animation: {
         "fade-in-up": "fadeInUp 0.6s ease forwards",
         blink: "blink 1s step-end infinite",
+        float: "float 6s ease-in-out infinite",
       },
     },
   },
