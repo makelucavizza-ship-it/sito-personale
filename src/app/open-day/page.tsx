@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import RegiaView from "@/components/open-day/RegiaView";
 
@@ -7,19 +6,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// La pagina è visibile a chiunque abbia il link (non indicizzata): chi la apre vede la
+// presentazione in corso, ma può farla avanzare solo inserendo la password nella regia
+// stessa, verificata lato server in /api/open-day/state. "key" in query resta solo una
+// scorciatoia per Luca, per sbloccarla subito da un link salvato invece che digitarla.
 export default function OpenDayRegiaPage({
   searchParams,
 }: {
   searchParams: { key?: string };
 }) {
-  const expectedKey = process.env.OPEN_DAY_KEY;
-  const providedKey = searchParams.key;
-
-  // Protezione leggera: senza OPEN_DAY_KEY configurata la regia è
-  // raggiungibile solo in sviluppo locale, mai in produzione.
-  const allowed = expectedKey ? providedKey === expectedKey : process.env.NODE_ENV !== "production";
-
-  if (!allowed) notFound();
-
-  return <RegiaView regiaKey={providedKey ?? ""} />;
+  return <RegiaView regiaKey={searchParams.key ?? ""} />;
 }

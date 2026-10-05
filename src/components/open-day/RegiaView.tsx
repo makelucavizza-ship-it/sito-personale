@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, RotateCcw, WifiOff, Smartphone } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw, WifiOff, Smartphone, Lock } from "lucide-react";
 import { getStepAt, QUESTIONS, SLIDE_BLOCKS, FINAL_SLIDE, LESSON_TITLE, BLOCK_ACCENTS, STEPS, isAiMoment } from "@/data/open-day";
 import { useOpenDayState } from "./useOpenDayState";
 import QrPanel from "./QrPanel";
@@ -14,32 +14,87 @@ import ProgressBar from "./ProgressBar";
 import LiveClock from "./LiveClock";
 import FloatingEmojis from "./FloatingEmojis";
 
+// La pagina è pubblica (link nel footer): chiunque la apre vede la presentazione in corso,
+// ma può farla avanzare solo dopo aver inserito questa password, verificata lato server a
+// ogni azione in /api/open-day/state. Salvata in locale così Luca non la ridigita ogni volta.
+const STORAGE_KEY = "open_day_regia_key";
+
 export default function RegiaView({ regiaKey }: { regiaKey: string }) {
   const { state, setState, connected } = useOpenDayState(1500);
   const [pending, setPending] = useState(false);
+  const [controlKey, setControlKey] = useState(regiaKey);
+  const [pwInput, setPwInput] = useState("");
+  const [keyError, setKeyError] = useState(false);
 
   const step = state?.step ?? 0;
   const current = getStepAt(step);
   const votes = state?.votes ?? {};
 
+  // "key" in URL (scorciatoia per Luca) ha priorità e viene salvata; altrimenti recupera
+  // l'ultima password usata su questo browser.
+  useEffect(() => {
+    if (regiaKey) {
+      try {
+        localStorage.setItem(STORAGE_KEY, regiaKey);
+      } catch {
+        /* localStorage non disponibile — la password resta comunque valida per questa visita */
+      }
+      return;
+    }
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) setControlKey(saved);
+    } catch {
+      /* localStorage non disponibile — si riparte dalla richiesta della password */
+    }
+  }, [regiaKey]);
+
+  function handleUnlock(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = pwInput.trim();
+    if (!trimmed) return;
+    setControlKey(trimmed);
+    setPwInput("");
+    setKeyError(false);
+    try {
+      localStorage.setItem(STORAGE_KEY, trimmed);
+    } catch {
+      /* localStorage non disponibile — la password resta comunque valida per questa visita */
+    }
+  }
+
   async function send(action: "next" | "prev" | "reset") {
-    if (pending) return;
+    if (pending || !controlKey) return;
     setPending(true);
     try {
       const res = await fetch("/api/open-day/state", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, key: regiaKey }),
+        body: JSON.stringify({ action, key: controlKey }),
       });
-      if (res.ok) setState(await res.json());
+      if (res.ok) {
+        setState(await res.json());
+        setKeyError(false);
+      } else if (res.status === 401) {
+        setKeyError(true);
+        setControlKey("");
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch {
+          /* localStorage non disponibile */
+        }
+      }
     } finally {
       setPending(false);
     }
   }
 
-  // Frecce tastiera per avanzare/tornare indietro senza toccare il mouse.
+  // Frecce tastiera per avanzare/tornare indietro senza toccare il mouse (ignorate mentre si
+  // digita nel campo password, altrimenti uno spazio o una freccia farebbero avanzare la slide).
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) return;
       if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
         e.preventDefault();
         send("next");
@@ -150,39 +205,63 @@ export default function RegiaView({ regiaKey }: { regiaKey: string }) {
       </div>
 
       <div className="relative z-30 shrink-0 flex flex-col items-center justify-center gap-1.5 pb-5 pt-2">
-        <div className="flex items-center justify-center gap-2">
-          <button
-            onClick={() => send("prev")}
-            disabled={pending || step === 0}
-            aria-label="Indietro"
-            title="Indietro"
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <button
-            onClick={() => {
-              if (window.confirm("Azzerare tutti i voti e tornare all'inizio?")) send("reset");
-            }}
-            disabled={pending}
-            title="Azzera voti e riparti dall'inizio"
-            className="w-7 h-7 flex items-center justify-center rounded-full border border-primary/10 text-primary/25 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-25 transition-colors"
-          >
-            <RotateCcw size={13} />
-          </button>
-          <button
-            onClick={() => send("next")}
-            disabled={pending || !state || step >= state.totalSteps - 1}
-            aria-label="Avanti"
-            title="Avanti"
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
-        <p className="text-[10px] opacity-25" style={{ fontFamily: "Sailors, Georgia, serif" }}>
-          oppure usa le frecce ← →
-        </p>
+        {controlKey ? (
+          <>
+            <div className="flex items-center justify-center gap-2">
+              <button
+                onClick={() => send("prev")}
+                disabled={pending || step === 0}
+                aria-label="Indietro"
+                title="Indietro"
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={() => {
+                  if (window.confirm("Azzerare tutti i voti e tornare all'inizio?")) send("reset");
+                }}
+                disabled={pending}
+                title="Azzera voti e riparti dall'inizio"
+                className="w-7 h-7 flex items-center justify-center rounded-full border border-primary/10 text-primary/25 hover:text-primary/60 hover:bg-primary/5 disabled:opacity-25 transition-colors"
+              >
+                <RotateCcw size={13} />
+              </button>
+              <button
+                onClick={() => send("next")}
+                disabled={pending || !state || step >= state.totalSteps - 1}
+                aria-label="Avanti"
+                title="Avanti"
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-primary/15 text-primary/50 hover:bg-primary/5 hover:text-primary/80 disabled:opacity-25 transition-colors"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+            <p className="text-[10px] opacity-25" style={{ fontFamily: "Sailors, Georgia, serif" }}>
+              oppure usa le frecce ← →
+            </p>
+          </>
+        ) : (
+          <>
+            <form onSubmit={handleUnlock} className="flex items-center gap-2">
+              <Lock size={13} className="opacity-30" />
+              <input
+                type="password"
+                value={pwInput}
+                onChange={(e) => setPwInput(e.target.value)}
+                placeholder="password regia"
+                className="text-xs bg-transparent border border-primary/15 rounded-full px-3 py-1 outline-none focus:border-primary/40 w-32"
+              />
+              <button
+                type="submit"
+                className="text-xs border border-primary/15 rounded-full px-3 py-1 text-primary/60 hover:bg-primary/5 hover:text-primary/80 transition-colors"
+              >
+                Sblocca
+              </button>
+            </form>
+            {keyError && <p className="text-[10px] text-coral">Password errata, riprova</p>}
+          </>
+        )}
       </div>
     </div>
   );
