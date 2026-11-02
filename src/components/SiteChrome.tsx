@@ -10,7 +10,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
 
   // /open-day è una vista a schermo intero per la regia e per il voto da smartphone:
   // niente nav, footer o banner cookie del sito sopra.
-  if (pathname?.startsWith("/open-day")) {
+  // /clienti/* sono pagine private per i clienti, con il loro header minimale.
+  if (pathname?.startsWith("/open-day") || pathname?.startsWith("/clienti/")) {
     return <>{children}</>;
   }
 
