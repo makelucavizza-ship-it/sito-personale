@@ -342,10 +342,6 @@ export default function MiragiaOnboarding() {
                   Qui raccolgo tutto quello che mi serve per partire con Miragià: accessi,
                   calendario, prodotti e qualche idea per i video. Sono 7 passaggi brevi.
                 </p>
-                <p className="text-[17px] leading-relaxed text-primary/80">
-                  Puoi saltare quelli che non sai e tornarci quando vuoi: quello che scrivi resta
-                  salvato su questo dispositivo finché non premi Invia.
-                </p>
                 <Field id="nome" label="Il tuo nome">
                   <input
                     id="nome"
